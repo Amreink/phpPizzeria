@@ -5,6 +5,7 @@
  */
 package dhbw_filmanwendung;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -22,7 +23,7 @@ public class FXMLDocumentController implements Initializable {
     private Label label;
     
     @FXML
-    private void handleButtonAction(ActionEvent event) {
+    private void handleButtonAction(ActionEvent event) throws IOException {
         System.out.println("You clicked me!");
         label.setText("Hello World!");
     }
