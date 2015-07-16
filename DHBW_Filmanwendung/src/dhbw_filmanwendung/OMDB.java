@@ -6,7 +6,6 @@
 package dhbw_filmanwendung;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -14,7 +13,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Type;
 
 /**
  *
@@ -45,7 +43,6 @@ public class OMDB {
         request.connect();
 
         Gson gson = new Gson();
-        //Movie movie = gson.fromJson(new InputStreamReader((InputStream) request.getContent()), Movie.class);
         SearchResponse movies = new Gson().fromJson(new InputStreamReader((InputStream) request.getContent()), SearchResponse.class);
 
         return movies.Search;
