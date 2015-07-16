@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.media.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
@@ -8,9 +11,33 @@
 
 <AnchorPane id="AnchorPane" prefHeight="799.0" prefWidth="1167.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dhbw_filmanwendung.FXMLDocumentController">
     <children>
-        <Button fx:id="button" layoutX="390.0" layoutY="44.0" onAction="#handleButtonAction" text="Click Me!" />
-        <Label fx:id="label" layoutX="544.0" layoutY="52.0" minHeight="16" minWidth="69" prefHeight="35.0" prefWidth="590.0" />
-      <TextField fx:id="searchbar" layoutX="70.0" layoutY="44.0" />
-      <ListView layoutX="66.0" layoutY="125.0" prefHeight="328.0" prefWidth="306.0" />
+        <TabPane layoutX="14.0" layoutY="14.0" prefHeight="762.0" prefWidth="1132.0" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab fx:id="tabSuche" text="Suche">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <Label fx:id="label" layoutX="515.0" layoutY="36.0" minHeight="16" minWidth="69" prefHeight="35.0" prefWidth="590.0" />
+                                <TextField fx:id="searchbar" layoutX="14.0" layoutY="14.0" prefHeight="51.0" prefWidth="1110.0" />
+                                <Button fx:id="button" layoutX="983.0" layoutY="632.0" onAction="#handleButtonAction" text="Click Me!" />
+                                <ImageView fx:id="image" fitHeight="610.0" fitWidth="550.0" layoutX="19.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true" />
+                                <Label layoutX="603.0" layoutY="71.0" prefHeight="35.0" prefWidth="519.0" text="Titel" />
+                                <ListView fx:id="list" layoutX="14.0" layoutY="64.0" onMouseExited="#test" prefHeight="328.0" prefWidth="1110.0" visible="false" />
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Merkliste">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    </content>
+                </Tab>
+                <Tab text="Favouriten">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
     </children>
 </AnchorPane>

@@ -15,8 +15,8 @@ public class Movie {
 
     private String imdbID;
     private String Title;
-    private int Year;
-    private int Runtime;
+    private String Year;
+    private String Runtime;
     private String Genre;
     private String Poster;
     private String Director;
@@ -43,19 +43,19 @@ public class Movie {
         this.Title = title;
     }
 
-    public int getYear() {
+    public String getYear() {
         return Year;
     }
 
-    public void setYear(int Year) {
+    public void setYear(String Year) {
         this.Year = Year;
     }
 
-    public int getRuntime() {
+    public String getRuntime() {
         return Runtime;
     }
 
-    public void setRuntime(int Runtime) {
+    public void setRuntime(String Runtime) {
         this.Runtime = Runtime;
     }
 
@@ -106,8 +106,6 @@ public class Movie {
     public void setImdbRating(double imdbRating) {
         this.imdbRating = imdbRating;
     }
-    
-    
 
     public boolean isFavourite() {
         return this.favourite;
