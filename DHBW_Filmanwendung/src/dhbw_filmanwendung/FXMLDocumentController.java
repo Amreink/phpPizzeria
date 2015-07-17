@@ -5,16 +5,11 @@
  */
 package dhbw_filmanwendung;
 
-import java.awt.Image;
-import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -38,6 +33,9 @@ public class FXMLDocumentController implements Initializable {
     MovieList movies = new MovieList();
     OMDB omdb = new OMDB();
 
+    Thread searchThread;
+    Thread loadMovie;
+
     @FXML
     private Label label;
     @FXML
@@ -58,7 +56,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     private void showResults(String title) throws IOException {
-        
+
         ArrayList<Movie> results_array = omdb.searchByTitle(title);
         ObservableList<Movie> results_list = FXCollections.observableList(results_array);
         list.setItems(results_list);
@@ -78,7 +76,6 @@ public class FXMLDocumentController implements Initializable {
                     }
 
                 };
-
                 return cell;
             }
         });
@@ -107,12 +104,17 @@ public class FXMLDocumentController implements Initializable {
             public void changed(ObservableValue<? extends Movie> observable, Movie oldValue, Movie newValue) {
                 // Your action here
                 System.out.println("Selected item: " + newValue.getTitle() + newValue.getId());
-                try {
-                    loadMovie(newValue.getId());
-                } catch (IOException ex) {
-                    //Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
+                searchbar.setText(newValue.getTitle());
+                loadMovie = new Thread(new Runnable() {
+                    public void run() {
+                        try {
+                            loadMovie(newValue.getId());
+                        } catch (IOException ex) {
+                            //  Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                });
+                loadMovie.start();
             }
         });
         // Listen for TextField text changes
@@ -124,16 +126,16 @@ public class FXMLDocumentController implements Initializable {
                     list.setVisible(false);
                     list.setItems(null);
                 } else {
-                    Thread t1 = new Thread(new Runnable() {
+                    searchThread = new Thread(new Runnable() {
                         public void run() {
                             try {
                                 showResults(newValue);
                             } catch (IOException ex) {
-                              //  Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                                //  Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
                     });
-                    t1.start();
+                    searchThread.start();
                     list.setVisible(true);
                 }
             }
