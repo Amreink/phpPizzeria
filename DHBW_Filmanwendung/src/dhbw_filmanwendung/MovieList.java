@@ -11,9 +11,10 @@ import java.util.ArrayList;
  *
  * @author Artur
  */
+
 public class MovieList {
 
-    private ArrayList movies = new ArrayList<Movie>();
+    public ArrayList movies = new ArrayList<Movie>();
 
     private static MovieList instance = null;
 
@@ -29,39 +30,32 @@ public class MovieList {
     }
 
     public boolean addMovie(Movie movie) {
-        if (this.movies.contains(movie)) {
+        if (movieExists(movie) < 0) {
             return this.movies.add(movie);
         }
         return false;
     }
 
-    public boolean removeMovie(Movie movie) {
-        if (this.movies.contains(movie)) {
-            return this.movies.remove(movie);
+    // TODO Remove Methode ausprogrammieren
+    
+    public int movieExists(Movie movie) {
+        for (Object test : movies) {
+            Movie test2 = (Movie) test;
+            if (test2.getId().equals(movie.getId())) {
+                return movies.indexOf(test2);
+            }
         }
-        return false;
-    }
-
-    public boolean movieExists(Movie movie) {
-        if (this.movies.contains(movie)) {
-            return true;
-        }
-        return false;
+        return -1;
     }
 
     public int getSize() {
         return this.movies.size();
     }
 
-    public Movie getMovieById(int id) {
-        Movie movie = (Movie) this.movies.get(id);
-        return movie;
-    }
-
     public Movie getMovieByObject(Movie movie) {
         Movie new_movie = null;
-        if (this.movies.contains(movie)) {
-            int index = this.movies.indexOf(movie);
+        int index = movieExists(movie);
+        if (index > -1) {
             new_movie = (Movie) this.movies.get(index);
         }
         return new_movie;

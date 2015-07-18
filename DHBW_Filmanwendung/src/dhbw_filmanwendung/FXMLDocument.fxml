@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.media.*?>
@@ -9,35 +11,154 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="799.0" prefWidth="1167.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dhbw_filmanwendung.FXMLDocumentController">
+<AnchorPane id="AnchorPane" minHeight="820.0" minWidth="1170.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dhbw_filmanwendung.FXMLDocumentController">
     <children>
-        <TabPane layoutX="14.0" layoutY="14.0" prefHeight="762.0" prefWidth="1132.0" tabClosingPolicy="UNAVAILABLE">
-            <tabs>
-                <Tab fx:id="tabSuche" text="Suche">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                            <children>
-                                <Label fx:id="label" layoutX="515.0" layoutY="36.0" minHeight="16" minWidth="69" prefHeight="35.0" prefWidth="590.0" />
-                                <TextField fx:id="searchbar" layoutX="14.0" layoutY="14.0" prefHeight="51.0" prefWidth="1110.0" />
-                                <Button fx:id="button" layoutX="983.0" layoutY="632.0" onAction="#handleButtonAction" text="Click Me!" />
-                                <ImageView fx:id="image" fitHeight="610.0" fitWidth="550.0" layoutX="19.0" layoutY="71.0" pickOnBounds="true" preserveRatio="true" />
-                                <Label layoutX="603.0" layoutY="71.0" prefHeight="35.0" prefWidth="519.0" text="Titel" />
-                                <ListView fx:id="list" layoutX="14.0" layoutY="64.0" onMouseExited="#test" prefHeight="328.0" prefWidth="1110.0" visible="false" />
-                            </children>
-                        </AnchorPane>
-                    </content>
-                </Tab>
-                <Tab text="Merkliste">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                    </content>
-                </Tab>
-                <Tab text="Favouriten">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                    </content>
-                </Tab>
-            </tabs>
-        </TabPane>
+        <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <center>
+                <TabPane prefWidth="0.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+                    <tabs>
+                        <Tab fx:id="tabSuche" text="Suche">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <children>
+                                        <BorderPane prefHeight="745.0" prefWidth="1167.0">
+                                            <right>
+                                                <ToolBar centerShape="false" nodeOrientation="RIGHT_TO_LEFT" orientation="VERTICAL" prefHeight="638.0" prefWidth="110.0">
+                                                    <items>
+                                                        <Button fx:id="btnMerken" mnemonicParsing="false" onAction="#merken" prefWidth="100.0" text="Merken" />
+                                                        <Button fx:id="btnFav" mnemonicParsing="false" onAction="#fav" prefWidth="100.0" text="Favourit" />
+                                                    </items>
+                                                </ToolBar>
+                                            </right>
+                                            <padding>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                            </padding>
+                                            <center>
+                                                <VBox prefWidth="100.0" BorderPane.alignment="CENTER">
+                                                    <children>
+                                                        <TitledPane alignment="CENTER" animated="false" collapsible="false" prefHeight="380.0" prefWidth="527.0" text="Film Informationen">
+                                                            <font>
+                                                                <Font name="Arial Bold" size="14.0" />
+                                                            </font>
+                                                            <content>
+                                                                <TableView fx:id="movieInfoTable" prefHeight="0.0" prefWidth="0.0">
+                                                                    <columns>
+                                                                        <TableColumn fx:id="nameCol" editable="false" prefWidth="125.0" resizable="false" sortable="false" visible="false" />
+                                                                        <TableColumn fx:id="valueCol" editable="false" prefWidth="350.0" resizable="false" sortable="false" visible="false" />
+                                                                    </columns>
+                                                                </TableView>
+                                                            </content>
+                                                        </TitledPane>
+                                                        <TitledPane alignment="CENTER" animated="false" collapsible="false" prefHeight="467.0" prefWidth="527.0" text="Film Beschreibung">
+                                                            <font>
+                                                                <Font name="Arial Bold" size="14.0" />
+                                                            </font>
+                                                            <content>
+                                                                <VBox prefHeight="323.0" prefWidth="525.0">
+                                                                    <children>
+                                                                        <TextArea fx:id="movieBeschreibung" editable="false" prefHeight="380.0" prefWidth="503.0" wrapText="true">
+                                                                            <font>
+                                                                                <Font name="Arial" size="14.0" />
+                                                                            </font>
+                                                                        </TextArea>
+                                                                    </children>
+                                                                </VBox>
+                                                            </content>
+                                                        </TitledPane>
+                                                    </children>
+                                                    <BorderPane.margin>
+                                                        <Insets right="10.0" />
+                                                    </BorderPane.margin>
+                                                </VBox>
+                                            </center>
+                                            <top>
+                                                <TextField fx:id="searchbar" prefHeight="29.0" prefWidth="1092.0" BorderPane.alignment="CENTER">
+                                                    <BorderPane.margin>
+                                                        <Insets bottom="10.0" />
+                                                    </BorderPane.margin>
+                                                </TextField>
+                                            </top>
+                                            <left>
+                                                <VBox prefWidth="500.0" BorderPane.alignment="CENTER">
+                                                    <children>
+                                                        <TitledPane alignment="CENTER" animated="false" collapsible="false" maxHeight="780.0" text="Film Cover">
+                                                            <font>
+                                                                <Font name="Arial Bold" size="14.0" />
+                                                            </font>
+                                                            <content>
+                                                                <VBox alignment="CENTER" prefHeight="686.0" prefWidth="500.0">
+                                                                    <children>
+                                                                        <ImageView fx:id="image" fitWidth="450.0" pickOnBounds="true" preserveRatio="true" />
+                                                                    </children>
+                                                                </VBox>
+                                                            </content>
+                                                        </TitledPane>
+                                                    </children>
+                                                    <BorderPane.margin>
+                                                        <Insets />
+                                                    </BorderPane.margin>
+                                                </VBox>
+                                            </left>
+                                        </BorderPane>
+                                        <ListView fx:id="list" layoutX="10.0" layoutY="38.0" onMouseExited="#test" prefHeight="200.0" prefWidth="1147.0" visible="false" />
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                        <Tab fx:id="tabMerkliste" onSelectionChanged="#changeToMerkliste" text="Merkliste">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <children>
+                                        <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <center>
+                                                <TableView fx:id="merkliste" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                                    <BorderPane.margin>
+                                                        <Insets />
+                                                    </BorderPane.margin>
+                                                </TableView>
+                                            </center>
+                                        </BorderPane>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                        <Tab fx:id="tabFav" onSelectionChanged="#changeToFav" text="Favouriten">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <children>
+                                        <BorderPane layoutX="6.0" layoutY="6.0" prefHeight="759.0" prefWidth="1163.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <center>
+                                                <TableView fx:id="favouritenTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                                            </center>
+                                        </BorderPane>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                    </tabs>
+                </TabPane>
+            </center>
+            <top>
+                <MenuBar BorderPane.alignment="CENTER">
+                    <menus>
+                        <Menu mnemonicParsing="false" text="File">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="Close" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Edit">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="Delete" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Help">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="About" />
+                            </items>
+                        </Menu>
+                    </menus>
+                </MenuBar>
+            </top>
+        </BorderPane>
     </children>
 </AnchorPane>
