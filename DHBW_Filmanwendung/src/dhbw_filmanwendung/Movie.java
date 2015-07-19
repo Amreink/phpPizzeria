@@ -5,8 +5,6 @@
  */
 package dhbw_filmanwendung;
 
-import java.util.Date;
-
 /**
  *
  * @author Artur

@@ -5,6 +5,7 @@
  */
 package dhbw_filmanwendung;
 
+import java.awt.Image;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -110,7 +111,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    private void changeToMerkliste() {
+    private void changeToMerkliste() throws MalformedURLException, IOException {
 
         List movieList = new ArrayList();
         for (Object element : movies.movies) {
@@ -119,10 +120,33 @@ public class FXMLDocumentController implements Initializable {
                 movieList.add(movieElement);
             }
         }
-
         ObservableList data = FXCollections.observableList(movieList);
         merkliste.setItems(data);
 
+        TableColumn coverCol = new TableColumn("Cover");
+        coverCol.setCellFactory(new Callback<TableColumn<Movie, Image>, TableCell<Movie, Image>>() {
+
+            @Override
+            public TableCell<Movie, Image> call(TableColumn<Movie, Image> param) {
+                //Set up the ImageView
+                final ImageView imageview = new ImageView();
+                imageview.setFitHeight(100);
+                imageview.setFitWidth(100);
+
+                //Set up the Table
+                TableCell<Movie, Image> cell = new TableCell<Movie, Image>() {
+                    public void updateItem(Movie item, boolean empty) throws MalformedURLException, IOException {
+                        if (item != null) {
+                            URL imageUrl = new URL(item.getPoster());
+                            WritableImage poster = SwingFXUtils.toFXImage(ImageIO.read(imageUrl), null);
+                            imageview.setImage(poster);
+                            setGraphic(imageview);
+                        }
+                    }
+                };
+                return cell;
+            }
+        });
         TableColumn titleCol = new TableColumn("Titel");
         titleCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("title"));
         TableColumn genreCol = new TableColumn("Genre");
@@ -134,7 +158,7 @@ public class FXMLDocumentController implements Initializable {
         TableColumn runtimeCol = new TableColumn("Dauer");
         runtimeCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("runtime"));
 
-        merkliste.getColumns().setAll(titleCol, genreCol, directorCol, yearCol, runtimeCol);
+        merkliste.getColumns().setAll(coverCol, titleCol, genreCol, directorCol, yearCol, runtimeCol);
     }
 
     private void showResults(String title) throws IOException {
@@ -247,13 +271,13 @@ public class FXMLDocumentController implements Initializable {
                         public void run() {
                             try {
                                 showResults(newValue);
+                                list.setVisible(true);
                             } catch (IOException ex) {
                                 //  Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
                     });
                     searchThread.start();
-                    list.setVisible(true);
                 }
             }
         });
