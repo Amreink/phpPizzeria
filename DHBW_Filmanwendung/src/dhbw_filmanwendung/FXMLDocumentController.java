@@ -68,7 +68,7 @@ public class FXMLDocumentController implements Initializable {
         if (event.getClickCount() == 2) {
             Movie movie = (Movie) searchlist.getSelectionModel().getSelectedItem();
             if (movie != null) {
-                loadMovie(movie.getId());
+                loadMovie(movie.getId());                
             }
         }
     }
@@ -87,10 +87,16 @@ public class FXMLDocumentController implements Initializable {
     }
 
     private void loadMovie(String id) {
+        String imageUrl = null;
         try {
             Movie movie = omdb.searchById(id);
             if (movie != null) {
-                detailImage.setImage(new Image(movie.getPoster()));
+                if (movie.getPoster().startsWith("http")) {
+                    imageUrl = movie.getPoster();
+                } else {
+                    imageUrl = "http://ozarktech.com/wp-content/uploads/2014/05/image-not-available-grid.jpg";
+                }
+                detailImage.setImage(new Image(imageUrl));
                 detailPlot.setText(movie.getPlot());
             }
         } catch (IOException ex) {
