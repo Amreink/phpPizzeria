@@ -20,7 +20,7 @@ public class Movie {
     private String Director;
     private String Released;
     private String Plot;
-    private double imdbRating;
+    private String imdbRating;
     private boolean favourite;
     private boolean bookmark;
     private boolean looked;
@@ -97,11 +97,11 @@ public class Movie {
         this.Plot = Plot;
     }
 
-    public double getImdbRating() {
+    public String getImdbRating() {
         return imdbRating;
     }
 
-    public void setImdbRating(double imdbRating) {
+    public void setImdbRating(String imdbRating) {
         this.imdbRating = imdbRating;
     }
 
@@ -128,4 +128,11 @@ public class Movie {
     public void setLooked(boolean looked) {
         this.looked = looked;
     }
+
+    @Override
+    public String toString() {
+        return this.Title;
+    }
+    
+    
 }

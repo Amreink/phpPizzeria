@@ -11,154 +11,105 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" minHeight="820.0" minWidth="1170.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dhbw_filmanwendung.FXMLDocumentController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dhbw_filmanwendung.FXMLDocumentController">
     <children>
-        <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <center>
-                <TabPane prefWidth="0.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <StackPane fx:id="stackpane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <TabPane prefHeight="200.0" prefWidth="200.0" side="BOTTOM" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
-                        <Tab fx:id="tabSuche" text="Suche">
+                        <Tab text="Main">
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                     <children>
-                                        <BorderPane prefHeight="745.0" prefWidth="1167.0">
-                                            <right>
-                                                <ToolBar centerShape="false" nodeOrientation="RIGHT_TO_LEFT" orientation="VERTICAL" prefHeight="638.0" prefWidth="110.0">
-                                                    <items>
-                                                        <Button fx:id="btnMerken" mnemonicParsing="false" onAction="#merken" prefWidth="100.0" text="Merken" />
-                                                        <Button fx:id="btnFav" mnemonicParsing="false" onAction="#fav" prefWidth="100.0" text="Favourit" />
-                                                    </items>
-                                                </ToolBar>
-                                            </right>
-                                            <padding>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                            </padding>
-                                            <center>
-                                                <VBox prefWidth="100.0" BorderPane.alignment="CENTER">
-                                                    <children>
-                                                        <TitledPane alignment="CENTER" animated="false" collapsible="false" prefHeight="380.0" prefWidth="527.0" text="Film Informationen">
-                                                            <font>
-                                                                <Font name="Arial Bold" size="14.0" />
-                                                            </font>
-                                                            <content>
-                                                                <TableView fx:id="movieInfoTable" prefHeight="0.0" prefWidth="0.0">
-                                                                    <columns>
-                                                                        <TableColumn fx:id="nameCol" editable="false" prefWidth="125.0" resizable="false" sortable="false" visible="false" />
-                                                                        <TableColumn fx:id="valueCol" editable="false" prefWidth="350.0" resizable="false" sortable="false" visible="false" />
-                                                                    </columns>
-                                                                </TableView>
-                                                            </content>
-                                                        </TitledPane>
-                                                        <TitledPane alignment="CENTER" animated="false" collapsible="false" prefHeight="467.0" prefWidth="527.0" text="Film Beschreibung">
-                                                            <font>
-                                                                <Font name="Arial Bold" size="14.0" />
-                                                            </font>
-                                                            <content>
-                                                                <VBox prefHeight="323.0" prefWidth="525.0">
+                                        <StackPane alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="0.0" prefWidth="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <children>
+                                                <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseEntered="#onCenterDragOver">
+                                                    <top>
+                                                        <TextField fx:id="searchbar" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onKeyPressed="#onSearch" BorderPane.alignment="CENTER">
+                                                            <BorderPane.margin>
+                                                                <Insets bottom="10.0" />
+                                                            </BorderPane.margin>
+                                                        </TextField>
+                                                    </top>
+                                                    <center>
+                                                        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
+                                                            <children>
+                                                                <TitledPane animated="false" text="untitled">
+                                                                    <content>
+                                                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                                                    </content>
+                                                                </TitledPane>
+                                                                <TitledPane animated="false" text="untitled">
+                                                                    <content>
+                                                                        <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                                         <children>
+                                                            <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                               <children>
+                                                                  <TextArea fx:id="detailPlot" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" wrapText="true" />
+                                                               </children>
+                                                            </StackPane>
+                                                         </children></AnchorPane>
+                                                                    </content>
+                                                                </TitledPane>
+                                                            </children>
+                                                        </VBox>
+                                                    </center>
+                                                    <left>
+                                                        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
+                                                            <children>
+                                                                <TitledPane animated="false" collapsible="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Cover">
+                                                                    <content>
+                                                                        <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0">
+                                                                            <children>
+                                                                                <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                                                    <children>
+                                                                                        <ImageView fx:id="detailImage" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
+                                                                                    </children>
+                                                                                </StackPane>
+                                                                            </children>
+                                                                        </AnchorPane>
+                                                                    </content>
+                                                                </TitledPane>
+                                                                <FlowPane alignment="CENTER" columnHalignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="0.0">
                                                                     <children>
-                                                                        <TextArea fx:id="movieBeschreibung" editable="false" prefHeight="380.0" prefWidth="503.0" wrapText="true">
-                                                                            <font>
-                                                                                <Font name="Arial" size="14.0" />
-                                                                            </font>
-                                                                        </TextArea>
+                                                                        <Button mnemonicParsing="false" text="Button" />
+                                                                        <Button mnemonicParsing="false" text="Button" />
+                                                                        <Button mnemonicParsing="false" text="Button" />
                                                                     </children>
-                                                                </VBox>
-                                                            </content>
-                                                        </TitledPane>
-                                                    </children>
-                                                    <BorderPane.margin>
-                                                        <Insets right="10.0" />
-                                                    </BorderPane.margin>
-                                                </VBox>
-                                            </center>
-                                            <top>
-                                                <TextField fx:id="searchbar" prefHeight="29.0" prefWidth="1092.0" BorderPane.alignment="CENTER">
-                                                    <BorderPane.margin>
-                                                        <Insets bottom="10.0" />
-                                                    </BorderPane.margin>
-                                                </TextField>
-                                            </top>
-                                            <left>
-                                                <VBox prefWidth="500.0" BorderPane.alignment="CENTER">
-                                                    <children>
-                                                        <TitledPane alignment="CENTER" animated="false" collapsible="false" maxHeight="780.0" text="Film Cover">
-                                                            <font>
-                                                                <Font name="Arial Bold" size="14.0" />
-                                                            </font>
-                                                            <content>
-                                                                <VBox alignment="CENTER" prefHeight="686.0" prefWidth="500.0">
-                                                                    <children>
-                                                                        <ImageView fx:id="image" fitWidth="450.0" pickOnBounds="true" preserveRatio="true" />
-                                                                    </children>
-                                                                </VBox>
-                                                            </content>
-                                                        </TitledPane>
-                                                    </children>
-                                                    <BorderPane.margin>
+                                                                </FlowPane>
+                                                            </children>
+                                                        </VBox>
+                                                    </left>
+                                                    <StackPane.margin>
                                                         <Insets />
-                                                    </BorderPane.margin>
-                                                </VBox>
-                                            </left>
-                                        </BorderPane>
-                                        <ListView fx:id="list" layoutX="10.0" layoutY="38.0" onMouseExited="#test" prefHeight="200.0" prefWidth="1147.0" visible="false" />
+                                                    </StackPane.margin>
+                                                </BorderPane>
+                                                <ListView fx:id="searchlist" maxHeight="200.0" maxWidth="1.7976931348623157E308" onMouseClicked="#onSearchlistClick" prefHeight="0.0" prefWidth="0.0">
+                                                    <StackPane.margin>
+                                                        <Insets top="50.0" />
+                                                    </StackPane.margin>
+                                                </ListView>
+                                            </children>
+                                        </StackPane>
                                     </children>
+                                    <padding>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    </padding>
                                 </AnchorPane>
                             </content>
                         </Tab>
-                        <Tab fx:id="tabMerkliste" onSelectionChanged="#changeToMerkliste" text="Merkliste">
+                        <Tab text="Lists">
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                    <children>
-                                        <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                            <center>
-                                                <TableView fx:id="merkliste" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                                                    <BorderPane.margin>
-                                                        <Insets />
-                                                    </BorderPane.margin>
-                                                </TableView>
-                                            </center>
-                                        </BorderPane>
-                                    </children>
-                                </AnchorPane>
-                            </content>
-                        </Tab>
-                        <Tab fx:id="tabFav" onSelectionChanged="#changeToFav" text="Favouriten">
-                            <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                    <children>
-                                        <BorderPane layoutX="6.0" layoutY="6.0" prefHeight="759.0" prefWidth="1163.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                            <center>
-                                                <TableView fx:id="favouritenTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-                                            </center>
-                                        </BorderPane>
-                                    </children>
+                                    <padding>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    </padding>
                                 </AnchorPane>
                             </content>
                         </Tab>
                     </tabs>
                 </TabPane>
-            </center>
-            <top>
-                <MenuBar BorderPane.alignment="CENTER">
-                    <menus>
-                        <Menu mnemonicParsing="false" text="File">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="Close" />
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Edit">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="Delete" />
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Help">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="About" />
-                            </items>
-                        </Menu>
-                    </menus>
-                </MenuBar>
-            </top>
-        </BorderPane>
+            </children>
+        </StackPane>
     </children>
 </AnchorPane>

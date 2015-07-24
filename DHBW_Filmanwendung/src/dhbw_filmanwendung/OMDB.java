@@ -37,14 +37,12 @@ public class OMDB {
 
         String sURL = "http://www.omdbapi.com/?s=" + movie_title;
 
-        // Connect to the URL using java's native library
         URL url = new URL(sURL);
         HttpURLConnection request = (HttpURLConnection) url.openConnection();
         request.connect();
 
         Gson gson = new Gson();
         SearchResponse movies = new Gson().fromJson(new InputStreamReader((InputStream) request.getContent()), SearchResponse.class);
-
         return movies.Search;
     }
 
@@ -52,7 +50,6 @@ public class OMDB {
 
         String sURL = "http://www.omdbapi.com/?i=" + id;
 
-        // Connect to the URL using java's native library
         URL url = new URL(sURL);
         HttpURLConnection request = (HttpURLConnection) url.openConnection();
         request.connect();
