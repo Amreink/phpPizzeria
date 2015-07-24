@@ -43,7 +43,6 @@ public class OMDB {
         HttpURLConnection request = (HttpURLConnection) url.openConnection();
         request.connect();
 
-        Gson gson = new Gson();
         SearchResponse movies = new Gson().fromJson(new InputStreamReader((InputStream) request.getContent()), SearchResponse.class);
         return movies.Search;
     }
@@ -57,8 +56,7 @@ public class OMDB {
         HttpURLConnection request = (HttpURLConnection) url.openConnection();
         request.connect();
 
-        Gson gson = new Gson();
-        Movie movie = gson.fromJson(new InputStreamReader((InputStream) request.getContent()), Movie.class);
+        Movie movie = new Gson().fromJson(new InputStreamReader((InputStream) request.getContent()), Movie.class);
 
         return movie;
     }
