@@ -12,7 +12,8 @@ and open the template in the editor.
     -fx-background-color: white;
     -fx-border-insets: 0;
     -fx-border-width: 1.5px;
-    -fx-border-color: white white lightslategray white;
+    -fx-border-color: white white #0093ff white;
+    -fx-text-fill: #0093ff;
 }
 
 .root{
@@ -23,10 +24,60 @@ and open the template in the editor.
     -fx-background-color: white;
 }
 
-.test{
+.tabButton{
+    -fx-border-color: white;
+    -fx-border-insets: 0;
+    -fx-background-color: white;
+}
+
+.tab .tab-label { 
+    -fx-text-fill: #0093ff;
+    -fx-font-weight: bold;   
+}
+
+.tab-pane *.tab-header-background {
+    -fx-background-color: white;
+}
+
+.tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
+    -fx-border-color: transparent;
+}
+
+.searchList{
+    -fx-background-color: transparent;
+    -fx-border-insets: 0;
+}
+
+.list-cell:filled:selected:focused, .list-cell:filled:selected {
+    -fx-background-color: lightgrey;
+    -fx-text-fill: white;
+}
+
+.list-cell:even { /* <=== changed to even */
+    -fx-background-color: white;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: #0093ff;
+    -fx-text-fill: white;
+}
+
+.button{
+    -fx-background-color: #0093ff;
+    -fx-text-fill: white;
+}
+
+.button:hover{
+    -fx-background-color: #64BFFF;
+}
+
+.titled-pane > .title 
+{
     -fx-background-color: white;
     -fx-border-insets: 0;
-    -fx-border-width: 1.5px;
-    -fx-border-color: white white white  white;
-    
+}
+
+.titled-pane > .content{
+    -fx-background-color: white;
+    -fx-border-color: transparent;
 }
