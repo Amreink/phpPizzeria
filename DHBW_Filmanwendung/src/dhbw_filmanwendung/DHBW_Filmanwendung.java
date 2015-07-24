@@ -16,13 +16,14 @@ import javafx.stage.Stage;
  * @author Artur
  */
 public class DHBW_Filmanwendung extends Application {
-    
+
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-        
+
         Scene scene = new Scene(root);
-        
+        scene.getStylesheets().add(getClass().getResource("css/main.css").toExternalForm());
+
         stage.setScene(scene);
 
         stage.setTitle("DHBW Filmanwendung");
@@ -35,5 +36,5 @@ public class DHBW_Filmanwendung extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }
