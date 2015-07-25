@@ -155,7 +155,7 @@
                         </TabPane>
                     </center>
                 </BorderPane>
-                <ListView fx:id="searchlist" maxHeight="200.0" maxWidth="1.7976931348623157E308" onMouseClicked="#onSearchlistClick" prefHeight="0.0" prefWidth="0.0" styleClass="searchList" StackPane.alignment="TOP_CENTER">
+                <ListView fx:id="searchlist" maxHeight="200.0" maxWidth="1.7976931348623157E308" onMouseClicked="#onSearchlistClick" prefHeight="0.0" prefWidth="0.0" styleClass="searchList" visible="false" StackPane.alignment="TOP_CENTER">
                     <StackPane.margin>
                         <Insets left="10.0" right="10.0" top="55.0" />
                     </StackPane.margin>
