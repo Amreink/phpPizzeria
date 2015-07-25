@@ -53,6 +53,12 @@ public class FXMLDocumentController implements Initializable {
     private TableView detailTable;
     @FXML
     private TabPane tabPane;
+    @FXML
+    private ImageView imageRow1;
+    @FXML
+    private ImageView imageRow2;
+    @FXML
+    private ImageView imageRow3;
 
     @FXML
     private void onSearch() {
@@ -106,15 +112,13 @@ public class FXMLDocumentController implements Initializable {
                 currentMovie = movie;
                 SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
                 selectionModel.select(0);
-                
+
                 if (movie.getPoster().startsWith("http")) {
                     imageUrl = movie.getPoster();
                 } else {
                     imageUrl = "http://ozarktech.com/wp-content/uploads/2014/05/image-not-available-grid.jpg";
                 }
                 detailImage.setImage(new Image(imageUrl));
-                detailImage.fitWidthProperty().bind(test.widthProperty());
-                detailImage.fitHeightProperty().bind(test.heightProperty());
                 detailPlot.setText(movie.getPlot());
 
                 Pane header = (Pane) detailTable.lookup("TableHeaderRow");
@@ -132,9 +136,9 @@ public class FXMLDocumentController implements Initializable {
                 infoList.add(new TableRow("Veröffentlicht", movie.getReleased()));
                 infoList.add(new TableRow("Jahr", movie.getYear()));
                 infoList.add(new TableRow("Bewertung", movie.getImdbRating()));
-                infoList.add(new TableRow("Geschaut", Boolean.toString(movie.isLooked())));
-                infoList.add(new TableRow("Favourit", Boolean.toString(movie.isFavourite())));
-                infoList.add(new TableRow("Gemerkt", Boolean.toString(movie.isBookmark())));
+                //infoList.add(new TableRow("Geschaut", Boolean.toString(movie.isLooked())));
+                //infoList.add(new TableRow("Favourit", Boolean.toString(movie.isFavourite())));
+                //infoList.add(new TableRow("Gemerkt", Boolean.toString(movie.isBookmark())));
 
                 ObservableList data = FXCollections.observableList(infoList);
                 detailTable.setItems(data);
@@ -145,6 +149,18 @@ public class FXMLDocumentController implements Initializable {
                 valueCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("value"));
                 valueCol.setVisible(true);
                 detailTable.getColumns().setAll(nameCol, valueCol);
+                
+                if(movie.isLooked()){
+                    imageRow1.setEffect(null);
+                }
+                
+                if(movie.isFavourite()){
+                    imageRow2.setEffect(null);
+                }
+                
+                if(movie.isBookmark()){
+                    imageRow3.setEffect(null);
+                }
 
             }
         } catch (IOException ex) {
@@ -155,8 +171,6 @@ public class FXMLDocumentController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        searchlist.setVisible(false);
-
     }
 
 }

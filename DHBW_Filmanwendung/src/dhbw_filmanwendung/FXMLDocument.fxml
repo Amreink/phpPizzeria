@@ -77,34 +77,50 @@
                                                             <left>
                                                                 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
                                                                     <children>
-                                                                        <TitledPane fx:id="test" animated="false" collapsible="false" maxHeight="650.0" maxWidth="1.7976931348623157E308" minHeight="500.0" text="Cover" textFill="#0093ff">
-                                                                            <content>
-                                                                                <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-                                                                                    <children>
-                                                                                        <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                                                            <children>
-                                                                                                <ImageView fx:id="detailImage" pickOnBounds="true" preserveRatio="true">
-                                                                                                    <StackPane.margin>
-                                                                                                        <Insets top="10.0" />
-                                                                                                    </StackPane.margin>
-                                                                                                </ImageView>
-                                                                                            </children>
-                                                                                        </StackPane>
-                                                                                    </children>
-                                                                                    <padding>
-                                                                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                                                                    </padding>
-                                                                                </AnchorPane>
-                                                                            </content>
-                                                         <font>
-                                                            <Font name="System Bold" size="12.0" />
-                                                         </font>
-                                                                        </TitledPane>
+                                                      <FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="30.0">
+                                                         <children>
+                                                            <ImageView fx:id="imageRow1" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@icon/iris.png" />
+                                                               </image>
+                                                               <effect>
+                                                                  <ColorAdjust brightness="0.75" contrast="1.0" saturation="1.0" />
+                                                               </effect>
+                                                            </ImageView>
+                                                            <ImageView fx:id="imageRow2" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@icon/romantic6.png" />
+                                                               </image>
+                                                               <effect>
+                                                                  <ColorAdjust brightness="0.75" contrast="1.0" saturation="1.0" />
+                                                               </effect>
+                                                            </ImageView>
+                                                            <ImageView fx:id="imageRow3" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@icon/save-file.png" />
+                                                               </image>
+                                                               <effect>
+                                                                  <ColorAdjust brightness="0.75" contrast="1.0" saturation="1.0" />
+                                                               </effect>
+                                                            </ImageView>
+                                                         </children>
+                                                         <VBox.margin>
+                                                            <Insets />
+                                                         </VBox.margin>
+                                                      </FlowPane>
+                                                                            <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0">
+                                                                                <children>
+                                                                                    <ImageView fx:id="detailImage" pickOnBounds="true" preserveRatio="true">
+                                                                                        <StackPane.margin>
+                                                                                            <Insets top="10.0" />
+                                                                                        </StackPane.margin>
+                                                                                    </ImageView>
+                                                                                </children>
+                                                                            </StackPane>
                                                                         <FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="50.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="0.0">
                                                                             <children>
-                                                                                <Button mnemonicParsing="false" text="Button" />
-                                                                                <Button mnemonicParsing="false" text="Button" />
-                                                                                <Button mnemonicParsing="false" text="Button" />
+                                                                                <Button mnemonicParsing="false" />
+                                                                                <Button mnemonicParsing="false" />
                                                                             </children>
                                                                             <VBox.margin>
                                                                                 <Insets top="5.0" />
@@ -113,6 +129,9 @@
                                                                     </children>
                                                                 </VBox>
                                                             </left>
+                                             <bottom>
+                                                <Separator prefWidth="200.0" BorderPane.alignment="CENTER" />
+                                             </bottom>
                                                         </BorderPane>
                                                     </children>
                                                 </StackPane>
@@ -136,7 +155,7 @@
                         </TabPane>
                     </center>
                 </BorderPane>
-                <ListView fx:id="searchlist" maxHeight="200.0" maxWidth="1.7976931348623157E308" onMouseClicked="#onSearchlistClick" prefHeight="0.0" prefWidth="0.0" styleClass="searchList" StackPane.alignment="TOP_CENTER">
+                <ListView fx:id="searchlist" maxHeight="200.0" maxWidth="1.7976931348623157E308" onMouseClicked="#onSearchlistClick" prefHeight="0.0" prefWidth="0.0" styleClass="searchList" visible="false" StackPane.alignment="TOP_CENTER">
                     <StackPane.margin>
                         <Insets left="10.0" right="10.0" top="36.0" />
                     </StackPane.margin>
