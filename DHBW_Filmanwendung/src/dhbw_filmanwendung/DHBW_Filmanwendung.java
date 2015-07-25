@@ -25,7 +25,9 @@ public class DHBW_Filmanwendung extends Application {
         scene.getStylesheets().add(getClass().getResource("css/main.css").toExternalForm());
 
         stage.setScene(scene);
-
+        stage.setMinHeight(840);
+        stage.setMaxHeight(840);
+        stage.setMinWidth(835);
         stage.setTitle("DHBW Filmanwendung");
         stage.show();
     }

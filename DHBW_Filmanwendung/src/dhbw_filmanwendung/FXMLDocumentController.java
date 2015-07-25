@@ -10,7 +10,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -34,10 +33,7 @@ public class FXMLDocumentController implements Initializable {
     MovieList movies = new MovieList();
     OMDB omdb = new OMDB();
 
-    Movie currentMovie;
-
-    private static Semaphore searchSemaphore = new Semaphore(1, true);
-    Thread searchThread;
+    private Movie currentMovie;
 
     @FXML
     private ListView searchlist;
@@ -47,8 +43,6 @@ public class FXMLDocumentController implements Initializable {
     private ImageView detailImage;
     @FXML
     private TextArea detailPlot;
-    @FXML
-    private TitledPane test;
     @FXML
     private TableView detailTable;
     @FXML
@@ -72,6 +66,24 @@ public class FXMLDocumentController implements Initializable {
         } else {
             searchlist.setItems(null);
             searchlist.setVisible(false);
+        }
+    }
+
+    @FXML
+    private void onFav() {
+        if (currentMovie != null) {
+            this.currentMovie.setFavourite(true);
+            movies.addMovie(this.currentMovie);
+            System.out.println(movies.getSize());
+        }
+    }
+
+    @FXML
+    private void onBookmark() {
+        if (currentMovie != null) {
+            this.currentMovie.setBookmark(true);
+            movies.addMovie(this.currentMovie);
+            System.out.println(movies.getSize());
         }
     }
 
@@ -106,8 +118,15 @@ public class FXMLDocumentController implements Initializable {
 
     private void loadMovie(String id) {
         String imageUrl = null;
+        Movie movie;
         try {
-            Movie movie = omdb.searchById(id);
+
+            movie = movies.getMovieById(id);
+
+            if (movie == null) {
+                movie = omdb.searchById(id);
+            }
+
             if (movie != null) {
 
                 currentMovie = movie;
@@ -151,23 +170,21 @@ public class FXMLDocumentController implements Initializable {
                 valueCol.setVisible(true);
                 detailTable.getColumns().setAll(nameCol, valueCol);
                 
-                if(movie.isLooked()){
-                    imageRow1.setEffect(null);
-                }
-                
-                if(movie.isFavourite()){
-                    imageRow2.setEffect(null);
-                }
-                
-                if(movie.isBookmark()){
-                    imageRow3.setEffect(null);
+                if (movie.isFavourite()) {
+                    imageRow2.setVisible(true);
+                } else {
+                    imageRow2.setVisible(false);
                 }
 
+                if (movie.isBookmark()) {
+                    imageRow3.setVisible(true);
+                } else {
+                    imageRow3.setVisible(false);
+                }
             }
         } catch (IOException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     @Override

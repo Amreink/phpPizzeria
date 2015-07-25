@@ -32,8 +32,15 @@ and open the template in the editor.
 
 .tab .tab-label { 
     -fx-text-fill: #0093ff;
-    /*-fx-font-weight: bold;*/
     -fx-font-size: 16px;
+}
+
+.tab:hover{
+    -fx-background-color: #64BFFF;
+}
+
+.tab .tab-label:hover{
+    -fx-text-fill: white;
 }
 
 .tab-pane *.tab-header-background {
@@ -64,12 +71,37 @@ and open the template in the editor.
 }
 
 .button{
-    -fx-background-color: #0093ff;
-    -fx-text-fill: white;
+    -fx-background-color: white;
+    -fx-text-fill: #0093ff;
 }
 
 .button:hover{
     -fx-background-color: #64BFFF;
+    -fx-text-fill: white;
+}
+
+.btnDetailFav{
+    -fx-background-image: url('../icon/social16.png');
+    -fx-background-size: 32 32 ;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:center;   
+    -fx-padding: 10 23 10 23;
+}
+
+.btnDetailFav:hover{
+    -fx-background-image: url('../icon/social16_1.png');
+}
+
+.btnDetailBookmark{
+    -fx-background-image: url('../icon/add139.png');
+    -fx-background-size: 32 32 ;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:center;   
+    -fx-padding: 10 23 10 23;
+}
+
+.btnDetailBookmark:hover{
+    -fx-background-image: url('../icon/add139_1.png');
 }
 
 .titled-pane > .title 
@@ -79,8 +111,9 @@ and open the template in the editor.
 }
 
 .titled-pane > .content{
-    -fx-background-color: white;
-    -fx-border-color: transparent;
+    -fx-border-insets: 0;
+    -fx-border-width: 1px;
+    -fx-border-color: #0093ff white #0093ff white;
 }
 
 .detailTxtArea{
@@ -91,8 +124,8 @@ and open the template in the editor.
     -fx-table-cell-border-color: transparent;
     -fx-table-header-border-color: transparent;
     -fx-border-insets: 0;
-    -fx-border-width: 1.5px;
-    -fx-border-color: #0093ff white #0093ff white;
+    -fx-border-width: 1px;
+    -fx-border-color: white;
 }
 
 .text-area{
@@ -108,10 +141,6 @@ and open the template in the editor.
 }
 
 .text-area .scroll-pane .content{
-    -fx-border-insets: 0;
-    -fx-border-width: 1.5px;
-    -fx-border-color: #0093ff white #0093ff white;
     -fx-focus-traversable: false;
     -fx-focus-color: transparent;
-
 }

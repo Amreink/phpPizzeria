@@ -11,7 +11,6 @@ import java.util.ArrayList;
  *
  * @author Artur
  */
-
 public class MovieList {
 
     public ArrayList movies = new ArrayList<Movie>();
@@ -37,7 +36,6 @@ public class MovieList {
     }
 
     // TODO Remove Methode ausprogrammieren
-    
     public int movieExists(Movie movie) {
         for (Object test : movies) {
             Movie test2 = (Movie) test;
@@ -59,5 +57,16 @@ public class MovieList {
             new_movie = (Movie) this.movies.get(index);
         }
         return new_movie;
+    }
+
+    public Movie getMovieById(String id) {
+        Movie new_movie;
+        for (Object object : movies) {
+            new_movie = (Movie) object;
+            if (new_movie.getId().equals(id)) {
+                return new_movie;
+            }
+        }
+        return null;
     }
 }
