@@ -32,7 +32,8 @@ and open the template in the editor.
 
 .tab .tab-label { 
     -fx-text-fill: #0093ff;
-    -fx-font-weight: bold;   
+    /*-fx-font-weight: bold;*/
+    -fx-font-size: 16px;
 }
 
 .tab-pane *.tab-header-background {
@@ -80,4 +81,37 @@ and open the template in the editor.
 .titled-pane > .content{
     -fx-background-color: white;
     -fx-border-color: transparent;
+}
+
+.detailTxtArea{
+    -fx-border-color:transparent;
+}
+
+.table-view {
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+    -fx-border-insets: 0;
+    -fx-border-width: 1.5px;
+    -fx-border-color: #0093ff white #0093ff white;
+}
+
+.text-area{
+    -fx-border-color:white;
+    -fx-focus-traversable: false;
+    -fx-focus-color: transparent;
+}
+
+.text-area .scroll-pane{
+    -fx-border-color:white;
+    -fx-focus-traversable: false;
+    -fx-focus-color: transparent;
+}
+
+.text-area .scroll-pane .content{
+    -fx-border-insets: 0;
+    -fx-border-width: 1.5px;
+    -fx-border-color: #0093ff white #0093ff white;
+    -fx-focus-traversable: false;
+    -fx-focus-color: transparent;
+
 }

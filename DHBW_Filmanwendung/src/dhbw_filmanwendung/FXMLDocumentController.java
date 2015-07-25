@@ -85,6 +85,7 @@ public class FXMLDocumentController implements Initializable {
         if (event.getClickCount() == 2) {
             Movie movie = (Movie) searchlist.getSelectionModel().getSelectedItem();
             if (movie != null) {
+                searchbar.setText(movie.getTitle());
                 loadMovie(movie.getId());
             }
         }
