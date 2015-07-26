@@ -104,6 +104,10 @@ and open the template in the editor.
     -fx-background-image: url('../icon/add139_1.png');
 }
 
+.titled-pane{
+    -fx-border-color: white;
+}
+
 .titled-pane > .title 
 {
     -fx-background-color: white;
@@ -111,18 +115,19 @@ and open the template in the editor.
 }
 
 .titled-pane > .content{
+    -fx-background-color: white;
     -fx-border-insets: 0;
     -fx-border-width: 1px;
     -fx-border-color: #0093ff white #0093ff white;
 }
 
 .detailTxtArea{
-    -fx-border-color:transparent;
+    -fx-border-color:white;
 }
 
 .table-view {
-    -fx-table-cell-border-color: transparent;
-    -fx-table-header-border-color: transparent;
+    -fx-table-cell-border-color: white;
+    -fx-table-header-border-color: white;
     -fx-border-insets: 0;
     -fx-border-width: 1px;
     -fx-border-color: white;

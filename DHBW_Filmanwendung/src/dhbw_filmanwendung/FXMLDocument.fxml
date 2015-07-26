@@ -11,7 +11,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dhbw_filmanwendung.FXMLDocumentController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dhbw_filmanwendung.FXMLDocumentController">
     <children>
         <StackPane fx:id="stackpane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -66,7 +66,7 @@
                                                                                     <children>
                                                                                         <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                                             <children>
-                                                                                                <TableView fx:id="detailTable" focusTraversable="false" maxHeight="200.0" maxWidth="1.7976931348623157E308" />
+                                                                                                <TableView fx:id="detailTable" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
                                                                                             </children>
                                                                                         </StackPane>
                                                                                     </children>
@@ -85,7 +85,7 @@
                                                                                     <children>
                                                                                         <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                                             <children>
-                                                                                                <TextArea fx:id="detailPlot" editable="false" focusTraversable="false" prefHeight="200.0" prefWidth="200.0" styleClass="detailTxtArea" wrapText="true" />
+                                                                                                <TextArea fx:id="detailPlot" editable="false" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="detailTxtArea" wrapText="true" />
                                                                                             </children>
                                                                                         </StackPane>
                                                                                     </children>
@@ -119,7 +119,7 @@
                                                                         </ImageView>
                                                                     </children>
                                                                 </FlowPane>
-                                                                <FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="50.0" maxHeight="150.0" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1">
+                                                                <FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="50.0" maxHeight="200.0" maxWidth="1.7976931348623157E308" prefHeight="200.0" GridPane.columnIndex="1">
                                                                     <children>
                                                                         <Button mnemonicParsing="false" onAction="#onBookmark" styleClass="btnDetailBookmark" />
                                                                         <Button mnemonicParsing="false" onAction="#onFav" styleClass="btnDetailFav" />

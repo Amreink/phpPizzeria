@@ -26,8 +26,8 @@ public class DHBW_Filmanwendung extends Application {
 
         stage.setScene(scene);
         stage.setMinHeight(840);
-        stage.setMaxHeight(840);
-        stage.setMinWidth(835);
+       // stage.setMaxHeight(840);
+        stage.setMinWidth(1300);
         stage.setTitle("DHBW Filmanwendung");
         stage.show();
     }
