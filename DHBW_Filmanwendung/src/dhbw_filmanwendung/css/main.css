@@ -131,21 +131,26 @@ and open the template in the editor.
     -fx-border-insets: 0;
     -fx-border-width: 1px;
     -fx-border-color: white;
+    -fx-background-color: white;
 }
 
 .text-area{
+    -fx-background-color: white;
     -fx-border-color:white;
     -fx-focus-traversable: false;
-    -fx-focus-color: transparent;
+    -fx-focus-color: white;
 }
 
 .text-area .scroll-pane{
+    -fx-background-color: white;
     -fx-border-color:white;
     -fx-focus-traversable: false;
-    -fx-focus-color: transparent;
+    -fx-focus-color: white;
 }
 
 .text-area .scroll-pane .content{
+    -fx-background-color: white;
+    -fx-border-color: white;
     -fx-focus-traversable: false;
-    -fx-focus-color: transparent;
+    -fx-focus-color: white;
 }
