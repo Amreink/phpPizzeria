@@ -22,7 +22,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
+
 
 /**
  *
@@ -53,6 +54,9 @@ public class FXMLDocumentController implements Initializable {
     private ImageView imageRow2;
     @FXML
     private ImageView imageRow3;
+    
+    @FXML
+    private StackPane imagePane; 
 
     @FXML
     private void onSearch() {
@@ -189,6 +193,10 @@ public class FXMLDocumentController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        detailImage.fitHeightProperty().bind(imagePane.heightProperty());
+        detailImage.fitWidthProperty().bind(imagePane.widthProperty());
+        
     }
 
 }

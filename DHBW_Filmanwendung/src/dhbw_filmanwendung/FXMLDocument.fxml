@@ -11,7 +11,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dhbw_filmanwendung.FXMLDocumentController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dhbw_filmanwendung.FXMLDocumentController">
     <children>
         <StackPane fx:id="stackpane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -41,20 +41,19 @@
                                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                             </columnConstraints>
                                                             <rowConstraints>
-                                                                <RowConstraints maxHeight="354.0" minHeight="10.0" prefHeight="55.0" vgrow="SOMETIMES" />
-                                                                <RowConstraints maxHeight="672.0" minHeight="10.0" prefHeight="662.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints maxHeight="100.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                                                                <RowConstraints maxHeight="1.7976931348623157E308" vgrow="SOMETIMES" />
                                                             </rowConstraints>
                                                             <children>
                                                                 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                                                                     <children>
-                                                                        <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0">
+                                                                        <StackPane fx:id="imagePane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                                                                             <children>
-                                                                                <ImageView fx:id="detailImage" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
-                                                                                    <StackPane.margin>
-                                                                                        <Insets top="10.0" />
-                                                                                    </StackPane.margin>
-                                                                                </ImageView>
+                                                                                <ImageView fx:id="detailImage" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" />
                                                                             </children>
+                                                         <VBox.margin>
+                                                            <Insets right="10.0" />
+                                                         </VBox.margin>
                                                                         </StackPane>
                                                                     </children>
                                                                 </VBox>
@@ -79,7 +78,7 @@
                                                                                 <Insets />
                                                                             </VBox.margin>
                                                                         </TitledPane>
-                                                                        <TitledPane animated="false" collapsible="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="320.0" text="Beschreibung" textFill="#0093ff">
+                                                                        <TitledPane animated="false" collapsible="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Beschreibung" textFill="#0093ff">
                                                                             <content>
                                                                                 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                                                                                     <children>
