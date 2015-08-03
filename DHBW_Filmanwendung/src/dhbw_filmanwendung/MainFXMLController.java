@@ -15,21 +15,33 @@ import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.Group;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-
+import javafx.scene.text.Text;
+import javafx.scene.web.PopupFeatures;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.util.Callback;
 
 /**
  *
  * @author Artur
  */
-public class FXMLDocumentController implements Initializable {
+public class MainFXMLController implements Initializable {
 
     MovieList movies = new MovieList();
     OMDB omdb = new OMDB();
@@ -54,26 +66,67 @@ public class FXMLDocumentController implements Initializable {
     private ImageView imageRow2;
     @FXML
     private ImageView imageRow3;
-    
     @FXML
-    private StackPane imagePane; 
+    private StackPane imagePane;
+    @FXML
+    private Button btnDetailPlay;
+    @FXML
+    private WebView webView;
+
+    @FXML
+    private void onPlay() throws IOException {
+
+        Stage trailerStage = new Stage();
+
+        Scene scene = new Scene(new Group());
+        VBox root = new VBox();
+        root.setAlignment(Pos.CENTER);
+        root.autosize();
+        final WebView browser = new WebView();
+        final WebEngine webEngine = browser.getEngine();
+
+        webEngine.load("http://www.imdb.com/video/imdb/vi996454425/imdb/embed?autoplay=false");
+
+        root.getChildren().addAll(browser);
+        scene.setRoot(root);
+
+        trailerStage.setScene(scene);
+        trailerStage.setMinHeight(500);
+        trailerStage.setMinWidth(1000);
+
+        trailerStage.getIcons().add(new Image(getClass().getResourceAsStream("icon/youtube1_1.png")));
+        trailerStage.setTitle("DHBW Filmanwendung");
+
+        trailerStage.show();
+//        
+//        WebEngine webEngine = webView.getEngine();  
+//    webEngine.load("http://blog.axxg.de");
+
+    }
 
     @FXML
     private void onSearch() {
         if (!searchbar.getText().isEmpty()) {
-            Platform.runLater(new Runnable() {
+            new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    showResults(searchbar.getText());
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            showResults(searchbar.getText());
+                        }
+                    });
                 }
-            });
+            }).start();
         } else {
             searchlist.setItems(null);
             searchlist.setVisible(false);
         }
+
     }
 
     @FXML
+
     private void onFav() {
         if (currentMovie != null) {
             this.currentMovie.setFavourite(true);
@@ -97,7 +150,8 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    private void onSearchlistClick(MouseEvent event) {
+    private void onSearchlistClick(MouseEvent event
+    ) {
         if (event.getClickCount() == 2) {
             Movie movie = (Movie) searchlist.getSelectionModel().getSelectedItem();
             if (movie != null) {
@@ -116,7 +170,7 @@ public class FXMLDocumentController implements Initializable {
                 searchlist.setItems(results_list);
             };
         } catch (IOException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -173,7 +227,10 @@ public class FXMLDocumentController implements Initializable {
                 valueCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("value"));
                 valueCol.setVisible(true);
                 detailTable.getColumns().setAll(nameCol, valueCol);
-                
+
+                detailImage.fitHeightProperty().bind(imagePane.heightProperty());
+                detailImage.fitWidthProperty().bind(imagePane.widthProperty());
+
                 if (movie.isFavourite()) {
                     imageRow2.setVisible(true);
                 } else {
@@ -187,16 +244,13 @@ public class FXMLDocumentController implements Initializable {
                 }
             }
         } catch (IOException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-        detailImage.fitHeightProperty().bind(imagePane.heightProperty());
-        detailImage.fitWidthProperty().bind(imagePane.widthProperty());
-        
+
     }
 
 }
