@@ -161,9 +161,6 @@
                     <effect>
                         <DropShadow blurType="ONE_PASS_BOX" color="#00000059" height="35.0" offsetY="1.0" radius="18.25" width="40.0" />
                     </effect>
-                    <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                    </cursor>
                     <opaqueInsets>
                         <Insets />
                     </opaqueInsets>

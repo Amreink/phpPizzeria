@@ -132,6 +132,7 @@ public class MainFXMLController implements Initializable {
             this.currentMovie.setFavourite(true);
             movies.addMovie(this.currentMovie);
             System.out.println(movies.getSize());
+            loadMovie(currentMovie.getId());
         }
     }
 
@@ -141,6 +142,7 @@ public class MainFXMLController implements Initializable {
             this.currentMovie.setBookmark(true);
             movies.addMovie(this.currentMovie);
             System.out.println(movies.getSize());
+            loadMovie(currentMovie.getId());
         }
     }
 
