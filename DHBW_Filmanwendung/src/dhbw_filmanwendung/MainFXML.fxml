@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.*?>
 <?import java.net.*?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dhbw_filmanwendung.MainFXMLController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dhbw_filmanwendung.MainFXMLController">
     <stylesheets>
         <URL value="@css/mainFXML.css" />
     </stylesheets>
@@ -127,7 +127,7 @@
                                                                     <children>
                                                                         <Button mnemonicParsing="false" onAction="#onBookmark" styleClass="btnDetailBookmark" />
                                                                         <Button mnemonicParsing="false" onAction="#onFav" styleClass="btnDetailFav" />
-                                                      <Button fx:id="btnDetailPlay" mnemonicParsing="false" onAction="#onPlay" styleClass="btnDetailPlay" />
+                                                                        <Button fx:id="btnDetailPlay" mnemonicParsing="false" onAction="#onPlay" styleClass="btnDetailPlay" />
                                                                     </children>
                                                                 </FlowPane>
                                                             </children>
@@ -139,6 +139,11 @@
                                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                             </padding>
                                         </AnchorPane>
+                                    </content>
+                                </Tab>
+                                <Tab styleClass="tabButton" text="Favoriten">
+                                    <content>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                                     </content>
                                 </Tab>
                                 <Tab styleClass="tabButton" text="Gemerkte FIlme">

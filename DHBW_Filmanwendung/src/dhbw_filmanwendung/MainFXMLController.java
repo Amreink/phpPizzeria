@@ -91,9 +91,6 @@ public class MainFXMLController implements Initializable {
         trailerStage.setTitle("DHBW Filmanwendung");
 
         trailerStage.show();
-//        
-//        WebEngine webEngine = webView.getEngine();  
-//    webEngine.load("http://blog.axxg.de");
 
     }
 
@@ -223,9 +220,6 @@ public class MainFXMLController implements Initializable {
                 valueCol.setVisible(true);
                 detailTable.getColumns().setAll(nameCol, valueCol);
 
-                detailImage.fitHeightProperty().bind(imagePane.heightProperty());
-                detailImage.fitWidthProperty().bind(imagePane.widthProperty());
-
                 if (movie.isFavourite()) {
                     imageRow2.setVisible(true);
                 } else {
@@ -245,6 +239,8 @@ public class MainFXMLController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        detailImage.fitHeightProperty().bind(imagePane.heightProperty());
+        detailImage.fitWidthProperty().bind(imagePane.widthProperty());
 
     }
 
