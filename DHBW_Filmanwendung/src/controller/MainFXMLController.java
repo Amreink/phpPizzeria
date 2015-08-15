@@ -3,8 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dhbw_filmanwendung;
+package controller;
 
+import classes.Movie;
+import classes.MovieList;
+import classes.OMDB;
+import classes.SQLite;
+import classes.TableRow;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -38,6 +43,9 @@ public class MainFXMLController implements Initializable {
 
     MovieList movies = new MovieList();
     OMDB omdb = new OMDB();
+    SQLite sql = new SQLite();
+
+    String user = null;
 
     private Movie currentMovie;
 
@@ -65,9 +73,13 @@ public class MainFXMLController implements Initializable {
     private Button btnDetailPlay;
     @FXML
     private WebView webView;
+    @FXML
+    private Label lblWelcome;
 
     @FXML
     private void onPlay() throws IOException {
+
+        System.out.println(user);
 
         Stage trailerStage = new Stage();
 
@@ -87,7 +99,7 @@ public class MainFXMLController implements Initializable {
         trailerStage.setMinHeight(500);
         trailerStage.setMinWidth(1000);
 
-        trailerStage.getIcons().add(new Image(getClass().getResourceAsStream("icon/youtube1_1.png")));
+        trailerStage.getIcons().add(new Image(getClass().getResourceAsStream("/icon/youtube1_1.png")));
         trailerStage.setTitle("DHBW Filmanwendung");
 
         trailerStage.show();
@@ -116,13 +128,13 @@ public class MainFXMLController implements Initializable {
     }
 
     @FXML
-
     private void onFav() {
         if (currentMovie != null) {
             this.currentMovie.setFavourite(true);
             movies.addMovie(this.currentMovie);
             System.out.println(movies.getSize());
             loadMovie(currentMovie.getId());
+            sql.insert("movie", currentMovie.getMap());
         }
     }
 
@@ -239,9 +251,15 @@ public class MainFXMLController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        detailImage.fitHeightProperty().bind(imagePane.heightProperty());
-        detailImage.fitWidthProperty().bind(imagePane.widthProperty());
+        //detailImage.fitHeightProperty().bind(imagePane.heightProperty());
+        //detailImage.fitWidthProperty().bind(imagePane.widthProperty());
 
     }
 
+    public void datenuebergabe(String user) {
+
+        lblWelcome.setText("Willkommen " + user);
+        this.user = user;
+
+    }
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dhbw_filmanwendung;
+package classes;
 
 import java.util.ArrayList;
 
@@ -17,7 +17,7 @@ public class MovieList {
 
     private static MovieList instance = null;
 
-    protected MovieList() {
+    public MovieList() {
         // Exists only to defeat instantiation.
     }
 

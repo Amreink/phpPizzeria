@@ -13,9 +13,9 @@
 <?import javafx.scene.layout.*?>
 <?import java.net.*?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dhbw_filmanwendung.MainFXMLController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainFXMLController">
     <stylesheets>
-        <URL value="@css/mainFXML.css" />
+        <URL value="@../css/mainFXML.css" />
     </stylesheets>
     <children>
         <StackPane fx:id="stackpane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -70,7 +70,7 @@
                                                                                     <children>
                                                                                         <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                                                             <children>
-                                                                                                <TableView fx:id="detailTable" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+                                                                                                <TableView fx:id="detailTable" focusTraversable="false" maxHeight="200.0" maxWidth="1.7976931348623157E308" />
                                                                                             </children>
                                                                                         </StackPane>
                                                                                     </children>
@@ -104,21 +104,29 @@
                                                                         </TitledPane>
                                                                     </children>
                                                                 </VBox>
-                                                                <FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="100.0" maxHeight="150.0">
+                                                                <FlowPane alignment="CENTER_LEFT" hgap="100.0" maxHeight="150.0">
                                                                     <children>
+                                                      <Label fx:id="lblWelcome" text="Willkommen" textFill="#0093ff">
+                                                         <FlowPane.margin>
+                                                            <Insets left="20.0" />
+                                                         </FlowPane.margin>
+                                                         <font>
+                                                            <Font name="System Italic" size="16.0" />
+                                                         </font>
+                                                      </Label>
                                                                         <ImageView fx:id="imageRow1" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" visible="false">
                                                                             <image>
-                                                                                <Image url="@icon/iris.png" />
+                                                                                <Image url="@../icon/iris.png" />
                                                                             </image>
                                                                         </ImageView>
                                                                         <ImageView fx:id="imageRow2" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" visible="false">
                                                                             <image>
-                                                                                <Image url="@icon/romantic6.png" />
+                                                                                <Image url="@../icon/romantic6.png" />
                                                                             </image>
                                                                         </ImageView>
                                                                         <ImageView fx:id="imageRow3" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" visible="false">
                                                                             <image>
-                                                                                <Image url="@icon/save-file.png" />
+                                                                                <Image url="@../icon/save-file.png" />
                                                                             </image>
                                                                         </ImageView>
                                                                     </children>

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dhbw_filmanwendung;
+package classes;
 
 import com.google.gson.Gson;
 import java.io.IOException;
@@ -22,7 +22,7 @@ public class OMDB {
 
     private static OMDB instance = null;
 
-    protected OMDB() {
+    public OMDB() {
         // Exists only to defeat instantiation.
     }
 
@@ -50,7 +50,8 @@ public class OMDB {
     public Movie searchById(String id) throws MalformedURLException, IOException {
 
         String sURL = "http://www.omdbapi.com/?i=" + id + "&plot=full";
-        System.out.println(sURL);
+        //String sURL = "http://www.omdbapi.com/?i=" + id;
+        //System.out.println(sURL);
 
         URL url = new URL(sURL);
         HttpURLConnection request = (HttpURLConnection) url.openConnection();

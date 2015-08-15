@@ -5,6 +5,7 @@
  */
 package dhbw_filmanwendung;
 
+import classes.SQLite;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,8 +21,7 @@ public class DHBW_Filmanwendung extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("LoginFXML.fxml"));
-
+        Parent root = FXMLLoader.load(getClass().getResource("/view/LoginFXML.fxml"));
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
@@ -29,10 +29,13 @@ public class DHBW_Filmanwendung extends Application {
         // stage.setMaxHeight(840);
         stage.setMinWidth(1300);
 
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("icon/youtube1_1.png")));
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/icon/youtube1_1.png")));
         stage.setTitle("DHBW Filmanwendung");
 
         stage.show();
+
+        new SQLite().createTable();
+
     }
 
     /**
