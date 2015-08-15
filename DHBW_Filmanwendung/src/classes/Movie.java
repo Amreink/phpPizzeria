@@ -24,6 +24,7 @@ public class Movie {
     private String Released;
     private String Plot;
     private String imdbRating;
+    private String Actors;
     private boolean favourite;
     private boolean bookmark;
     private boolean looked;
@@ -130,6 +131,22 @@ public class Movie {
 
     public void setLooked(boolean looked) {
         this.looked = looked;
+    }
+
+    public String getImdbID() {
+        return imdbID;
+    }
+
+    public void setImdbID(String imdbID) {
+        this.imdbID = imdbID;
+    }
+
+    public String getActors() {
+        return Actors;
+    }
+
+    public void setActors(String Actors) {
+        this.Actors = Actors;
     }
 
     @Override

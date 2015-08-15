@@ -224,6 +224,7 @@ public class MainFXMLController implements Initializable {
                 infoList.add(new TableRow("Titel", movie.getTitle()));
                 infoList.add(new TableRow("Dauer", movie.getRuntime()));
                 infoList.add(new TableRow("Regiseur", movie.getDirector()));
+                infoList.add(new TableRow("Schauspieler", movie.getActors()));
                 infoList.add(new TableRow("Genre", movie.getGenre()));
                 infoList.add(new TableRow("Veröffentlicht", movie.getReleased()));
                 infoList.add(new TableRow("Jahr", movie.getYear()));
@@ -268,7 +269,7 @@ public class MainFXMLController implements Initializable {
 
     public void datenuebergabe(String user) {
 
-        lblWelcome.setText("Willkommen " + user);
+        lblWelcome.setText("Hallo " + user);
         this.user = user;
 
     }
