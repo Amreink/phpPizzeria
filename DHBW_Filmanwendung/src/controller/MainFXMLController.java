@@ -116,12 +116,16 @@ public class MainFXMLController implements Initializable {
                             String year = "";
                             String title = "";
                             String[] res = searchbar.getText().split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
-                            for (String t : res) {
-                                if (t.matches(".*\\d.*")) {
-                                    year = t;
-                                } else {
-                                    title = t;
+                            if (res.length > 1) {
+                                for (String t : res) {
+                                    if (t.matches(".*\\d.*")) {
+                                        year = t;
+                                    } else {
+                                        title = t;
+                                    }
                                 }
+                            }else{
+                                title = res[0];
                             }
                             showResults(title, year);
                         }
