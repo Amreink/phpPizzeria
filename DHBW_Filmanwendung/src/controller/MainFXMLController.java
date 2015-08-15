@@ -79,8 +79,6 @@ public class MainFXMLController implements Initializable {
     @FXML
     private void onPlay() throws IOException {
 
-        System.out.println(user);
-
         Stage trailerStage = new Stage();
 
         Scene scene = new Scene(new Group());
@@ -132,7 +130,6 @@ public class MainFXMLController implements Initializable {
         if (currentMovie != null) {
             this.currentMovie.setFavourite(true);
             movies.addMovie(this.currentMovie);
-            System.out.println(movies.getSize());
             loadMovie(currentMovie.getId());
             sql.insert("movie", currentMovie.getMap());
         }
@@ -143,7 +140,6 @@ public class MainFXMLController implements Initializable {
         if (currentMovie != null) {
             this.currentMovie.setBookmark(true);
             movies.addMovie(this.currentMovie);
-            System.out.println(movies.getSize());
             loadMovie(currentMovie.getId());
         }
     }

@@ -85,7 +85,6 @@ public class SQLite {
             String col = "";
             String values = "";
             for (Map.Entry<String, String> entry : map.entrySet()) {
-                System.out.println(entry.getKey() + "/" + entry.getValue());
                 String value = entry.getValue().replaceAll("'", "");
                 if (value != null) {
                     if (col != "") {
