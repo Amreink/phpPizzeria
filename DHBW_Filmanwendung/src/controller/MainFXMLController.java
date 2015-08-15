@@ -113,7 +113,17 @@ public class MainFXMLController implements Initializable {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-                            showResults(searchbar.getText());
+                            String year = "";
+                            String title = "";
+                            String[] res = searchbar.getText().split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
+                            for (String t : res) {
+                                if (t.matches(".*\\d.*")) {
+                                    year = t;
+                                } else {
+                                    title = t;
+                                }
+                            }
+                            showResults(title, year);
                         }
                     });
                 }
@@ -161,9 +171,9 @@ public class MainFXMLController implements Initializable {
         }
     }
 
-    private void showResults(String title) {
+    private void showResults(String title, String year) {
         try {
-            ArrayList<Movie> results_array = omdb.searchByTitle(title);
+            ArrayList<Movie> results_array = omdb.searchByTitle(title, year);
             if (results_array != null) {
                 searchlist.setVisible(true);
                 ObservableList<Movie> results_list = FXCollections.observableList(results_array);

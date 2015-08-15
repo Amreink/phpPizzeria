@@ -33,11 +33,11 @@ public class OMDB {
         return instance;
     }
 
-    public ArrayList searchByTitle(String movie_title) throws MalformedURLException, IOException {
+    public ArrayList searchByTitle(String movie_title, String year) throws MalformedURLException, IOException {
 
         String movieReplace = movie_title.replace(" ", "%");
 
-        String sURL = "http://www.omdbapi.com/?s=" + movieReplace;
+        String sURL = "http://www.omdbapi.com/?s=" + movieReplace + "&y=" + year;
 
         URL url = new URL(sURL);
         HttpURLConnection request = (HttpURLConnection) url.openConnection();
@@ -50,8 +50,6 @@ public class OMDB {
     public Movie searchById(String id) throws MalformedURLException, IOException {
 
         String sURL = "http://www.omdbapi.com/?i=" + id + "&plot=full";
-        //String sURL = "http://www.omdbapi.com/?i=" + id;
-        //System.out.println(sURL);
 
         URL url = new URL(sURL);
         HttpURLConnection request = (HttpURLConnection) url.openConnection();
