@@ -8,6 +8,7 @@ package controller;
 import classes.SQLite;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -26,17 +27,41 @@ public class RegistFXMLController implements Initializable {
     private TextField txtUserName;
     @FXML
     private Button btnRegist;
+    @FXML
+    private Button btnClose;
 
     @FXML
     private void regist() {
-        System.out.println(txtUserName.getText());
-        
-        Map<String, String> map = new HashMap<>();
-        map.put("username", txtUserName.getText());
-        
-        SQLite sql = new SQLite();
-        sql.insert("User", map);
-        Stage stage = (Stage) btnRegist.getScene().getWindow();
+        if (!txtUserName.getText().isEmpty()) {
+            SQLite sql = new SQLite();
+
+            List rs = sql.select("User", "Username", "Username = '" + txtUserName.getText() + "'");
+            String username = null;
+            for (Object entrySet : rs) {
+                Map<String, Object> row = (Map<String, Object>) entrySet;
+                for (Map.Entry<String, Object> entry : row.entrySet()) {
+                    username = (String) entry.getValue();
+                }
+            }
+
+            System.out.println(username);
+
+            if (txtUserName.getText() != null && username != txtUserName.getText()) {
+                Map<String, String> map = new HashMap<>();
+                map.put("username", txtUserName.getText());
+
+                sql.insert("User", map);
+                Stage stage = (Stage) btnRegist.getScene().getWindow();
+                stage.close();
+            } else {
+                txtUserName.setText("Benutzername ist schon vergeben!");
+            }
+        }
+    }
+
+    @FXML
+    private void close() {
+        Stage stage = (Stage) btnClose.getScene().getWindow();
         stage.close();
     }
 

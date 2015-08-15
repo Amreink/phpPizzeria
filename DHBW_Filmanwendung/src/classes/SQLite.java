@@ -67,8 +67,8 @@ public class SQLite {
 
             //Create User Table
             sql = "CREATE TABLE IF NOT EXISTS User("
-                    + "UserID INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,"
-                    + "Username char(200) UNIQUE"
+                    + "UserID INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,"
+                    + "Username char(200) NOT NULL UNIQUE"
                     + ");";
             stmt.executeUpdate(sql);
 

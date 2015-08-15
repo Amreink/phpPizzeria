@@ -25,6 +25,7 @@ import javafx.stage.Stage;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
+import javafx.stage.StageStyle;
 
 /**
  * FXML Controller class
@@ -94,7 +95,7 @@ public class LoginFXMLController implements Initializable {
         Scene scene = new Scene(root);
 
         stage.initModality(Modality.APPLICATION_MODAL);
-        //stage.initStyle(StageStyle.TRANSPARENT);
+        stage.initStyle(StageStyle.TRANSPARENT);
         stage.setScene(scene);
         stage.setTitle("Registrierung");
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/icon/youtube1_1.png")));
