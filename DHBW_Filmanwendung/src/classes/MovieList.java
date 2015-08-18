@@ -34,7 +34,7 @@ public class MovieList {
         }
         return false;
     }
-
+    
     // TODO Remove Methode ausprogrammieren
     public int movieExists(Movie movie) {
         for (Object test : movies) {

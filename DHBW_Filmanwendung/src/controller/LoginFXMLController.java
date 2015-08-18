@@ -88,6 +88,11 @@ public class LoginFXMLController implements Initializable {
     }
 
     @FXML
+    public void Feldleeren() {
+        txtLogin.setText("");
+    }
+
+    @FXML
     public void Regist() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/RegistFXML.fxml"));
 

@@ -39,7 +39,7 @@
                         </Label>
                         <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                            <children>
-                              <TextField fx:id="txtLogin" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="500.0" promptText="Benutzername" />
+                              <TextField fx:id="txtLogin" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#Feldleeren" prefWidth="500.0" promptText="Benutzername" />
                               <Button fx:id="btnLogin" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#login" text="Login &gt;">
                                  <cursor>
                                     <Cursor fx:constant="HAND" />

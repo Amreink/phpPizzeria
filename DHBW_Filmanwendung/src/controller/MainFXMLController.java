@@ -146,19 +146,31 @@ public class MainFXMLController implements Initializable {
     @FXML
     private void onFav() {
         if (currentMovie != null) {
-            this.currentMovie.setFavourite(true);
-            movies.addMovie(this.currentMovie);
-            loadMovie(currentMovie.getId());
-            //sql.insert("movie", currentMovie.getMap());
+            if (currentMovie.isFavourite()) {
+                Movie movie2 = movies.getMovieByObject(currentMovie);
+                movie2.setFavourite(false);
+                loadMovie(currentMovie.getId());
+            } else {
+                this.currentMovie.setFavourite(true);
+                movies.addMovie(this.currentMovie);
+                loadMovie(currentMovie.getId());
+                //sql.insert("movie", currentMovie.getMap());
+            }
         }
     }
 
     @FXML
     private void onBookmark() {
         if (currentMovie != null) {
-            this.currentMovie.setBookmark(true);
-            movies.addMovie(this.currentMovie);
-            loadMovie(currentMovie.getId());
+            if (currentMovie.isBookmark()) {
+                Movie movie3 = movies.getMovieByObject(currentMovie);
+                movie3.setBookmark(false);
+                loadMovie(currentMovie.getId());
+            } else {
+                this.currentMovie.setBookmark(true);
+                movies.addMovie(this.currentMovie);
+                loadMovie(currentMovie.getId());
+            }
         }
     }
 
