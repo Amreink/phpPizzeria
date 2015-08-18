@@ -7,6 +7,7 @@ package controller;
 
 import classes.SQLite;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,6 +60,11 @@ public class RegistFXMLController implements Initializable {
         }
     }
 
+    @FXML
+    public void Enterpress1() throws SQLException{
+        regist();
+    }
+    
     @FXML
     private void close() {
         Stage stage = (Stage) btnClose.getScene().getWindow();

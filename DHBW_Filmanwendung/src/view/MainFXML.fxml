@@ -34,7 +34,7 @@
                     <center>
                         <TabPane fx:id="tabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" side="BOTTOM" styleClass="tabPane" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
                             <tabs>
-                                <Tab styleClass="tabButton" text="Detail Ansicht">
+                                <Tab styleClass="tabButton" text="Detailansicht">
                                     <content>
                                         <AnchorPane>
                                             <children>
@@ -64,7 +64,7 @@
                                                                 </VBox>
                                                                 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                                                                     <children>
-                                                                        <TitledPane animated="false" collapsible="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Film Informationen" textFill="#0093ff">
+                                                                        <TitledPane animated="false" collapsible="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Informationen" textFill="#0093ff">
                                                                             <content>
                                                                                 <AnchorPane>
                                                                                     <children>
@@ -177,9 +177,8 @@
                                                    <children>
                                                       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="100.0" StackPane.alignment="CENTER">
                                                          <children>
-                                                            <Button mnemonicParsing="false" text="Button" />
-                                                            <Button mnemonicParsing="false" text="Button" />
-                                                            <Button mnemonicParsing="false" text="Button" />
+                                                            <Button mnemonicParsing="false" />
+                                                            <Button mnemonicParsing="false" />
                                                          </children>
                                                       </VBox>
                                                    </children>
@@ -194,7 +193,7 @@
                                  </padding></AnchorPane>
                                     </content>
                                 </Tab>
-                                <Tab onSelectionChanged="#loadBookmarks" styleClass="tabButton" text="Gemerkte FIlme">
+                                <Tab onSelectionChanged="#loadBookmarks" styleClass="tabButton" text="Merkliste">
                                     <content>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                             <padding>
@@ -214,16 +213,15 @@
                                              <children>
                                                 <StackPane prefHeight="150.0" prefWidth="200.0">
                                                    <children>
-                                                      <TableView prefHeight="200.0" prefWidth="200.0" />
+                                                      <TableView fx:id="bookmarkTable" prefHeight="200.0" prefWidth="200.0" />
                                                    </children>
                                                 </StackPane>
                                                 <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1">
                                                    <children>
                                                       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="100.0">
                                                          <children>
-                                                            <Button mnemonicParsing="false" text="Button" />
-                                                            <Button mnemonicParsing="false" text="Button" />
-                                                            <Button mnemonicParsing="false" text="Button" />
+                                                            <Button mnemonicParsing="false" />
+                                                            <Button mnemonicParsing="false" />
                                                          </children>
                                                       </VBox>
                                                    </children>

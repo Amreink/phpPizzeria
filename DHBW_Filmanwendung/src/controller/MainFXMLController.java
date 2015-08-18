@@ -193,8 +193,6 @@ public class MainFXMLController implements Initializable {
         TableColumn genreCol = new TableColumn("Genre");
         TableColumn runCol = new TableColumn("Laufzeit");
         TableColumn ratingCol = new TableColumn("Rating");
-
-        imageCol.setCellValueFactory(new PropertyValueFactory<TableRow, ImageView>("Poster"));
         
         titleCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("Title"));
 
@@ -206,8 +204,9 @@ public class MainFXMLController implements Initializable {
                
         ratingCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("imdbRating"));
         
+        
+        favoriteTable.getColumns().setAll(titleCol, yearCol, genreCol, runCol, ratingCol);
         favoriteTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        favoriteTable.getColumns().setAll(imageCol, titleCol, yearCol, genreCol, runCol, ratingCol);
         favoriteTable.setItems(fav);
     }
 
@@ -241,6 +240,7 @@ public class MainFXMLController implements Initializable {
         ratingCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("imdbRating"));
         
         bookmarkTable.getColumns().setAll(titleCol, yearCol, genreCol, runCol, ratingCol);
+        bookmarkTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         bookmarkTable.setItems(bookmark);
     }
 

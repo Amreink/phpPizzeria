@@ -86,6 +86,11 @@ public class LoginFXMLController implements Initializable {
         }
 
     }
+    
+    @FXML
+    public void Enterpress() throws SQLException{
+        login();
+    }
 
     @FXML
     public void Feldleeren() {
