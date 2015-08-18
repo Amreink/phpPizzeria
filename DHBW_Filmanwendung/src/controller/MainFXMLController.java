@@ -176,30 +176,54 @@ public class MainFXMLController implements Initializable {
 
     @FXML
     private void loadFavorites() {
-        ObservableList fav = FXCollections.observableList(movies.movies);
+        
+        ArrayList<Movie> favorites = new ArrayList();
+        
+        for (Object element : movies.movies) {
+            Movie movie = (Movie) element;
+            if(movie.isFavourite() == true){
+                favorites.add(movie);
+            }
+        }
+
+        ObservableList fav = FXCollections.observableList(favorites);
+        TableColumn imageCol = new TableColumn("Poster");
         TableColumn titleCol = new TableColumn("Titel");
         TableColumn yearCol = new TableColumn("Jahr");
         TableColumn genreCol = new TableColumn("Genre");
         TableColumn runCol = new TableColumn("Laufzeit");
         TableColumn ratingCol = new TableColumn("Rating");
 
+        imageCol.setCellValueFactory(new PropertyValueFactory<TableRow, ImageView>("Poster"));
+        
         titleCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("Title"));
-        titleCol.setVisible(true);
+
         yearCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("Year"));
-        yearCol.setVisible(true);
+   
         genreCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("Genre"));
-        genreCol.setVisible(true);
+
         runCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("Runtime"));
-        runCol.setVisible(true);
-        ratingCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("imbdRating"));
-        ratingCol.setVisible(true);
-        favoriteTable.getColumns().setAll(titleCol, yearCol, genreCol, runCol, ratingCol);
+               
+        ratingCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("imdbRating"));
+        
+        favoriteTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        favoriteTable.getColumns().setAll(imageCol, titleCol, yearCol, genreCol, runCol, ratingCol);
         favoriteTable.setItems(fav);
     }
 
     @FXML
     private void loadBookmarks() {
-        ObservableList bookmark = FXCollections.observableList(movies.movies);
+        
+        ArrayList<Movie> bookmarks = new ArrayList();
+        
+        for (Object element : movies.movies) {
+            Movie movie = (Movie) element;
+            if(movie.isBookmark()== true){
+                bookmarks.add(movie);
+            }
+        }
+        
+        ObservableList bookmark = FXCollections.observableList(bookmarks);
         TableColumn titleCol = new TableColumn("Titel");
         TableColumn yearCol = new TableColumn("Jahr");
         TableColumn genreCol = new TableColumn("Genre");
@@ -207,15 +231,15 @@ public class MainFXMLController implements Initializable {
         TableColumn ratingCol = new TableColumn("Rating");
 
         titleCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("Title"));
-        titleCol.setVisible(true);
+
         yearCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("Year"));
-        yearCol.setVisible(true);
+   
         genreCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("Genre"));
-        genreCol.setVisible(true);
+
         runCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("Runtime"));
-        runCol.setVisible(true);
-        ratingCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("imbdRating"));
-        ratingCol.setVisible(true);
+               
+        ratingCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("imdbRating"));
+        
         bookmarkTable.getColumns().setAll(titleCol, yearCol, genreCol, runCol, ratingCol);
         bookmarkTable.setItems(bookmark);
     }

@@ -45,7 +45,7 @@ public class SQLite {
                     + "UserID int,"
                     + "MovieID char(20),"
                     + "MerkList bit,"
-                    + "FavList bit,"
+                    + "FavList bit,"     
                     + "UserRate char(3)"
                     + ");";
             stmt.executeUpdate(sql);
@@ -56,7 +56,7 @@ public class SQLite {
                     + "Title char(20),"
                     + "Year char(20),"
                     + "Runtime char(20),"
-                    + "Genre char(200),"
+                    + "Genre char(200),"  
                     + "Poster text,"
                     + "Director char(200),"
                     + "Released char(20),"
