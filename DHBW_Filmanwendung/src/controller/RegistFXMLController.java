@@ -47,7 +47,7 @@ public class RegistFXMLController implements Initializable {
 
             System.out.println(username);
 
-            if (txtUserName.getText() != null && username != txtUserName.getText()) {
+            if (!username.contentEquals(txtUserName.getText()) && txtUserName.getText() != null ) {
                 Map<String, String> map = new HashMap<>();
                 map.put("username", txtUserName.getText());
 
@@ -63,6 +63,11 @@ public class RegistFXMLController implements Initializable {
     @FXML
     public void Enterpress1() throws SQLException{
         regist();
+    }
+    
+    @FXML
+    public void Feldleeren1() {
+        txtUserName.setText("");
     }
     
     @FXML
