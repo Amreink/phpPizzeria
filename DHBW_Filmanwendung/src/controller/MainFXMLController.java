@@ -75,6 +75,10 @@ public class MainFXMLController implements Initializable {
     private WebView webView;
     @FXML
     private Label lblWelcome;
+    @FXML
+    private TableView favoriteTable;
+    @FXML
+    private TableView bookmarkTable;
 
     @FXML
     private void onPlay() throws IOException {
@@ -145,7 +149,7 @@ public class MainFXMLController implements Initializable {
             this.currentMovie.setFavourite(true);
             movies.addMovie(this.currentMovie);
             loadMovie(currentMovie.getId());
-            sql.insert("movie", currentMovie.getMap());
+            //sql.insert("movie", currentMovie.getMap());
         }
     }
 
@@ -158,6 +162,17 @@ public class MainFXMLController implements Initializable {
         }
     }
 
+    @FXML
+    private void loadFavorites(){
+            ObservableList fav = FXCollections.observableArrayList(movies.movies);
+            favoriteTable.setItems(fav);
+    }
+    
+    @FXML
+    private void loadBookmark(){
+        
+    }
+    
     @FXML
     private void onCenterDragOver() {
         searchlist.setVisible(false);
