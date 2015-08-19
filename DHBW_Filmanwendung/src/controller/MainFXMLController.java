@@ -173,6 +173,21 @@ public class MainFXMLController implements Initializable {
             }
         }
     }
+    
+//    @FXML
+//    private void onLooked() {
+//        if (currentMovie != null) {
+//            if (currentMovie.isLooked()) {
+//                Movie movie1 = movies.getMovieByObject(currentMovie);
+//                movie1.setLooked(false);
+//                loadMovie(currentMovie.getId());
+//            } else {
+//                this.currentMovie.setLooked(true);
+//                movies.addMovie(this.currentMovie);
+//                loadMovie(currentMovie.getId());
+//            }
+//        }
+//    }
 
     @FXML
     private void loadFavorites() {
@@ -187,25 +202,32 @@ public class MainFXMLController implements Initializable {
         }
 
         ObservableList fav = FXCollections.observableList(favorites);
-        TableColumn imageCol = new TableColumn("Poster");
         TableColumn titleCol = new TableColumn("Titel");
         TableColumn yearCol = new TableColumn("Jahr");
         TableColumn genreCol = new TableColumn("Genre");
         TableColumn runCol = new TableColumn("Laufzeit");
         TableColumn ratingCol = new TableColumn("Rating");
+        TableColumn lookedCol = new TableColumn("Gesehen");
         
         titleCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("Title"));
+        titleCol.setStyle("-fx-alignment: CENTER;");
 
         yearCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("Year"));
+        yearCol.setStyle("-fx-alignment: CENTER;");
    
         genreCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("Genre"));
+        genreCol.setStyle("-fx-alignment: CENTER;");
 
         runCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("Runtime"));
+        runCol.setStyle("-fx-alignment: CENTER;");
                
         ratingCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("imdbRating"));
+        ratingCol.setStyle("-fx-alignment: CENTER;");
         
+        lookedCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("looked"));
+        lookedCol.setStyle("-fx-alignment: CENTER;");
         
-        favoriteTable.getColumns().setAll(titleCol, yearCol, genreCol, runCol, ratingCol);
+        favoriteTable.getColumns().setAll(titleCol, yearCol, genreCol, runCol, ratingCol, lookedCol);
         favoriteTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         favoriteTable.setItems(fav);
     }
@@ -228,18 +250,27 @@ public class MainFXMLController implements Initializable {
         TableColumn genreCol = new TableColumn("Genre");
         TableColumn runCol = new TableColumn("Laufzeit");
         TableColumn ratingCol = new TableColumn("Rating");
+        TableColumn lookedCol = new TableColumn("Gesehen");
 
         titleCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("Title"));
+        titleCol.setStyle("-fx-alignment: CENTER;");
 
         yearCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("Year"));
+        yearCol.setStyle("-fx-alignment: CENTER;");
    
         genreCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("Genre"));
+        genreCol.setStyle("-fx-alignment: CENTER;");
 
         runCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("Runtime"));
+        runCol.setStyle("-fx-alignment: CENTER;");
                
         ratingCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("imdbRating"));
+        ratingCol.setStyle("-fx-alignment: CENTER;");
         
-        bookmarkTable.getColumns().setAll(titleCol, yearCol, genreCol, runCol, ratingCol);
+        lookedCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("looked"));
+        lookedCol.setStyle("-fx-alignment: CENTER;");
+        
+        bookmarkTable.getColumns().setAll(titleCol, yearCol, genreCol, runCol, ratingCol, lookedCol);
         bookmarkTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         bookmarkTable.setItems(bookmark);
     }
@@ -340,6 +371,12 @@ public class MainFXMLController implements Initializable {
                 } else {
                     imageRow3.setVisible(false);
                 }
+                
+//                if (movie.isLooked()) {
+//                    imageRow1.setVisible(true);
+//                } else {
+//                    imageRow1.setVisible(false);
+//                }
             }
         } catch (IOException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);

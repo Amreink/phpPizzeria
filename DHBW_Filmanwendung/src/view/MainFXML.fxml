@@ -177,8 +177,8 @@
                                                    <children>
                                                       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="100.0" StackPane.alignment="CENTER">
                                                          <children>
-                                                            <Button mnemonicParsing="false" />
-                                                            <Button mnemonicParsing="false" />
+                                                            <Button mnemonicParsing="false" styleClass="btnSeen" />
+                                                            <Button mnemonicParsing="false" styleClass="btnDelete" />
                                                          </children>
                                                       </VBox>
                                                    </children>
@@ -205,7 +205,7 @@
                                           <GridPane>
                                             <columnConstraints>
                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="75.0" prefWidth="75.0" />
+                                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="75.0" prefWidth="75.0" />
                                             </columnConstraints>
                                             <rowConstraints>
                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -220,8 +220,8 @@
                                                    <children>
                                                       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="100.0">
                                                          <children>
-                                                            <Button mnemonicParsing="false" />
-                                                            <Button mnemonicParsing="false" />
+                                                            <Button mnemonicParsing="false" styleClass="btnSeen" />
+                                                            <Button mnemonicParsing="false" styleClass="btnDelete" />
                                                          </children>
                                                       </VBox>
                                                    </children>
