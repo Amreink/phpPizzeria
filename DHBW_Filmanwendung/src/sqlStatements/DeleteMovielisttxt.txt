@@ -1,0 +1,3 @@
+DELETE
+FROM Movielist
+WHERE Spaltenname1 = 120 Or Spaltenname2 like 'String';

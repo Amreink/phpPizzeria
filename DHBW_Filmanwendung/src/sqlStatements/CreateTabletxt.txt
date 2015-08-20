@@ -1,0 +1,31 @@
+CREATE TABLE Movielist(
+ID int UNIQUE,
+UserID int,
+MovieID char(20),
+MerkList bit,
+FavList bit,
+UserRate char(3)
+);
+
+Create TABLE Movie(
+MovieID char(20) PRIMARY KEY,
+Title char(20),
+Myear char(20),
+Runtime char(20),
+Genre char(200),
+Poster text,
+Director char(200),
+Released char(20), /*Vllt als date?*/
+Plot text,
+ImdbRate char(3)
+);
+
+CREATE TABLE UserT(
+UserID int PRIMARY KEY,
+Username char(200)
+);
+
+ ALTER TABLE Movielist 
+ADD FOREIGN KEY (UserID) REFERENCES UserT(UserID); 
+ALTER TABLE Movielist
+ADD FOREIGN KEY (MovieID) REFERENCES Movie(MovieID);

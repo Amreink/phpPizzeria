@@ -1,0 +1,1 @@
+Select * From UserT T0 Inner Join MovieList T1 On T0.UserID = T1.UserID Inner Join Movie T2 On T1.MovieID = T2.MovieID

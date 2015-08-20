@@ -1,0 +1,1 @@
+SELECT T0.imdbID, T0.MerkList,T0.FavList,T0.UserRate,T1.* FROM MovieList T0 LEFT OUTER JOIN Movie T1 On T0.imdbID = T1.imdbID WHERE T0.UserID = '1'

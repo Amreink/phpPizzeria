@@ -1,0 +1,2 @@
+SELECT * FROM Movielist
+WHERE UserID LIKE 'char(200)' AND MovieID LIKE 'char(20)
