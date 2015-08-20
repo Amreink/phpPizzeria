@@ -10,6 +10,7 @@ import classes.MovieList;
 import classes.OMDB;
 import classes.SQLite;
 import classes.TableRow;
+import classes.User;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -45,7 +47,7 @@ public class MainFXMLController implements Initializable {
     OMDB omdb = new OMDB();
     SQLite sql = new SQLite();
 
-    String user = null;
+    User user = null;
 
     private Movie currentMovie;
 
@@ -173,7 +175,7 @@ public class MainFXMLController implements Initializable {
             }
         }
     }
-    
+
 //    @FXML
 //    private void onLooked() {
 //        if (currentMovie != null) {
@@ -188,45 +190,45 @@ public class MainFXMLController implements Initializable {
 //            }
 //        }
 //    }
-
     @FXML
     private void loadFavorites() {
-        
+
         ArrayList<Movie> favorites = new ArrayList();
-        
+
         for (Object element : movies.movies) {
             Movie movie = (Movie) element;
-            if(movie.isFavourite() == true){
+            if (movie.isFavourite() == true) {
                 favorites.add(movie);
             }
         }
 
         ObservableList fav = FXCollections.observableList(favorites);
+        
         TableColumn titleCol = new TableColumn("Titel");
         TableColumn yearCol = new TableColumn("Jahr");
         TableColumn genreCol = new TableColumn("Genre");
         TableColumn runCol = new TableColumn("Laufzeit");
         TableColumn ratingCol = new TableColumn("Rating");
         TableColumn lookedCol = new TableColumn("Gesehen");
-        
-        titleCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("Title"));
+
+        titleCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("Title"));
         titleCol.setStyle("-fx-alignment: CENTER;");
 
-        yearCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("Year"));
+        yearCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("Year"));
         yearCol.setStyle("-fx-alignment: CENTER;");
-   
-        genreCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("Genre"));
+
+        genreCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("Genre"));
         genreCol.setStyle("-fx-alignment: CENTER;");
 
-        runCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("Runtime"));
+        runCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("Runtime"));
         runCol.setStyle("-fx-alignment: CENTER;");
-               
-        ratingCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("imdbRating"));
+
+        ratingCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("imdbRating"));
         ratingCol.setStyle("-fx-alignment: CENTER;");
-        
-        lookedCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("looked"));
+
+        lookedCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("looked"));
         lookedCol.setStyle("-fx-alignment: CENTER;");
-        
+
         favoriteTable.getColumns().setAll(titleCol, yearCol, genreCol, runCol, ratingCol, lookedCol);
         favoriteTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         favoriteTable.setItems(fav);
@@ -234,16 +236,16 @@ public class MainFXMLController implements Initializable {
 
     @FXML
     private void loadBookmarks() {
-        
+
         ArrayList<Movie> bookmarks = new ArrayList();
-        
+
         for (Object element : movies.movies) {
             Movie movie = (Movie) element;
-            if(movie.isBookmark()== true){
+            if (movie.isBookmark() == true) {
                 bookmarks.add(movie);
             }
         }
-        
+
         ObservableList bookmark = FXCollections.observableList(bookmarks);
         TableColumn titleCol = new TableColumn("Titel");
         TableColumn yearCol = new TableColumn("Jahr");
@@ -252,24 +254,24 @@ public class MainFXMLController implements Initializable {
         TableColumn ratingCol = new TableColumn("Rating");
         TableColumn lookedCol = new TableColumn("Gesehen");
 
-        titleCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("Title"));
+        titleCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("Title"));
         titleCol.setStyle("-fx-alignment: CENTER;");
 
-        yearCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("Year"));
+        yearCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("Year"));
         yearCol.setStyle("-fx-alignment: CENTER;");
-   
-        genreCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("Genre"));
+
+        genreCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("Genre"));
         genreCol.setStyle("-fx-alignment: CENTER;");
 
-        runCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("Runtime"));
+        runCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("Runtime"));
         runCol.setStyle("-fx-alignment: CENTER;");
-               
-        ratingCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("imdbRating"));
+
+        ratingCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("imdbRating"));
         ratingCol.setStyle("-fx-alignment: CENTER;");
-        
-        lookedCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("looked"));
+
+        lookedCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("looked"));
         lookedCol.setStyle("-fx-alignment: CENTER;");
-        
+
         bookmarkTable.getColumns().setAll(titleCol, yearCol, genreCol, runCol, ratingCol, lookedCol);
         bookmarkTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         bookmarkTable.setItems(bookmark);
@@ -371,7 +373,7 @@ public class MainFXMLController implements Initializable {
                 } else {
                     imageRow3.setVisible(false);
                 }
-                
+
 //                if (movie.isLooked()) {
 //                    imageRow1.setVisible(true);
 //                } else {
@@ -388,11 +390,18 @@ public class MainFXMLController implements Initializable {
         //detailImage.fitHeightProperty().bind(imagePane.heightProperty());
         //detailImage.fitWidthProperty().bind(imagePane.widthProperty());
 
+        favoriteTable.setOnMousePressed(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent me) {
+                Movie movie = (Movie) favoriteTable.getSelectionModel().getSelectedItem();
+                System.out.println(movie.getTitle());
+            }
+        });
+
     }
 
-    public void datenuebergabe(String user) {
+    public void datenuebergabe(User user) {
 
-        lblWelcome.setText("Hallo " + user);
+        lblWelcome.setText("Hallo " + user.getName());
         this.user = user;
 
     }

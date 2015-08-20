@@ -6,6 +6,7 @@
 package controller;
 
 import classes.SQLite;
+import classes.User;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -45,15 +46,16 @@ public class LoginFXMLController implements Initializable {
     public void login() throws SQLException {
 
         String username = null;
+        int userid = 0;
 
         SQLite sql = new SQLite();
-        List rs = sql.select("User", "Username", "Username = '" + txtLogin.getText() + "'");
+        List rs = sql.select("User", "*", "Username = '" + txtLogin.getText() + "'");
 
         for (Object entrySet : rs) {
             Map<String, Object> row = (Map<String, Object>) entrySet;
-            for (Map.Entry<String, Object> entry : row.entrySet()) {
-                username = (String) entry.getValue();
-            }
+            username = (String) row.get("Username");
+            userid = (int) row.get("UserID");
+            
         }
 
         if (username != null && username.contentEquals(txtLogin.getText())) {
@@ -68,7 +70,7 @@ public class LoginFXMLController implements Initializable {
             } catch (IOException ex) {
                 Logger.getLogger(LoginFXMLController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            //create a new scene with root and set the stage
+            
             Scene scene = new Scene(root);
 
             stage.setScene(scene);
@@ -76,7 +78,7 @@ public class LoginFXMLController implements Initializable {
             stage.show();
 
             MainFXMLController meinController = (MainFXMLController) fxmlLoader.getController();
-            meinController.datenuebergabe(username);
+            meinController.datenuebergabe(new User(userid,username));
 
         } else {
             txtLogin.setText(
