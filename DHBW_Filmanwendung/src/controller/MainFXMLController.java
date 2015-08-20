@@ -83,6 +83,23 @@ public class MainFXMLController implements Initializable {
     private TableView bookmarkTable;
 
     @FXML
+    public void onFavPressed(MouseEvent event) {
+        if (event.getClickCount() == 2) {
+            Movie movie = (Movie) favoriteTable.getSelectionModel().getSelectedItem();
+            loadMovie(movie.getId());
+            SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
+            selectionModel.select(0);
+
+        }
+    }
+    
+    @FXML
+    public void favDel(){
+        
+    }
+    
+
+    @FXML
     private void onPlay() throws IOException {
 
         Stage trailerStage = new Stage();
@@ -203,7 +220,7 @@ public class MainFXMLController implements Initializable {
         }
 
         ObservableList fav = FXCollections.observableList(favorites);
-        
+
         TableColumn titleCol = new TableColumn("Titel");
         TableColumn yearCol = new TableColumn("Jahr");
         TableColumn genreCol = new TableColumn("Genre");
@@ -387,15 +404,6 @@ public class MainFXMLController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //detailImage.fitHeightProperty().bind(imagePane.heightProperty());
-        //detailImage.fitWidthProperty().bind(imagePane.widthProperty());
-
-        favoriteTable.setOnMousePressed(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent me) {
-                Movie movie = (Movie) favoriteTable.getSelectionModel().getSelectedItem();
-                System.out.println(movie.getTitle());
-            }
-        });
 
     }
 
