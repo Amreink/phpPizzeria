@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.*?>
 <?import java.net.*?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainFXMLController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainFXMLController">
     <stylesheets>
         <URL value="@../css/mainFXML.css" />
     </stylesheets>
@@ -34,7 +34,7 @@
                     <center>
                         <TabPane fx:id="tabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" side="BOTTOM" styleClass="tabPane" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
                             <tabs>
-                                <Tab styleClass="tabButton" text="Detailansicht">
+                                <Tab onSelectionChanged="#onDetailClose" styleClass="tabButton" text="Detailansicht">
                                     <content>
                                         <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                                             <children>
@@ -174,7 +174,7 @@
                                                    <children>
                                                       <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="100.0" StackPane.alignment="CENTER">
                                                          <children>
-                                                            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="btnSeen" />
+                                                            <Button mnemonicParsing="false" onAction="#movieLooked" styleClass="btnLooked" />
                                                             <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#FavoriteDelet" styleClass="btnDelete" />
                                                             <Button mnemonicParsing="false" onAction="#pdfListExportFav" styleClass="btnPdfList" />
                                                          </children>
@@ -212,14 +212,14 @@
                                                 <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                                                    <children>
                                                       <TableView fx:id="bookmarkTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="generalTable" />
-                                                      <TableView fx:id="bookmarkTable" onMousePressed="#onBookmarkPressed" prefHeight="200.0" prefWidth="200.0" />
+                                                      <TableView fx:id="bookmarkTable" onMousePressed="#onBookmarkPressed" prefHeight="200.0" prefWidth="200.0" styleClass="generalTable" />
                                                    </children>
                                                 </StackPane>
                                                 <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1">
                                                    <children>
                                                       <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="100.0">
                                                          <children>
-                                                            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="btnSeen" />
+                                                            <Button mnemonicParsing="false" onAction="#movieToFav" styleClass="btnToFav" />
                                                             <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#BookmarkDelet" styleClass="btnDelete" />
                                                             <Button mnemonicParsing="false" onAction="#pdfListExportBook" styleClass="btnPdfList" text="Button" />
                                                          </children>

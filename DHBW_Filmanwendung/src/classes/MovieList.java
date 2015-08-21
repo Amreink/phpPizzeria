@@ -18,7 +18,6 @@ public class MovieList {
     private static MovieList instance = null;
 
     public MovieList() {
-        // Exists only to defeat instantiation.
     }
 
     public static MovieList getInstance() {
@@ -34,8 +33,12 @@ public class MovieList {
         }
         return false;
     }
-    
-    // TODO Remove Methode ausprogrammieren
+
+    public void updateMovie(Movie movie) {
+        int index = movieExists(movie);
+        movies.set(index, movie);
+    }
+
     public int movieExists(Movie movie) {
         for (Object test : movies) {
             Movie test2 = (Movie) test;
@@ -68,5 +71,11 @@ public class MovieList {
             }
         }
         return null;
+    }
+
+    public void deleteMovie(Movie movie) {
+        if (movieExists(movie) != -1) {
+            movies.remove(movie);
+        }
     }
 }

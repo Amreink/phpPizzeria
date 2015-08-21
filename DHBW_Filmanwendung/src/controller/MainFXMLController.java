@@ -20,8 +20,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -37,7 +35,7 @@ import javafx.stage.StageStyle;
 
 public class MainFXMLController implements Initializable {
 
-    MovieList movies = new MovieList();
+    MovieList movies;
     OMDB omdb = new OMDB();
     SQLite sql = new SQLite();
 
@@ -76,102 +74,61 @@ public class MainFXMLController implements Initializable {
     @FXML
     private TableView bookmarkTable;
 
+    public MainFXMLController() {
+        this.movies = MovieList.getInstance();
+    }
+
     //Öffnet ein POP-UP in der Favliste
     @FXML
     public void onFavPressed(MouseEvent event) throws IOException {
-         //Übergibt den ausgewählten Movie der Fav-Liste an die Methode favDel
-        if (event.getClickCount() == 1) {
-            Movie movie = (Movie) favoriteTable.getSelectionModel().getSelectedItem();
-            FavoriteDelet(movie);
-        }
         if (event.getClickCount() == 2) {
             Movie movie = (Movie) favoriteTable.getSelectionModel().getSelectedItem();
-            //loadMovie(movie.getId());
-//            Parent background = FXMLLoader.load(getClass().getResource("/view/BackgroundFXML.fxml"));
-//            Stage bgstage = new Stage();
-//            Scene bgscene = new Scene(background);
-//            bgstage.initModality(Modality.APPLICATION_MODAL);
-//            bgstage.initStyle(StageStyle.TRANSPARENT);
-//            bgstage.setScene(bgscene);
-//            bgstage.show();
-            FXMLLoader fxmlLoader = null;
-            Parent root = FXMLLoader.load(getClass().getResource("/view/PopupFXML.fxml"));
+            if (movie != null) {
 
-            Stage stage = new Stage();
-            Scene scene = new Scene(root);
+                FXMLLoader fxmlLoader = null;
+                fxmlLoader = new FXMLLoader(getClass().getResource("/view/PopupFXML.fxml"));
+                Parent root = fxmlLoader.load();
 
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.TRANSPARENT);
-            stage.setScene(scene);
-            stage.setTitle("Details");
-            //stage.getIcons().add(new Image(getClass().getResourceAsStream("/icon/youtube1_1.png")));
-            stage.show();
-            
-            PopupFXMLController meinController = (PopupFXMLController) fxmlLoader.getController();
-            meinController.datenuebergabeMovie(movie);
+                Stage stage = new Stage();
+                Scene scene = new Scene(root);
+
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.initStyle(StageStyle.TRANSPARENT);
+                stage.setScene(scene);
+                stage.setTitle("Details");
+                stage.show();
+
+                PopupFXMLController popupController = (PopupFXMLController) fxmlLoader.getController();
+                popupController.datenuebergabeMovie(movie);
+            }
         }
     }
-    
+
     //Öffnet ein  POP-UP in der Merkliste
     @FXML
     public void onBookmarkPressed(MouseEvent event) throws IOException {
-        //Übergibt den ausgewählten Movie der Bookmark-Liste an die Methode BookmarkDel
-        if (event.getClickCount() == 1) {
-            Movie movie = (Movie) bookmarkTable.getSelectionModel().getSelectedItem();
-            BookmarkDelet(movie);
-        }
+
         if (event.getClickCount() == 2) {
             Movie movie = (Movie) bookmarkTable.getSelectionModel().getSelectedItem();
-            //loadMovie(movie.getId());
-//            Parent background = FXMLLoader.load(getClass().getResource("/view/BackgroundFXML.fxml"));
-//            Stage bgstage = new Stage();
-//            Scene bgscene = new Scene(background);
-//            bgstage.initModality(Modality.APPLICATION_MODAL);
-//            bgstage.initStyle(StageStyle.TRANSPARENT);
-//            bgstage.setScene(bgscene);
-//            bgstage.show();
-            FXMLLoader fxmlLoader = null;
-            Parent root = FXMLLoader.load(getClass().getResource("/view/PopupFXML.fxml"));
+            if (movie != null) {
+                FXMLLoader fxmlLoader = null;
+                fxmlLoader = new FXMLLoader(getClass().getResource("/view/PopupFXML.fxml"));
+                Parent root = fxmlLoader.load();
 
-            Stage stage = new Stage();
-            Scene scene = new Scene(root);
+                Stage stage = new Stage();
+                Scene scene = new Scene(root);
 
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.TRANSPARENT);
-            stage.setScene(scene);
-            stage.setTitle("Details");
-            //stage.getIcons().add(new Image(getClass().getResourceAsStream("/icon/youtube1_1.png")));
-            stage.show();
-            
-            PopupFXMLController meinController = (PopupFXMLController) fxmlLoader.getController();
-            meinController.datenuebergabeMovie(movie);
-        }
-    }
-    
-   //Löscht den markierten Film aus der Favoritenliste
-    @FXML
-    public void FavoriteDelet(Movie movie) {
-        if (currentMovie != null) {
-            if (currentMovie.isFavourite()) {
-                Movie movie2 = movies.getMovieByObject(currentMovie);
-                movie2.setFavourite(false);
-                loadMovie(currentMovie.getId());
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.initStyle(StageStyle.TRANSPARENT);
+                stage.setScene(scene);
+                stage.setTitle("Details");
+                stage.show();
+
+                PopupFXMLController popupController = (PopupFXMLController) fxmlLoader.getController();
+                popupController.datenuebergabeMovie(movie);
             }
         }
     }
-
-    //Löscht den markierten Film aus der Merkliste
-    @FXML
-    public void BookmarkDelet(Movie movie) {
-        if (currentMovie != null) {
-            if (currentMovie.isBookmark()) {
-                Movie movie3 = movies.getMovieByObject(currentMovie);
-                movie3.setBookmark(false);
-                loadMovie(currentMovie.getId());
-            }
-        }
-    }
-
 
     //Öffnet ein Pop-up,welcher den Trailer eines Filmes abspielt
     @FXML
@@ -180,7 +137,6 @@ public class MainFXMLController implements Initializable {
         pdf.exportMovie(currentMovie);
     }
 
-    
     //Was tue ich genau? Threads für die Livesearch?
     @FXML
     private void onSearch() {
@@ -229,7 +185,6 @@ public class MainFXMLController implements Initializable {
                 this.currentMovie.setFavourite(true);
                 movies.addMovie(this.currentMovie);
                 loadMovie(currentMovie.getId());
-                //sql.insert("movie", currentMovie.getMap());
             }
         }
     }
@@ -250,30 +205,6 @@ public class MainFXMLController implements Initializable {
         }
     }
 
-//    @FXML
-//    private void onLooked() {
-//        if (currentMovie != null) {
-//            if (currentMovie.isLooked()) {
-//                Movie movie1 = movies.getMovieByObject(currentMovie);
-//                movie1.setLooked(false);
-//                loadMovie(currentMovie.getId());
-//            } else {
-//                this.currentMovie.setLooked(true);
-//                movies.addMovie(this.currentMovie);
-//                loadMovie(currentMovie.getId());
-//            }
-//        }
-//    }
-    
-//    @FXML
-//    private void loadDetails() {
-//        Movie movie = (Movie) searchlist.getSelectionModel().getSelectedItem();
-//        movie = null;
-//        searchbar.setText(movie.getTitle());
-//        loadMovie(movie.getId());
-//            
-//    }
-    
     //Lade die Filme in die Favoritenliste
     @FXML
     private void loadFavorites() {
@@ -293,21 +224,23 @@ public class MainFXMLController implements Initializable {
         TableColumn yearCol = new TableColumn("Jahr");
         TableColumn genreCol = new TableColumn("Genre");
         TableColumn runCol = new TableColumn("Laufzeit");
-        TableColumn ratingCol = new TableColumn("Rating");
+        TableColumn ratingCol = new TableColumn("IMDB Wertung");
         TableColumn lookedCol = new TableColumn("Gesehen");
+        TableColumn userRatCol = new TableColumn("Benutzer Wertung");
 
         titleCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("Title"));
         yearCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("Year"));
         genreCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("Genre"));
         runCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("Runtime"));
         ratingCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("imdbRating"));
+        userRatCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("userRating"));
         lookedCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("looked"));
 
-        favoriteTable.getColumns().setAll(titleCol, yearCol, genreCol, runCol, ratingCol, lookedCol);
+        favoriteTable.getColumns().setAll(titleCol, yearCol, genreCol, runCol, userRatCol, ratingCol, lookedCol);
         favoriteTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         favoriteTable.setItems(fav);
     }
-    
+
     //Lade die Filme in die Merkliste
     @FXML
     private void loadBookmarks() {
@@ -327,16 +260,16 @@ public class MainFXMLController implements Initializable {
         TableColumn genreCol = new TableColumn("Genre");
         TableColumn runCol = new TableColumn("Laufzeit");
         TableColumn ratingCol = new TableColumn("Rating");
-        TableColumn lookedCol = new TableColumn("Gesehen");
+        TableColumn userRatCol = new TableColumn("Benutzer Wertung");
 
         titleCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("Title"));
         yearCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("Year"));
         genreCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("Genre"));
         runCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("Runtime"));
         ratingCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("imdbRating"));
-        lookedCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("looked"));;
+        userRatCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("userRating"));
 
-        bookmarkTable.getColumns().setAll(titleCol, yearCol, genreCol, runCol, ratingCol, lookedCol);
+        bookmarkTable.getColumns().setAll(titleCol, yearCol, genreCol, userRatCol, runCol, ratingCol);
         bookmarkTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         bookmarkTable.setItems(bookmark);
     }
@@ -449,7 +382,7 @@ public class MainFXMLController implements Initializable {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     //???
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -471,16 +404,77 @@ public class MainFXMLController implements Initializable {
 
         for (Object element : movies.movies) {
             Movie movie = (Movie) element;
-            if (movie.isFavourite()== true) {
+            if (movie.isFavourite() == true) {
                 array.add(movie);
             }
         }
-        pdf.exportMovies(array,"favouritenliste");
+        if (array.size() > 0) {
+            pdf.exportMovies(array, "favouritenliste");
+        }
     }
-    
+
     @FXML
-    public void pdfListExportBook(){
-        
+    public void pdfListExportBook() {
+        PdfExport pdf = new PdfExport();
+        ArrayList<Movie> array = new ArrayList();
+
+        for (Object element : movies.movies) {
+            Movie movie = (Movie) element;
+            if (movie.isBookmark() == true) {
+                array.add(movie);
+            }
+        }
+        if (array.size() > 0) {
+            pdf.exportMovies(array, "merkliste");
+        }
     }
-    
+
+    @FXML
+    public void FavoriteDelet() {
+        Movie movie = (Movie) favoriteTable.getSelectionModel().getSelectedItem();
+        movie.setFavourite(false);
+        movies.updateMovie(movie);
+        loadFavorites();
+    }
+
+    @FXML
+    public void BookmarkDelet() {
+        Movie movie = (Movie) bookmarkTable.getSelectionModel().getSelectedItem();
+        movie.setBookmark(false);
+        movies.updateMovie(movie);
+        loadBookmarks();
+    }
+
+    @FXML
+    public void onDetailClose() {
+        detailImage.setImage(null);
+        detailPlot.setText(null);
+        detailTable.setItems(null);
+        searchbar.setText("");
+        imageRow1.setVisible(false);
+        imageRow2.setVisible(false);
+        imageRow3.setVisible(false);
+        currentMovie = null;
+    }
+
+    @FXML
+    public void movieLooked() {
+        Movie movie = (Movie) favoriteTable.getSelectionModel().getSelectedItem();
+        if (movie.isLooked()) {
+            movie.setLooked(false);
+        } else {
+            movie.setLooked(true);
+        }
+        movies.updateMovie(movie);
+        loadFavorites();
+    }
+
+    @FXML
+    public void movieToFav() {
+        Movie movie = (Movie) bookmarkTable.getSelectionModel().getSelectedItem();
+        movie.setBookmark(false);
+        movie.setFavourite(true);
+        movies.updateMovie(movie);
+        loadBookmarks();
+    }
 }

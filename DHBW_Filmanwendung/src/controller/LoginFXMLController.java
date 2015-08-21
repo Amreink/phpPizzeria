@@ -73,13 +73,11 @@ public class LoginFXMLController implements Initializable {
             }
             
             Scene scene = new Scene(root);
-
             stage.setScene(scene);
-
             stage.show();
 
-            MainFXMLController meinController = (MainFXMLController) fxmlLoader.getController();
-            meinController.datenuebergabe(new User(userid,username));
+            MainFXMLController mainController = (MainFXMLController) fxmlLoader.getController();
+            mainController.datenuebergabe(new User(userid,username));
         //Falscher Benutzer
         } else {
             txtLogin.setText(

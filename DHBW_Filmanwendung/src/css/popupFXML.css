@@ -1,0 +1,16 @@
+.root{
+    -fx-border-color: #0093ff;
+    -fx-border-width: 2px;
+}
+
+.btnClose{
+    -fx-background-image: url('../icon/cancel30.png');
+    -fx-background-size: 32 32 ;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:center;   
+    -fx-padding: 10 50 10 50;
+}
+
+.btnClose:hover{
+    -fx-background-image: url('../icon/cancel30_1.png');
+}
