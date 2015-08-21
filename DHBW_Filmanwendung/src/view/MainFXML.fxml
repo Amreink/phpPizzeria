@@ -213,7 +213,7 @@
                                              <children>
                                                 <StackPane prefHeight="150.0" prefWidth="200.0">
                                                    <children>
-                                                      <TableView fx:id="bookmarkTable" prefHeight="200.0" prefWidth="200.0" />
+                                                      <TableView fx:id="bookmarkTable" onMousePressed="#onBookmarkPressed" prefHeight="200.0" prefWidth="200.0" />
                                                    </children>
                                                 </StackPane>
                                                 <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1">

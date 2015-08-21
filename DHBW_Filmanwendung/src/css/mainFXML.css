@@ -183,3 +183,15 @@
 .btnDelete:hover{
     -fx-background-image: url('../icon/cancel30_1.png');
 }
+
+.btnPopupLooked{
+    -fx-background-image: url('../icon/iris.png');
+    -fx-background-size: 32 32 ;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:center;   
+    -fx-padding: 10 30 10 30;
+}
+
+.btnPopupLooked:hover{
+    -fx-background-image: url('../icon/iris_1.png');
+}
