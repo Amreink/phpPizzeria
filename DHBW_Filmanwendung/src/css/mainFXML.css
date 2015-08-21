@@ -216,6 +216,7 @@
 
 .generalTable .table-row-cell:selected .text {
     -fx-fill: #0093ff;
+}
 
 .btnPopupLooked{
     -fx-background-image: url('../icon/iris.png');
