@@ -1,13 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import classes.Movie;
 import classes.MovieList;
 import classes.OMDB;
+import classes.PdfExport;
 import classes.SQLite;
 import classes.TableRow;
 import classes.User;
@@ -21,26 +17,16 @@ import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import javafx.stage.Stage;
 
-/**
- *
- * @author Artur
- */
 public class MainFXMLController implements Initializable {
 
     MovieList movies = new MovieList();
@@ -87,44 +73,18 @@ public class MainFXMLController implements Initializable {
         if (event.getClickCount() == 2) {
             Movie movie = (Movie) favoriteTable.getSelectionModel().getSelectedItem();
             loadMovie(movie.getId());
-            SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
-            selectionModel.select(0);
-
         }
     }
-    
+
     @FXML
-    public void favDel(){
-        
+    public void favDel() {
+
     }
-    
 
     @FXML
     private void onPlay() throws IOException {
-
-        Stage trailerStage = new Stage();
-
-        Scene scene = new Scene(new Group());
-        VBox root = new VBox();
-        root.setAlignment(Pos.CENTER);
-        root.autosize();
-        final WebView browser = new WebView();
-        final WebEngine webEngine = browser.getEngine();
-
-        webEngine.load("http://www.imdb.com/video/imdb/vi996454425/imdb/embed?autoplay=false");
-
-        root.getChildren().addAll(browser);
-        scene.setRoot(root);
-
-        trailerStage.setScene(scene);
-        trailerStage.setMinHeight(500);
-        trailerStage.setMinWidth(1000);
-
-        trailerStage.getIcons().add(new Image(getClass().getResourceAsStream("/icon/youtube1_1.png")));
-        trailerStage.setTitle("DHBW Filmanwendung");
-
-        trailerStage.show();
-
+        PdfExport pdf = new PdfExport();
+        pdf.exportMovie(currentMovie);
     }
 
     @FXML
@@ -229,22 +189,11 @@ public class MainFXMLController implements Initializable {
         TableColumn lookedCol = new TableColumn("Gesehen");
 
         titleCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("Title"));
-        titleCol.setStyle("-fx-alignment: CENTER;");
-
         yearCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("Year"));
-        yearCol.setStyle("-fx-alignment: CENTER;");
-
         genreCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("Genre"));
-        genreCol.setStyle("-fx-alignment: CENTER;");
-
         runCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("Runtime"));
-        runCol.setStyle("-fx-alignment: CENTER;");
-
         ratingCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("imdbRating"));
-        ratingCol.setStyle("-fx-alignment: CENTER;");
-
         lookedCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("looked"));
-        lookedCol.setStyle("-fx-alignment: CENTER;");
 
         favoriteTable.getColumns().setAll(titleCol, yearCol, genreCol, runCol, ratingCol, lookedCol);
         favoriteTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -272,22 +221,11 @@ public class MainFXMLController implements Initializable {
         TableColumn lookedCol = new TableColumn("Gesehen");
 
         titleCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("Title"));
-        titleCol.setStyle("-fx-alignment: CENTER;");
-
         yearCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("Year"));
-        yearCol.setStyle("-fx-alignment: CENTER;");
-
         genreCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("Genre"));
-        genreCol.setStyle("-fx-alignment: CENTER;");
-
         runCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("Runtime"));
-        runCol.setStyle("-fx-alignment: CENTER;");
-
         ratingCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("imdbRating"));
-        ratingCol.setStyle("-fx-alignment: CENTER;");
-
-        lookedCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("looked"));
-        lookedCol.setStyle("-fx-alignment: CENTER;");
+        lookedCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("looked"));;
 
         bookmarkTable.getColumns().setAll(titleCol, yearCol, genreCol, runCol, ratingCol, lookedCol);
         bookmarkTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -365,9 +303,6 @@ public class MainFXMLController implements Initializable {
                 infoList.add(new TableRow("Veröffentlicht", movie.getReleased()));
                 infoList.add(new TableRow("Jahr", movie.getYear()));
                 infoList.add(new TableRow("Bewertung", movie.getImdbRating()));
-                //infoList.add(new TableRow("Geschaut", Boolean.toString(movie.isLooked())));
-                //infoList.add(new TableRow("Favourit", Boolean.toString(movie.isFavourite())));
-                //infoList.add(new TableRow("Gemerkt", Boolean.toString(movie.isBookmark())));
 
                 ObservableList data = FXCollections.observableList(infoList);
                 detailTable.setItems(data);
@@ -412,5 +347,24 @@ public class MainFXMLController implements Initializable {
         lblWelcome.setText("Hallo " + user.getName());
         this.user = user;
 
+    }
+
+    @FXML
+    public void pdfListExportFav() {
+        PdfExport pdf = new PdfExport();
+        ArrayList<Movie> array = new ArrayList();
+
+        for (Object element : movies.movies) {
+            Movie movie = (Movie) element;
+            if (movie.isFavourite()== true) {
+                array.add(movie);
+            }
+        }
+        pdf.exportMovies(array,"favouritenliste");
+    }
+    
+    @FXML
+    public void pdfListExportBook(){
+        
     }
 }
