@@ -41,13 +41,14 @@ public class LoginFXMLController implements Initializable {
     private TextField txtLogin;
     @FXML
     private Label lblOnlineStatus;
-
+    
+     //Lädt den User aus der DB
     @FXML
     public void login() throws SQLException {
 
         String username = null;
         int userid = 0;
-
+        
         SQLite sql = new SQLite();
         List rs = sql.select("User", "*", "Username = '" + txtLogin.getText() + "'");
 
@@ -57,12 +58,12 @@ public class LoginFXMLController implements Initializable {
             userid = (int) row.get("UserID");
             
         }
-
+        
         if (username != null && username.contentEquals(txtLogin.getText())) {
             Stage stage = null;
             Parent root = null;
             FXMLLoader fxmlLoader = null;
-
+            //Lädt die MainFXML.fxml
             try {
                 stage = (Stage) btnLogin.getScene().getWindow();
                 fxmlLoader = new FXMLLoader(getClass().getResource("/view/MainFXML.fxml"));
@@ -79,7 +80,7 @@ public class LoginFXMLController implements Initializable {
 
             MainFXMLController meinController = (MainFXMLController) fxmlLoader.getController();
             meinController.datenuebergabe(new User(userid,username));
-
+        //Falscher Benutzer
         } else {
             txtLogin.setText(
                     "Falscher Benutzername");
@@ -88,17 +89,17 @@ public class LoginFXMLController implements Initializable {
         }
 
     }
-    
+    //Enter ersetzt Mausclick
     @FXML
     public void Enterpress() throws SQLException{
         login();
     }
-
+    //Klick in das Textfeld leert dieses
     @FXML
     public void Feldleeren() {
         txtLogin.setText("");
     }
-
+    //POP-UP der RegistFXML.fxml
     @FXML
     public void Regist() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/RegistFXML.fxml"));
@@ -113,7 +114,7 @@ public class LoginFXMLController implements Initializable {
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/icon/youtube1_1.png")));
         stage.show();
     }
-
+    //Anzeige des Status der OMBD-Datenbank
     @Override
     public void initialize(URL location, ResourceBundle resources
     ) {
@@ -125,7 +126,7 @@ public class LoginFXMLController implements Initializable {
             lblOnlineStatus.setStyle("-fx-text-fill:red;");
         }
     }
-
+    
     private static boolean netIsAvailable() {
         try {
             final URL url = new URL("http://www.omdbapi.com/");

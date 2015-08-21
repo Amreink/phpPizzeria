@@ -1,1 +1,1 @@
-SELECT imdbID FROM Movie WHERE imdbID = 'SCheiﬂegal'
+SELECT imdbID FROM Movie WHERE imdbID = 'Scheissegal'

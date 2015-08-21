@@ -18,7 +18,12 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.Group;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -26,6 +31,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.web.WebView;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class MainFXMLController implements Initializable {
 
@@ -68,25 +76,89 @@ public class MainFXMLController implements Initializable {
     @FXML
     private TableView bookmarkTable;
 
+    //Öffnet ein POP-UP in der Favliste
     @FXML
-    public void onFavPressed(MouseEvent event) {
+    public void onFavPressed(MouseEvent event) throws IOException {
         if (event.getClickCount() == 2) {
             Movie movie = (Movie) favoriteTable.getSelectionModel().getSelectedItem();
-            loadMovie(movie.getId());
+            //loadMovie(movie.getId());
+//            Parent background = FXMLLoader.load(getClass().getResource("/view/BackgroundFXML.fxml"));
+//            Stage bgstage = new Stage();
+//            Scene bgscene = new Scene(background);
+//            bgstage.initModality(Modality.APPLICATION_MODAL);
+//            bgstage.initStyle(StageStyle.TRANSPARENT);
+//            bgstage.setScene(bgscene);
+//            bgstage.show();
+            FXMLLoader fxmlLoader = null;
+            Parent root = FXMLLoader.load(getClass().getResource("/view/PopupFXML.fxml"));
+
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            stage.setScene(scene);
+            stage.setTitle("Details");
+            //stage.getIcons().add(new Image(getClass().getResourceAsStream("/icon/youtube1_1.png")));
+            stage.show();
+            
+            PopupFXMLController meinController = (PopupFXMLController) fxmlLoader.getController();
+            meinController.datenuebergabeMovie(movie);
         }
     }
+    
+    //Öffnet ein  POP-UP in der Merkliste
+    @FXML
+    public void onBookmarkPressed(MouseEvent event) throws IOException {
+        if (event.getClickCount() == 2) {
+            Movie movie = (Movie) bookmarkTable.getSelectionModel().getSelectedItem();
+            //loadMovie(movie.getId());
+//            Parent background = FXMLLoader.load(getClass().getResource("/view/BackgroundFXML.fxml"));
+//            Stage bgstage = new Stage();
+//            Scene bgscene = new Scene(background);
+//            bgstage.initModality(Modality.APPLICATION_MODAL);
+//            bgstage.initStyle(StageStyle.TRANSPARENT);
+//            bgstage.setScene(bgscene);
+//            bgstage.show();
+            FXMLLoader fxmlLoader = null;
+            Parent root = FXMLLoader.load(getClass().getResource("/view/PopupFXML.fxml"));
 
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            stage.setScene(scene);
+            stage.setTitle("Details");
+            //stage.getIcons().add(new Image(getClass().getResourceAsStream("/icon/youtube1_1.png")));
+            stage.show();
+            
+            PopupFXMLController meinController = (PopupFXMLController) fxmlLoader.getController();
+            meinController.datenuebergabeMovie(movie);
+        }
+    }
+    
+    //Löscht den markierten Film aus der Favoritenliste
     @FXML
     public void favDel() {
 
     }
+    
+    //Löscht den markierten Film aus der Merkliste
+    @FXML
+    public void BookmarkDel(){
+        
+    }
 
+    //Öffnet ein Pop-up,welcher den Trailer eines Filmes abspielt
     @FXML
     private void onPlay() throws IOException {
         PdfExport pdf = new PdfExport();
         pdf.exportMovie(currentMovie);
     }
 
+    
+    //Was tue ich genau? Threads für die Livesearch?
     @FXML
     private void onSearch() {
         if (!searchbar.getText().isEmpty()) {
@@ -122,6 +194,7 @@ public class MainFXMLController implements Initializable {
 
     }
 
+    //Setzt einen Film auf die Favoritenliste, oder entfernt ihn.
     @FXML
     private void onFav() {
         if (currentMovie != null) {
@@ -138,6 +211,7 @@ public class MainFXMLController implements Initializable {
         }
     }
 
+    //Setzt einen Film auf die Merkliste, oder entfernt ihn.
     @FXML
     private void onBookmark() {
         if (currentMovie != null) {
@@ -167,6 +241,17 @@ public class MainFXMLController implements Initializable {
 //            }
 //        }
 //    }
+    
+//    @FXML
+//    private void loadDetails() {
+//        Movie movie = (Movie) searchlist.getSelectionModel().getSelectedItem();
+//        movie = null;
+//        searchbar.setText(movie.getTitle());
+//        loadMovie(movie.getId());
+//            
+//    }
+    
+    //Lade die Filme in die Favoritenliste
     @FXML
     private void loadFavorites() {
 
@@ -199,7 +284,8 @@ public class MainFXMLController implements Initializable {
         favoriteTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         favoriteTable.setItems(fav);
     }
-
+    
+    //Lade die Filme in die Merkliste
     @FXML
     private void loadBookmarks() {
 
@@ -232,11 +318,13 @@ public class MainFXMLController implements Initializable {
         bookmarkTable.setItems(bookmark);
     }
 
+    //Wofür bin ich zuständig?
     @FXML
     private void onCenterDragOver() {
         searchlist.setVisible(false);
     }
 
+    //???
     @FXML
     private void onSearchlistClick(MouseEvent event
     ) {
@@ -249,6 +337,7 @@ public class MainFXMLController implements Initializable {
         }
     }
 
+    //Zeige die Suchergebnisse aus der omdb
     private void showResults(String title, String year) {
         try {
             ArrayList<Movie> results_array = omdb.searchByTitle(title, year);
@@ -262,6 +351,7 @@ public class MainFXMLController implements Initializable {
         }
     }
 
+    //Lade die Detailansicht
     private void loadMovie(String id) {
         String imageUrl = null;
         Movie movie;
@@ -336,12 +426,14 @@ public class MainFXMLController implements Initializable {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
+    //???
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
     }
 
+    //???
     public void datenuebergabe(User user) {
 
         lblWelcome.setText("Hallo " + user.getName());
@@ -367,4 +459,5 @@ public class MainFXMLController implements Initializable {
     public void pdfListExportBook(){
         
     }
+    
 }

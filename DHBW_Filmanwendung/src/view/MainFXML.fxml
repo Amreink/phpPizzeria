@@ -212,6 +212,7 @@
                                                 <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                                                    <children>
                                                       <TableView fx:id="bookmarkTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="generalTable" />
+                                                      <TableView fx:id="bookmarkTable" onMousePressed="#onBookmarkPressed" prefHeight="200.0" prefWidth="200.0" />
                                                    </children>
                                                 </StackPane>
                                                 <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1">
