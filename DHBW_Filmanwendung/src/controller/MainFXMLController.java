@@ -79,6 +79,11 @@ public class MainFXMLController implements Initializable {
     //Öffnet ein POP-UP in der Favliste
     @FXML
     public void onFavPressed(MouseEvent event) throws IOException {
+         //Übergibt den ausgewählten Movie der Fav-Liste an die Methode favDel
+        if (event.getClickCount() == 1) {
+            Movie movie = (Movie) favoriteTable.getSelectionModel().getSelectedItem();
+            FavoriteDelet(movie);
+        }
         if (event.getClickCount() == 2) {
             Movie movie = (Movie) favoriteTable.getSelectionModel().getSelectedItem();
             //loadMovie(movie.getId());
@@ -110,6 +115,11 @@ public class MainFXMLController implements Initializable {
     //Öffnet ein  POP-UP in der Merkliste
     @FXML
     public void onBookmarkPressed(MouseEvent event) throws IOException {
+        //Übergibt den ausgewählten Movie der Bookmark-Liste an die Methode BookmarkDel
+        if (event.getClickCount() == 1) {
+            Movie movie = (Movie) bookmarkTable.getSelectionModel().getSelectedItem();
+            BookmarkDelet(movie);
+        }
         if (event.getClickCount() == 2) {
             Movie movie = (Movie) bookmarkTable.getSelectionModel().getSelectedItem();
             //loadMovie(movie.getId());
@@ -138,17 +148,30 @@ public class MainFXMLController implements Initializable {
         }
     }
     
-    //Löscht den markierten Film aus der Favoritenliste
+   //Löscht den markierten Film aus der Favoritenliste
     @FXML
-    public void favDel() {
-
+    public void FavoriteDelet(Movie movie) {
+        if (currentMovie != null) {
+            if (currentMovie.isFavourite()) {
+                Movie movie2 = movies.getMovieByObject(currentMovie);
+                movie2.setFavourite(false);
+                loadMovie(currentMovie.getId());
+            }
+        }
     }
-    
+
     //Löscht den markierten Film aus der Merkliste
     @FXML
-    public void BookmarkDel(){
-        
+    public void BookmarkDelet(Movie movie) {
+        if (currentMovie != null) {
+            if (currentMovie.isBookmark()) {
+                Movie movie3 = movies.getMovieByObject(currentMovie);
+                movie3.setBookmark(false);
+                loadMovie(currentMovie.getId());
+            }
+        }
     }
+
 
     //Öffnet ein Pop-up,welcher den Trailer eines Filmes abspielt
     @FXML
