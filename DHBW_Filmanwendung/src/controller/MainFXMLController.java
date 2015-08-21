@@ -460,21 +460,25 @@ public class MainFXMLController implements Initializable {
     @FXML
     public void movieLooked() {
         Movie movie = (Movie) favoriteTable.getSelectionModel().getSelectedItem();
-        if (movie.isLooked()) {
-            movie.setLooked(false);
-        } else {
-            movie.setLooked(true);
+        if (movie != null) {
+            if (movie.isLooked()) {
+                movie.setLooked(false);
+            } else {
+                movie.setLooked(true);
+            }
+            movies.updateMovie(movie);
+            loadFavorites();
         }
-        movies.updateMovie(movie);
-        loadFavorites();
     }
 
     @FXML
     public void movieToFav() {
         Movie movie = (Movie) bookmarkTable.getSelectionModel().getSelectedItem();
-        movie.setBookmark(false);
-        movie.setFavourite(true);
-        movies.updateMovie(movie);
-        loadBookmarks();
+        if (movie != null) {
+            movie.setBookmark(false);
+            movie.setFavourite(true);
+            movies.updateMovie(movie);
+            loadBookmarks();
+        }
     }
 }
