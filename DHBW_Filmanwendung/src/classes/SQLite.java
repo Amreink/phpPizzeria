@@ -41,9 +41,9 @@ public class SQLite {
             //Create MovieList Table
             Statement stmt = c.createStatement();
             sql = "CREATE TABLE IF NOT EXISTS Movielist("
-                    + "ID int UNIQUE,"
+                    + "ID int AUTOINCREMENT UNIQUE,"
                     + "UserID int,"
-                    + "MovieID char(20),"
+                    + "imdbID char(20),"
                     + "MerkList bit,"
                     + "FavList bit,"     
                     + "UserRate char(3)"

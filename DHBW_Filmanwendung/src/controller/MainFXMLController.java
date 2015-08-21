@@ -85,6 +85,7 @@ public class MainFXMLController implements Initializable {
     @FXML
     private TableView bookmarkTable;
 
+    //Öffnet ein POP-UP in der Favliste
     @FXML
     public void onFavPressed(MouseEvent event) throws IOException {
         if (event.getClickCount() == 2) {
@@ -115,6 +116,7 @@ public class MainFXMLController implements Initializable {
         }
     }
     
+    //Öffnet ein  POP-UP in der Merkliste
     @FXML
     public void onBookmarkPressed(MouseEvent event) throws IOException {
         if (event.getClickCount() == 2) {
@@ -145,12 +147,19 @@ public class MainFXMLController implements Initializable {
         }
     }
     
+    //Löscht den markierten Film aus der Favoritenliste
     @FXML
     public void favDel(){
         
     }
     
+    //Löscht den markierten Film aus der Merkliste
+    @FXML
+    public void BookmarkDel(){
+        
+    }
 
+    //Öffnet ein Pop-up,welcher den Trailer eines Filmes abspielt
     @FXML
     private void onPlay() throws IOException {
 
@@ -179,6 +188,8 @@ public class MainFXMLController implements Initializable {
 
     }
 
+    
+    //Was tue ich genau? Threads für die Livesearch?
     @FXML
     private void onSearch() {
         if (!searchbar.getText().isEmpty()) {
@@ -214,6 +225,7 @@ public class MainFXMLController implements Initializable {
 
     }
 
+    //Setzt einen Film auf die Favoritenliste, oder entfernt ihn.
     @FXML
     private void onFav() {
         if (currentMovie != null) {
@@ -230,6 +242,7 @@ public class MainFXMLController implements Initializable {
         }
     }
 
+    //Setzt einen Film auf die Merkliste, oder entfernt ihn.
     @FXML
     private void onBookmark() {
         if (currentMovie != null) {
@@ -269,6 +282,7 @@ public class MainFXMLController implements Initializable {
 //            
 //    }
     
+    //Lade die Filme in die Favoritenliste
     @FXML
     private void loadFavorites() {
 
@@ -312,7 +326,8 @@ public class MainFXMLController implements Initializable {
         favoriteTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         favoriteTable.setItems(fav);
     }
-
+    
+    //Lade die Filme in die Merkliste
     @FXML
     private void loadBookmarks() {
 
@@ -356,11 +371,13 @@ public class MainFXMLController implements Initializable {
         bookmarkTable.setItems(bookmark);
     }
 
+    //Wofür bin ich zuständig?
     @FXML
     private void onCenterDragOver() {
         searchlist.setVisible(false);
     }
 
+    //???
     @FXML
     private void onSearchlistClick(MouseEvent event
     ) {
@@ -373,6 +390,7 @@ public class MainFXMLController implements Initializable {
         }
     }
 
+    //Zeige die Suchergebnisse aus der omdb
     private void showResults(String title, String year) {
         try {
             ArrayList<Movie> results_array = omdb.searchByTitle(title, year);
@@ -386,6 +404,7 @@ public class MainFXMLController implements Initializable {
         }
     }
 
+    //Lade die Detailansicht
     private void loadMovie(String id) {
         String imageUrl = null;
         Movie movie;
@@ -463,12 +482,14 @@ public class MainFXMLController implements Initializable {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
+    //???
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
     }
 
+    //???
     public void datenuebergabe(User user) {
 
         lblWelcome.setText("Hallo " + user.getName());

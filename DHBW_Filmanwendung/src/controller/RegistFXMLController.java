@@ -31,6 +31,8 @@ public class RegistFXMLController implements Initializable {
     @FXML
     private Button btnClose;
 
+    
+    //Registriert einen neuen Benutzer, wenn Feld nicht leer und speichert den User in der SQLite-DB
     @FXML
     private void regist() {
         if (!txtUserName.getText().isEmpty()) {
@@ -46,7 +48,7 @@ public class RegistFXMLController implements Initializable {
             }
 
             System.out.println(username);
-
+            //Überprüft ob der Name schon vergeben ist.
             if (!username.contentEquals(txtUserName.getText()) && txtUserName.getText() != null ) {
                 Map<String, String> map = new HashMap<>();
                 map.put("username", txtUserName.getText());
@@ -59,23 +61,23 @@ public class RegistFXMLController implements Initializable {
             }
         }
     }
-
+    //Enter kann Mausclick ersetzen
     @FXML
     public void Enterpress1() throws SQLException{
         regist();
     }
-    
+    //Klick in das Textfeld leert dieses
     @FXML
     public void Feldleeren1() {
         txtUserName.setText("");
     }
-    
+    //Schließt RegistFXML.fxml
     @FXML
     private void close() {
         Stage stage = (Stage) btnClose.getScene().getWindow();
         stage.close();
     }
-
+    //Was tue ich?
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }
