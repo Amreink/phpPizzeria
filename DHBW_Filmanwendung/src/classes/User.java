@@ -12,9 +12,9 @@ package classes;
 public class User {
     
     private String name;
-    private int id;
+    private String id;
     
-    public User(int id, String name){
+    public User(String id, String name){
         this.id = id;
         this.name = name;
     }
@@ -27,11 +27,11 @@ public class User {
         this.name = name;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
     

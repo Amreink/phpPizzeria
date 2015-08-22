@@ -5,7 +5,6 @@
  */
 package classes;
 
-import java.lang.reflect.Field;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,11 +40,11 @@ public class SQLite {
             //Create MovieList Table
             Statement stmt = c.createStatement();
             sql = "CREATE TABLE IF NOT EXISTS Movielist("
-                    + "ID int UNIQUE,"
+                    + "ID INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,"
                     + "UserID int,"
                     + "imdbID char(20),"
                     + "MerkList bit,"
-                    + "FavList bit,"     
+                    + "FavList bit,"
                     + "UserRate char(3)"
                     + ");";
             stmt.executeUpdate(sql);
@@ -56,7 +55,7 @@ public class SQLite {
                     + "Title char(20),"
                     + "Year char(20),"
                     + "Runtime char(20),"
-                    + "Genre char(200),"  
+                    + "Genre char(200),"
                     + "Poster text,"
                     + "Director char(200),"
                     + "Released char(20),"
@@ -110,6 +109,75 @@ public class SQLite {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
+    }
+
+    public void update(String table, Map<String, String> map, String statement) {
+        try {
+            String fields = "";
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                if (entry.getValue() != null) {
+                    String value = entry.getValue().replaceAll("'", "");
+                    if (fields != "") {
+                        fields += "," + entry.getKey() + "='" + value + "'";
+                    } else {
+                        fields += entry.getKey() + "='" + value + "'";
+                    }
+                }
+            }
+
+            Class.forName("org.sqlite.JDBC");
+            Connection c = DriverManager.getConnection("jdbc:sqlite:" + dbname);
+            Statement stmt = c.createStatement();
+
+            String sql = "UPDATE " + table + " SET " + fields + " WHERE " + statement + ";";
+
+            stmt.executeUpdate(sql);
+            stmt.close();
+            c.close();
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+
+    }
+
+    public int exsists(String table, String field, String statement) {
+        ResultSet rs = null;
+        List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
+        Map<String, Object> row = null;
+
+        if (field.isEmpty()) {
+            field = "*";
+        }
+
+        try {
+            Class.forName("org.sqlite.JDBC");
+            Connection c = DriverManager.getConnection("jdbc:sqlite:" + dbname);
+            c.setAutoCommit(false);
+            Statement stmt = c.createStatement();
+
+            rs = stmt.executeQuery("SELECT " + field + " FROM " + table + " WHERE " + statement + ";");
+
+            ResultSetMetaData metaData = rs.getMetaData();
+            Integer columnCount = metaData.getColumnCount();
+
+            while (rs.next()) {
+                row = new HashMap<String, Object>();
+                for (int i = 1; i <= columnCount; i++) {
+                    row.put(metaData.getColumnName(i), rs.getObject(i));
+                }
+                resultList.add(row);
+            }
+
+            rs.close();
+            stmt.close();
+            c.close();
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+
+        return resultList.size();
     }
 
     public List select(String table, String field, String statement) {

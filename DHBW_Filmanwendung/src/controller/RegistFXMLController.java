@@ -47,7 +47,6 @@ public class RegistFXMLController implements Initializable {
                 }
             }
 
-            System.out.println(username);
             //Überprüft ob der Name schon vergeben ist.
             if (username != txtUserName.getText() && txtUserName.getText() != null ) {
                 Map<String, String> map = new HashMap<>();

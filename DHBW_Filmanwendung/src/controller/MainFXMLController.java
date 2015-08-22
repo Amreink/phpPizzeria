@@ -10,7 +10,9 @@ import classes.User;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -173,19 +175,46 @@ public class MainFXMLController implements Initializable {
 
     }
 
+    private void sqlInsertToMovie(Movie movie) {
+        sql.insert("Movie", movie.getMap());
+    }
+
+    private void sqlInsertToMovielist(Movie movie) {
+        Map<String, String> movielist = new HashMap<>();
+        movielist.put("UserID", user.getId());
+        movielist.put("imdbID", movie.getImdbID());
+        movielist.put("MerkList", Boolean.toString(movie.isBookmark()));
+        movielist.put("FavList", Boolean.toString(movie.isFavourite()));
+        movielist.put("UserRate", movie.getUserRating());
+        sql.insert("Movielist", movielist);
+    }
+
+    private void sqlUpdateMovielist(Movie movie) {
+        Map<String, String> movielist = new HashMap<>();
+        movielist.put("UserID", user.getId());
+        movielist.put("imdbID", movie.getImdbID());
+        movielist.put("MerkList", Boolean.toString(movie.isBookmark()));
+        movielist.put("FavList", Boolean.toString(movie.isFavourite()));
+        movielist.put("UserRate", movie.getUserRating());
+        sql.update("Movielist", movielist, "imdbID = '" + movie.getImdbID() + "'");
+    }
+
     //Setzt einen Film auf die Favoritenliste, oder entfernt ihn.
     @FXML
     private void onFav() {
         if (currentMovie != null) {
-            if (currentMovie.isFavourite()) {
-                Movie movie2 = movies.getMovieByObject(currentMovie);
-                movie2.setFavourite(false);
-                loadMovie(currentMovie.getId());
-            } else {
-                this.currentMovie.setFavourite(true);
-                movies.addMovie(this.currentMovie);
-                loadMovie(currentMovie.getId());
+            this.currentMovie.setFavourite(true);
+            movies.addMovie(this.currentMovie);
+            loadMovie(currentMovie.getId());
+            if (sql.exsists("Movie", "imdbID", "imdbID = '" + currentMovie.getImdbID() + "'") < 1) {
+                sqlInsertToMovie(currentMovie);
             }
+            if (sql.exsists("Movielist", "UserID, imdbID", "UserID = '" + user.getId() + "' and imdbID = '" + currentMovie.getImdbID() + "'") > 0) {
+                sqlUpdateMovielist(currentMovie);
+            } else {
+                sqlInsertToMovielist(currentMovie);
+            }
+
         }
     }
 
@@ -193,14 +222,16 @@ public class MainFXMLController implements Initializable {
     @FXML
     private void onBookmark() {
         if (currentMovie != null) {
-            if (currentMovie.isBookmark()) {
-                Movie movie3 = movies.getMovieByObject(currentMovie);
-                movie3.setBookmark(false);
-                loadMovie(currentMovie.getId());
+            this.currentMovie.setBookmark(true);
+            movies.addMovie(this.currentMovie);
+            loadMovie(currentMovie.getId());
+            if (sql.exsists("Movie", "imdbID", "imdbID = '" + currentMovie.getImdbID() + "'") < 1) {
+                sqlInsertToMovie(currentMovie);
+            }
+            if (sql.exsists("Movielist", "UserID, imdbID", "UserID = '" + user.getId() + "' and imdbID = '" + currentMovie.getImdbID() + "'") > 0) {
+                sqlUpdateMovielist(currentMovie);
             } else {
-                this.currentMovie.setBookmark(true);
-                movies.addMovie(this.currentMovie);
-                loadMovie(currentMovie.getId());
+                sqlInsertToMovielist(currentMovie);
             }
         }
     }
@@ -383,18 +414,44 @@ public class MainFXMLController implements Initializable {
         }
     }
 
-    //???
+    private void loadMovies() {
+        List movielistRS = sql.select("Movielist", "*", "UserID = '" + user.getId() + "'");
+
+        for (Object movielistElement : movielistRS) {
+            Map<String, Object> movielistRow = (Map<String, Object>) movielistElement;
+            Movie movie = new Movie();
+            movie.setImdbID((String) movielistRow.get("imdbID"));
+            movie.setBookmark(Boolean.parseBoolean((String) movielistRow.get("MerkList")));
+            movie.setFavourite(Boolean.parseBoolean((String) movielistRow.get("FavList")));
+            movie.setUserRating((String) movielistRow.get("userRate"));
+            List movieRS = sql.select("Movie", "*", "imdbID = '" + movie.getImdbID() + "'");
+            for (Object movieElement : movieRS) {
+                Map<String, Object> movieRow = (Map<String, Object>) movieElement;
+                //movie.setActors((String) movieRow.get("Actors"));
+                movie.setGenre((String) movieRow.get("Genre"));
+                movie.setImdbRating((String) movieRow.get("imdbRating"));
+                movie.setPlot((String) movieRow.get("Plot"));
+                movie.setPoster((String) movieRow.get("Poster"));
+                movie.setReleased((String) movieRow.get("Released"));
+                movie.setRuntime((String) movieRow.get("Runtime"));
+                movie.setTitle((String) movieRow.get("Title"));
+                movie.setYear((String) movieRow.get("Year"));
+                movie.setDirector((String) movieRow.get("Director"));
+            }
+            movies.addMovie(movie);
+        }
+    }
+
+    //initialmethode wird aufgerufen wenn controller geladen wird.
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
     }
 
     //???
     public void datenuebergabe(User user) {
-
         lblWelcome.setText("Hallo " + user.getName());
         this.user = user;
-
+        loadMovies();
     }
 
     @FXML
@@ -479,6 +536,9 @@ public class MainFXMLController implements Initializable {
             movie.setFavourite(true);
             movies.updateMovie(movie);
             loadBookmarks();
+            if (sql.exsists("Movielist", "UserID, imdbID", "UserID = '" + user.getId() + "' and imdbID = '" + movie.getImdbID() + "'") > 0) {
+                sqlUpdateMovielist(movie);
+            }
         }
     }
 }
