@@ -525,7 +525,7 @@ public class MainFXMLController implements Initializable {
             }
         }
         if (array.size() > 0) {
-            pdf.exportMovies(array, "favoritenliste");
+            pdf.exportMovies(array, "Favoritenliste");
         } else {
             FXMLLoader fxmlLoader = null;
             fxmlLoader = new FXMLLoader(getClass().getResource("/view/ErrorFXML.fxml"));
@@ -555,7 +555,7 @@ public class MainFXMLController implements Initializable {
             }
         }
         if (array.size() > 0) {
-            pdf.exportMovies(array, "merkliste");
+            pdf.exportMovies(array, "Merkliste");
         } else {
             FXMLLoader fxmlLoader = null;
             fxmlLoader = new FXMLLoader(getClass().getResource("/view/ErrorFXML.fxml"));
