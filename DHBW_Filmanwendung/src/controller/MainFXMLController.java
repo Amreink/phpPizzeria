@@ -43,7 +43,7 @@ public class MainFXMLController implements Initializable {
 
     User user = null;
 
-    private Movie currentMovie;
+    private Movie currentMovie = null;
 
     @FXML
     private ListView searchlist;
@@ -68,6 +68,22 @@ public class MainFXMLController implements Initializable {
     @FXML
     private Button btnDetailPlay;
     @FXML
+    private Button btnDetailFav;
+    @FXML
+    private Button btnDetailBookmark;
+    @FXML
+    private Button btnFavDel;
+    @FXML
+    private Button btnFavPdf;
+    @FXML
+    private Button btnFavLooked;
+    @FXML
+    private Button btnBookmarkDel;
+    @FXML
+    private Button btnBookmarkToFav;
+    @FXML
+    private Button btnBookmarkPdf;
+    @FXML
     private WebView webView;
     @FXML
     private Label lblWelcome;
@@ -80,7 +96,7 @@ public class MainFXMLController implements Initializable {
         this.movies = MovieList.getInstance();
     }
 
-    //Öffnet ein POP-UP in der Favliste
+    //Öffnet ein POP-UP in der Favliste.
     @FXML
     public void onFavPressed(MouseEvent event) throws IOException {
         if (event.getClickCount() == 2) {
@@ -106,7 +122,7 @@ public class MainFXMLController implements Initializable {
         }
     }
 
-    //Öffnet ein  POP-UP in der Merkliste
+    //Öffnet ein  POP-UP in der Merkliste.
     @FXML
     public void onBookmarkPressed(MouseEvent event) throws IOException {
 
@@ -132,11 +148,26 @@ public class MainFXMLController implements Initializable {
         }
     }
 
-    //Öffnet ein Pop-up,welcher den Trailer eines Filmes abspielt
+    //Exportiert den in der Detailansicht gewählten Film als PDF
     @FXML
     private void onPlay() throws IOException {
-        PdfExport pdf = new PdfExport();
-        pdf.exportMovie(currentMovie);
+        if (currentMovie != null) {
+            PdfExport pdf = new PdfExport();
+            pdf.exportMovie(currentMovie);
+        } else {
+            FXMLLoader fxmlLoader = null;
+            fxmlLoader = new FXMLLoader(getClass().getResource("/view/ErrorFXML.fxml"));
+            Parent root = fxmlLoader.load();
+
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            stage.setScene(scene);
+            stage.setTitle("Error");
+            stage.show();
+        }
     }
 
     //Was tue ich genau? Threads für die Livesearch?
@@ -199,9 +230,9 @@ public class MainFXMLController implements Initializable {
         sql.update("Movielist", movielist, "imdbID = '" + movie.getImdbID() + "'");
     }
 
-    //Setzt einen Film auf die Favoritenliste, oder entfernt ihn.
+    //Setzt einen Film auf die Favoritenliste, oder entfernt ihn. Fehlermeldung falls kein Film gewählt.
     @FXML
-    private void onFav() {
+    private void onFav() throws IOException {
         if (currentMovie != null) {
             this.currentMovie.setFavourite(true);
             movies.addMovie(this.currentMovie);
@@ -216,11 +247,25 @@ public class MainFXMLController implements Initializable {
             }
 
         }
+        else {
+            FXMLLoader fxmlLoader = null;
+            fxmlLoader = new FXMLLoader(getClass().getResource("/view/ErrorFXML.fxml"));
+            Parent root = fxmlLoader.load();
+
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            stage.setScene(scene);
+            stage.setTitle("Error");
+            stage.show();
+        }
     }
 
-    //Setzt einen Film auf die Merkliste, oder entfernt ihn.
+    //Setzt einen Film auf die Merkliste, oder entfernt ihn. Fehlermeldung falls kein Film gewählt.
     @FXML
-    private void onBookmark() {
+    private void onBookmark() throws IOException {
         if (currentMovie != null) {
             this.currentMovie.setBookmark(true);
             movies.addMovie(this.currentMovie);
@@ -234,9 +279,23 @@ public class MainFXMLController implements Initializable {
                 sqlInsertToMovielist(currentMovie);
             }
         }
+        else {
+            FXMLLoader fxmlLoader = null;
+            fxmlLoader = new FXMLLoader(getClass().getResource("/view/ErrorFXML.fxml"));
+            Parent root = fxmlLoader.load();
+
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            stage.setScene(scene);
+            stage.setTitle("Error");
+            stage.show();
+        }
     }
 
-    //Lade die Filme in die Favoritenliste
+    //Lade die Filme in die Favoritenliste.
     @FXML
     private void loadFavorites() {
 
@@ -272,7 +331,7 @@ public class MainFXMLController implements Initializable {
         favoriteTable.setItems(fav);
     }
 
-    //Lade die Filme in die Merkliste
+    //Lade die Filme in die Merkliste.
     @FXML
     private void loadBookmarks() {
 
@@ -305,13 +364,13 @@ public class MainFXMLController implements Initializable {
         bookmarkTable.setItems(bookmark);
     }
 
-    //Wofür bin ich zuständig?
+    //Lässt die Ergebnisliste der Suche nach verlassen der Liste verschwinden.
     @FXML
     private void onCenterDragOver() {
         searchlist.setVisible(false);
     }
 
-    //???
+    //Wählt Film für Detailansicht aus Suchliste aus.
     @FXML
     private void onSearchlistClick(MouseEvent event
     ) {
@@ -324,7 +383,7 @@ public class MainFXMLController implements Initializable {
         }
     }
 
-    //Zeige die Suchergebnisse aus der omdb
+    //Zeige die Suchergebnisse aus der omdb.
     private void showResults(String title, String year) {
         try {
             ArrayList<Movie> results_array = omdb.searchByTitle(title, year);
@@ -338,7 +397,7 @@ public class MainFXMLController implements Initializable {
         }
     }
 
-    //Lade die Detailansicht
+    //Lade die Detailansicht.
     private void loadMovie(String id) {
         String imageUrl = null;
         Movie movie;
@@ -414,6 +473,7 @@ public class MainFXMLController implements Initializable {
         }
     }
 
+    //Lädt die vom Nutzer gespeicherten Filme aus der SQLLite Datenbank.
     private void loadMovies() {
         List movielistRS = sql.select("Movielist", "*", "UserID = '" + user.getId() + "'");
 
@@ -447,15 +507,16 @@ public class MainFXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
     }
 
-    //???
+    //Übergabe des in LoginFXMLController eingegebenen Benutzernamens.
     public void datenuebergabe(User user) {
         lblWelcome.setText("Hallo " + user.getName());
         this.user = user;
         loadMovies();
     }
-
+    
+    // Exportiert die Favoritenliste als PDF. Fehlermeldung falls kein Film in Liste.
     @FXML
-    public void pdfListExportFav() {
+    public void pdfListExportFav() throws IOException {
         PdfExport pdf = new PdfExport();
         ArrayList<Movie> array = new ArrayList();
 
@@ -466,12 +527,27 @@ public class MainFXMLController implements Initializable {
             }
         }
         if (array.size() > 0) {
-            pdf.exportMovies(array, "favouritenliste");
+            pdf.exportMovies(array, "favoritenliste");
+        }
+        else {
+            FXMLLoader fxmlLoader = null;
+            fxmlLoader = new FXMLLoader(getClass().getResource("/view/ErrorFXML.fxml"));
+            Parent root = fxmlLoader.load();
+
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            stage.setScene(scene);
+            stage.setTitle("Error");
+            stage.show();
         }
     }
-
+    
+    // Exportiert die Merkliste als PDF. Fehlermeldung falls kein Film in Liste.
     @FXML
-    public void pdfListExportBook() {
+    public void pdfListExportBook() throws IOException {
         PdfExport pdf = new PdfExport();
         ArrayList<Movie> array = new ArrayList();
 
@@ -483,9 +559,24 @@ public class MainFXMLController implements Initializable {
         }
         if (array.size() > 0) {
             pdf.exportMovies(array, "merkliste");
+        } 
+        else {
+            FXMLLoader fxmlLoader = null;
+            fxmlLoader = new FXMLLoader(getClass().getResource("/view/ErrorFXML.fxml"));
+            Parent root = fxmlLoader.load();
+
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            stage.setScene(scene);
+            stage.setTitle("Error");
+            stage.show();
         }
     }
 
+    //Entfernt gewählten Film aus Favoritenliste.
     @FXML
     public void FavoriteDelet() {
         Movie movie = (Movie) favoriteTable.getSelectionModel().getSelectedItem();
@@ -494,6 +585,7 @@ public class MainFXMLController implements Initializable {
         loadFavorites();
     }
 
+    //Entfernt gewählten Film aus Merkliste.
     @FXML
     public void BookmarkDelet() {
         Movie movie = (Movie) bookmarkTable.getSelectionModel().getSelectedItem();
@@ -502,6 +594,7 @@ public class MainFXMLController implements Initializable {
         loadBookmarks();
     }
 
+    //Leert die Detailansicht beim verlassen.
     @FXML
     public void onDetailClose() {
         detailImage.setImage(null);
@@ -513,7 +606,8 @@ public class MainFXMLController implements Initializable {
         imageRow3.setVisible(false);
         currentMovie = null;
     }
-
+    
+    //Markiert einen Film auf der Favoritenliste als gesehen/ungesehen.
     @FXML
     public void movieLooked() {
         Movie movie = (Movie) favoriteTable.getSelectionModel().getSelectedItem();
@@ -527,7 +621,8 @@ public class MainFXMLController implements Initializable {
             loadFavorites();
         }
     }
-
+    
+    //Verschiebt einen Film aus der Merkliste in die Favoritenliste.
     @FXML
     public void movieToFav() {
         Movie movie = (Movie) bookmarkTable.getSelectionModel().getSelectedItem();
@@ -540,5 +635,52 @@ public class MainFXMLController implements Initializable {
                 sqlUpdateMovielist(movie);
             }
         }
+    }
+    
+    //Verantwortlich für die Tooltips der einzelnen Buttons auf der MainFXML.fxml.
+    @FXML
+    public void onFavEntered() {
+        Tooltip fav = new Tooltip("Film zur Favoritenliste hinzufügen");
+        Tooltip.install(btnDetailFav, fav);
+    }
+    @FXML
+    public void onBookmarkEntered() {
+        Tooltip bm = new Tooltip("Film zur Merkliste hinzufügen");
+        Tooltip.install(btnDetailBookmark, bm);
+    }
+    @FXML
+    public void onPlayEntered() {
+        Tooltip pdf = new Tooltip("Film als PDF exportieren");
+        Tooltip.install(btnDetailPlay, pdf);
+    }
+    @FXML
+    public void onFavDelEntered() {
+        Tooltip favdel = new Tooltip("Film aus Favoriten entfernen");
+        Tooltip.install(btnFavDel, favdel);
+    }
+    @FXML
+    public void onFavPdfEntered() {
+        Tooltip favpdf = new Tooltip("Favoritenliste als PDF exportieren");
+        Tooltip.install(btnFavPdf, favpdf);
+    }
+    @FXML
+    public void onFavLookedEntered() {
+        Tooltip favlooked = new Tooltip("Film als gesehen markieren");
+        Tooltip.install(btnFavLooked, favlooked);
+    }
+    @FXML
+    public void onBookmarkDelEntered() {
+        Tooltip bookmarkdel = new Tooltip("Film aus Merkliste entfernen");
+        Tooltip.install(btnBookmarkDel, bookmarkdel);
+    }
+    @FXML
+    public void onBookmarkPdfEntered() {
+        Tooltip bookmarkpdf = new Tooltip("Merkliste als PDF exportieren");
+        Tooltip.install(btnBookmarkPdf, bookmarkpdf);
+    }
+    @FXML
+    public void onBookmarkToFavEntered() {
+        Tooltip bookmarktofav = new Tooltip("Film in Favoritenliste verschieben");
+        Tooltip.install(btnBookmarkToFav, bookmarktofav);
     }
 }
