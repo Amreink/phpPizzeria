@@ -246,8 +246,7 @@ public class MainFXMLController implements Initializable {
                 sqlInsertToMovielist(currentMovie);
             }
 
-        }
-        else {
+        } else {
             FXMLLoader fxmlLoader = null;
             fxmlLoader = new FXMLLoader(getClass().getResource("/view/ErrorFXML.fxml"));
             Parent root = fxmlLoader.load();
@@ -278,8 +277,7 @@ public class MainFXMLController implements Initializable {
             } else {
                 sqlInsertToMovielist(currentMovie);
             }
-        }
-        else {
+        } else {
             FXMLLoader fxmlLoader = null;
             fxmlLoader = new FXMLLoader(getClass().getResource("/view/ErrorFXML.fxml"));
             Parent root = fxmlLoader.load();
@@ -513,7 +511,7 @@ public class MainFXMLController implements Initializable {
         this.user = user;
         loadMovies();
     }
-    
+
     // Exportiert die Favoritenliste als PDF. Fehlermeldung falls kein Film in Liste.
     @FXML
     public void pdfListExportFav() throws IOException {
@@ -528,8 +526,7 @@ public class MainFXMLController implements Initializable {
         }
         if (array.size() > 0) {
             pdf.exportMovies(array, "favoritenliste");
-        }
-        else {
+        } else {
             FXMLLoader fxmlLoader = null;
             fxmlLoader = new FXMLLoader(getClass().getResource("/view/ErrorFXML.fxml"));
             Parent root = fxmlLoader.load();
@@ -544,7 +541,7 @@ public class MainFXMLController implements Initializable {
             stage.show();
         }
     }
-    
+
     // Exportiert die Merkliste als PDF. Fehlermeldung falls kein Film in Liste.
     @FXML
     public void pdfListExportBook() throws IOException {
@@ -559,8 +556,7 @@ public class MainFXMLController implements Initializable {
         }
         if (array.size() > 0) {
             pdf.exportMovies(array, "merkliste");
-        } 
-        else {
+        } else {
             FXMLLoader fxmlLoader = null;
             fxmlLoader = new FXMLLoader(getClass().getResource("/view/ErrorFXML.fxml"));
             Parent root = fxmlLoader.load();
@@ -576,22 +572,56 @@ public class MainFXMLController implements Initializable {
         }
     }
 
-    //Entfernt gewählten Film aus Favoritenliste.
+    //Entfernt gewählten Film aus Favoritenliste. Fehlermeldung wenn kein Film vorhanden.
     @FXML
-    public void FavoriteDelet() {
+    public void FavoriteDelet() throws IOException {
         Movie movie = (Movie) favoriteTable.getSelectionModel().getSelectedItem();
-        movie.setFavourite(false);
-        movies.updateMovie(movie);
-        loadFavorites();
+        if (movie != null) {
+            movie.setFavourite(false);
+            movies.updateMovie(movie);
+            loadFavorites();
+            currentMovie = null;
+        } 
+//            else {
+//            FXMLLoader fxmlLoader = null;
+//            fxmlLoader = new FXMLLoader(getClass().getResource("/view/ErrorFXML.fxml"));
+//            Parent root = fxmlLoader.load();
+//
+//            Stage stage = new Stage();
+//            Scene scene = new Scene(root);
+//
+//            stage.initModality(Modality.APPLICATION_MODAL);
+//            stage.initStyle(StageStyle.TRANSPARENT);
+//            stage.setScene(scene);
+//            stage.setTitle("Error");
+//            stage.show();
+//        }
     }
 
-    //Entfernt gewählten Film aus Merkliste.
+    //Entfernt gewählten Film aus Merkliste. Fehlermeldung wenn kein Film vorhanden.
     @FXML
-    public void BookmarkDelet() {
+    public void BookmarkDelet() throws IOException {
         Movie movie = (Movie) bookmarkTable.getSelectionModel().getSelectedItem();
-        movie.setBookmark(false);
-        movies.updateMovie(movie);
-        loadBookmarks();
+        if (movie != null) {
+            movie.setBookmark(false);
+            movies.updateMovie(movie);
+            loadBookmarks();
+            currentMovie = null;
+        } 
+//        else {
+//            FXMLLoader fxmlLoader = null;
+//            fxmlLoader = new FXMLLoader(getClass().getResource("/view/ErrorFXML.fxml"));
+//            Parent root = fxmlLoader.load();
+//
+//            Stage stage = new Stage();
+//            Scene scene = new Scene(root);
+//
+//            stage.initModality(Modality.APPLICATION_MODAL);
+//            stage.initStyle(StageStyle.TRANSPARENT);
+//            stage.setScene(scene);
+//            stage.setTitle("Error");
+//            stage.show();
+//        }
     }
 
     //Leert die Detailansicht beim verlassen.
@@ -606,10 +636,10 @@ public class MainFXMLController implements Initializable {
         imageRow3.setVisible(false);
         currentMovie = null;
     }
-    
-    //Markiert einen Film auf der Favoritenliste als gesehen/ungesehen.
+
+    //Markiert einen Film auf der Favoritenliste als gesehen/ungesehen. Fehlermeldung wenn kein Film vorhanden.
     @FXML
-    public void movieLooked() {
+    public void movieLooked() throws IOException {
         Movie movie = (Movie) favoriteTable.getSelectionModel().getSelectedItem();
         if (movie != null) {
             if (movie.isLooked()) {
@@ -620,64 +650,101 @@ public class MainFXMLController implements Initializable {
             movies.updateMovie(movie);
             loadFavorites();
         }
+//        else {
+//            FXMLLoader fxmlLoader = null;
+//            fxmlLoader = new FXMLLoader(getClass().getResource("/view/ErrorFXML.fxml"));
+//            Parent root = fxmlLoader.load();
+//
+//            Stage stage = new Stage();
+//            Scene scene = new Scene(root);
+//
+//            stage.initModality(Modality.APPLICATION_MODAL);
+//            stage.initStyle(StageStyle.TRANSPARENT);
+//            stage.setScene(scene);
+//            stage.setTitle("Error");
+//            stage.show();
+//        }
     }
-    
-    //Verschiebt einen Film aus der Merkliste in die Favoritenliste.
+
+    //Verschiebt einen Film aus der Merkliste in die Favoritenliste. Fehlermeldung wenn kein Film vorhanden.
     @FXML
-    public void movieToFav() {
+    public void movieToFav() throws IOException {
         Movie movie = (Movie) bookmarkTable.getSelectionModel().getSelectedItem();
         if (movie != null) {
             movie.setBookmark(false);
             movie.setFavourite(true);
             movies.updateMovie(movie);
             loadBookmarks();
+            currentMovie = null;
             if (sql.exsists("Movielist", "UserID, imdbID", "UserID = '" + user.getId() + "' and imdbID = '" + movie.getImdbID() + "'") > 0) {
                 sqlUpdateMovielist(movie);
             }
         }
+//        else {
+//            FXMLLoader fxmlLoader = null;
+//            fxmlLoader = new FXMLLoader(getClass().getResource("/view/ErrorFXML.fxml"));
+//            Parent root = fxmlLoader.load();
+//
+//            Stage stage = new Stage();
+//            Scene scene = new Scene(root);
+//
+//            stage.initModality(Modality.APPLICATION_MODAL);
+//            stage.initStyle(StageStyle.TRANSPARENT);
+//            stage.setScene(scene);
+//            stage.setTitle("Error");
+//            stage.show();
+//        }
     }
-    
+
     //Verantwortlich für die Tooltips der einzelnen Buttons auf der MainFXML.fxml.
     @FXML
     public void onFavEntered() {
         Tooltip fav = new Tooltip("Film zur Favoritenliste hinzufügen");
         Tooltip.install(btnDetailFav, fav);
     }
+
     @FXML
     public void onBookmarkEntered() {
         Tooltip bm = new Tooltip("Film zur Merkliste hinzufügen");
         Tooltip.install(btnDetailBookmark, bm);
     }
+
     @FXML
     public void onPlayEntered() {
         Tooltip pdf = new Tooltip("Film als PDF exportieren");
         Tooltip.install(btnDetailPlay, pdf);
     }
+
     @FXML
     public void onFavDelEntered() {
         Tooltip favdel = new Tooltip("Film aus Favoriten entfernen");
         Tooltip.install(btnFavDel, favdel);
     }
+
     @FXML
     public void onFavPdfEntered() {
         Tooltip favpdf = new Tooltip("Favoritenliste als PDF exportieren");
         Tooltip.install(btnFavPdf, favpdf);
     }
+
     @FXML
     public void onFavLookedEntered() {
         Tooltip favlooked = new Tooltip("Film als gesehen markieren");
         Tooltip.install(btnFavLooked, favlooked);
     }
+
     @FXML
     public void onBookmarkDelEntered() {
         Tooltip bookmarkdel = new Tooltip("Film aus Merkliste entfernen");
         Tooltip.install(btnBookmarkDel, bookmarkdel);
     }
+
     @FXML
     public void onBookmarkPdfEntered() {
         Tooltip bookmarkpdf = new Tooltip("Merkliste als PDF exportieren");
         Tooltip.install(btnBookmarkPdf, bookmarkpdf);
     }
+
     @FXML
     public void onBookmarkToFavEntered() {
         Tooltip bookmarktofav = new Tooltip("Film in Favoritenliste verschieben");
