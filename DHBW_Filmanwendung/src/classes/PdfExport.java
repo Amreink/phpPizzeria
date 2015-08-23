@@ -1,10 +1,13 @@
 package classes;
 
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.draw.LineSeparator;
 import controller.MainFXMLController;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -35,14 +38,15 @@ public class PdfExport {
                 PdfWriter.getInstance(document, new FileOutputStream(chooser.getCurrentDirectory() + "/" + movie.getTitle() + ".pdf"));
                 document.open();
                 document.add(Image.getInstance(new URL(movie.getPoster())));
-                document.add(new Paragraph(movie.getTitle()));
-                document.add(new Paragraph(movie.getYear()));
-                document.add(new Paragraph(movie.getGenre()));
-                document.add(new Paragraph(movie.getImdbRating()));
-                document.add(new Paragraph(movie.getRuntime()));
-                document.add(new Paragraph(movie.getPlot()));
-                document.add(new Paragraph(movie.getDirector()));
-                document.add(new Paragraph(movie.getActors()));
+                document.add(new Paragraph("Titel: " + movie.getTitle()));
+                document.add(new Paragraph("Jahr: " + movie.getYear()));
+                document.add(new Paragraph("Genre: " + movie.getGenre()));
+                document.add(new Paragraph("IMDB-Rating: " + movie.getImdbRating()));
+                document.add(new Paragraph("Laufzeit: " + movie.getRuntime()));
+                document.add(new Paragraph("Handlung: " + movie.getPlot()));
+                document.add(new Paragraph("Regisseur: " + movie.getDirector()));
+                document.add(new Paragraph("Schauspieler: " + movie.getActors()));
+                document.add(new LineSeparator(0.5f, 100, null, 0, -5));
                 document.close();
             } catch (DocumentException ex) {
                 Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
@@ -72,14 +76,16 @@ public class PdfExport {
                 document.open();
                 for (Movie movie : Movies) {
                     document.add(Image.getInstance(new URL(movie.getPoster())));
-                    document.add(new Paragraph(movie.getTitle()));
-                    document.add(new Paragraph(movie.getYear()));
-                    document.add(new Paragraph(movie.getGenre()));
-                    document.add(new Paragraph(movie.getImdbRating()));
-                    document.add(new Paragraph(movie.getRuntime()));
-                    document.add(new Paragraph(movie.getPlot()));
-                    document.add(new Paragraph(movie.getDirector()));
-                    document.add(new Paragraph(movie.getActors()));
+                    document.add(new Paragraph("Titel: " + movie.getTitle()));
+                    document.add(new Paragraph("Jahr: " + movie.getYear()));
+                    document.add(new Paragraph("Genre: " + movie.getGenre()));
+                    document.add(new Paragraph("IMDB-Rating: " + movie.getImdbRating()));
+                    document.add(new Paragraph("Laufzeit: " + movie.getRuntime()));
+                    document.add(new Paragraph("Handlung: " + movie.getPlot()));
+                    document.add(new Paragraph("Regisseur: " + movie.getDirector()));
+                    document.add(new Paragraph("Schauspieler: " + movie.getActors()));
+                    document.add(new LineSeparator(0.5f, 100, null, 0, -5));
+                    document.newPage();
                 }
                 document.close();
             } catch (DocumentException ex) {

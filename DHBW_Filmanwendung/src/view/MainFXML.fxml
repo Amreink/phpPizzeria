@@ -13,14 +13,14 @@
 <?import javafx.scene.layout.*?>
 <?import java.net.*?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainFXMLController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainFXMLController">
     <stylesheets>
         <URL value="@../css/mainFXML.css" />
     </stylesheets>
     <children>
         <StackPane fx:id="stackpane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <BorderPane>
+                <BorderPane prefHeight="600.0" prefWidth="1000.0">
                     <top>
                         <TextField fx:id="searchbar" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onKeyPressed="#onSearch" promptText="Filmsuche" styleClass="searchbar" BorderPane.alignment="CENTER">
                             <BorderPane.margin>
@@ -133,9 +133,9 @@
                                                                 </FlowPane>
                                                                 <FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="50.0" maxHeight="200.0" maxWidth="1.7976931348623157E308" prefHeight="200.0" GridPane.columnIndex="1">
                                                                     <children>
-                                                                        <Button mnemonicParsing="false" onAction="#onBookmark" styleClass="btnDetailBookmark" />
-                                                                        <Button mnemonicParsing="false" onAction="#onFav" styleClass="btnDetailFav" />
-                                                                        <Button fx:id="btnDetailPlay" mnemonicParsing="false" onAction="#onPlay" styleClass="btnDetailPlay" />
+                                                                        <Button fx:id="btnDetailBookmark" mnemonicParsing="false" onAction="#onBookmark" onMouseEntered="#onBookmarkEntered" styleClass="btnDetailBookmark" />
+                                                                        <Button fx:id="btnDetailFav" mnemonicParsing="false" onAction="#onFav" onMouseEntered="#onFavEntered" styleClass="btnDetailFav" />
+                                                                        <Button fx:id="btnDetailPlay" mnemonicParsing="false" onAction="#onPlay" onMouseEntered="#onPlayEntered" styleClass="btnDetailPlay" />
                                                                     </children>
                                                                 </FlowPane>
                                                             </children>
@@ -174,9 +174,9 @@
                                                    <children>
                                                       <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="100.0" StackPane.alignment="CENTER">
                                                          <children>
-                                                            <Button mnemonicParsing="false" onAction="#movieLooked" styleClass="btnLooked" />
-                                                            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#FavoriteDelet" styleClass="btnDelete" />
-                                                            <Button mnemonicParsing="false" onAction="#pdfListExportFav" styleClass="btnPdfList" />
+                                                            <Button fx:id="btnFavLooked" mnemonicParsing="false" onAction="#movieLooked" onMouseEntered="#onFavLookedEntered" styleClass="btnLooked" />
+                                                            <Button fx:id="btnFavDel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#FavoriteDelet" onMouseEntered="#onFavDelEntered" styleClass="btnDelete" />
+                                                            <Button fx:id="btnFavPdf" mnemonicParsing="false" onAction="#pdfListExportFav" onMouseEntered="#onFavPdfEntered" styleClass="btnPdfList" />
                                                          </children>
                                                       </VBox>
                                                    </children>
@@ -219,9 +219,9 @@
                                                    <children>
                                                       <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="100.0">
                                                          <children>
-                                                            <Button mnemonicParsing="false" onAction="#movieToFav" styleClass="btnToFav" />
-                                                            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#BookmarkDelet" styleClass="btnDelete" />
-                                                            <Button mnemonicParsing="false" onAction="#pdfListExportBook" styleClass="btnPdfList" text="Button" />
+                                                            <Button fx:id="btnBookmarkToFav" mnemonicParsing="false" onAction="#movieToFav" onMouseEntered="#onBookmarkToFavEntered" styleClass="btnToFav" />
+                                                            <Button fx:id="btnBookmarkDel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#BookmarkDelet" onMouseEntered="#onBookmarkDelEntered" styleClass="btnDelete" />
+                                                            <Button fx:id="btnBookmarkPdf" mnemonicParsing="false" onAction="#pdfListExportBook" onMouseEntered="#onBookmarkPdfEntered" styleClass="btnPdfList" text="Button" />
                                                          </children>
                                                       </VBox>
                                                    </children>
