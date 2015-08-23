@@ -1,9 +1,12 @@
 package classes;
 
 import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -36,17 +39,32 @@ public class PdfExport {
                 //und mit daten befüllt
                 Document document = new Document();
                 PdfWriter.getInstance(document, new FileOutputStream(chooser.getCurrentDirectory() + "/" + movie.getTitle() + ".pdf"));
+
                 document.open();
-                document.add(Image.getInstance(new URL(movie.getPoster())));
-                document.add(new Paragraph("Titel: " + movie.getTitle()));
+
+                Image image = Image.getInstance(new URL(movie.getPoster()));
+                image.setAlignment(1);
+                image.scalePercent(70);
+                LineSeparator ls = new LineSeparator();
+                Font boldFont = FontFactory.getFont("Times-Roman", 20, Font.BOLD);
+
+                Paragraph title = new Paragraph(movie.getTitle(), boldFont);
+                title.setAlignment(1);
+
+                //Element in der Reihnfolge wie sie angezeigt werden sollen
+                document.add(title);
+                document.add(new Chunk(ls));
+                document.add(new Chunk().NEWLINE);
+                document.add(image);
                 document.add(new Paragraph("Jahr: " + movie.getYear()));
                 document.add(new Paragraph("Genre: " + movie.getGenre()));
                 document.add(new Paragraph("IMDB-Rating: " + movie.getImdbRating()));
                 document.add(new Paragraph("Laufzeit: " + movie.getRuntime()));
-                document.add(new Paragraph("Handlung: " + movie.getPlot()));
                 document.add(new Paragraph("Regisseur: " + movie.getDirector()));
                 document.add(new Paragraph("Schauspieler: " + movie.getActors()));
-                document.add(new LineSeparator(0.5f, 100, null, 0, -5));
+                document.add(new Chunk(ls));
+                document.add(new Paragraph(movie.getPlot()));
+                document.add(new Chunk(ls));
                 document.close();
             } catch (DocumentException ex) {
                 Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
@@ -75,16 +93,29 @@ public class PdfExport {
                 PdfWriter.getInstance(document, new FileOutputStream(chooser.getCurrentDirectory() + "/" + outputname + ".pdf"));
                 document.open();
                 for (Movie movie : Movies) {
-                    document.add(Image.getInstance(new URL(movie.getPoster())));
-                    document.add(new Paragraph("Titel: " + movie.getTitle()));
+                    Image image = Image.getInstance(new URL(movie.getPoster()));
+                    image.setAlignment(1);
+                    image.scalePercent(70);
+                    LineSeparator ls = new LineSeparator();
+                    Font boldFont = FontFactory.getFont("Times-Roman", 20, Font.BOLD);
+
+                    Paragraph title = new Paragraph(movie.getTitle(), boldFont);
+                    title.setAlignment(1);
+
+                    //Element in der Reihnfolge wie sie angezeigt werden sollen
+                    document.add(title);
+                    document.add(new Chunk(ls));
+                    document.add(new Chunk().NEWLINE);
+                    document.add(image);
                     document.add(new Paragraph("Jahr: " + movie.getYear()));
                     document.add(new Paragraph("Genre: " + movie.getGenre()));
                     document.add(new Paragraph("IMDB-Rating: " + movie.getImdbRating()));
                     document.add(new Paragraph("Laufzeit: " + movie.getRuntime()));
-                    document.add(new Paragraph("Handlung: " + movie.getPlot()));
                     document.add(new Paragraph("Regisseur: " + movie.getDirector()));
                     document.add(new Paragraph("Schauspieler: " + movie.getActors()));
-                    document.add(new LineSeparator(0.5f, 100, null, 0, -5));
+                    document.add(new Chunk(ls));
+                    document.add(new Paragraph(movie.getPlot()));
+                    document.add(new Chunk(ls));
                     document.newPage();
                 }
                 document.close();
