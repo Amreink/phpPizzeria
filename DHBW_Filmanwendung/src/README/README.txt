@@ -1,30 +1,12 @@
 **************************************************************
 *************************Filmanwendung************************
-**Authors:	Artur Stalbaum, Timo Schmidt, Karsten Amrein**
-**Date: 	23.08.2015				    **
+**Autoren:	Artur Stalbaum, Timo Schmidt, Karsten Amrein**
+**Datum: 	23.08.2015				    **
 **Dozent:	Prof. Dr. Erik Behrends			    **
 **************************************************************
 **************************************************************
 
 ****************************README:***************************
-
-                         
-                      \`*-.                    
-                       )  _`-.                 
-                      .  : `. .                
-                      : _   '  \               
-                      ; *` _.   `*-._          
-                      `-.-'          `-.       
-                        ;       `       `.     
-                        :.       .        \    
-                        . \  .   :   .-'   .   
-                        '  `+.;  ;  '      :   
-                        :  '  |    ;       ;-. 
-                        ; '   : :`-:     _.`* ;
-                     .*' /  .*' ; .*`- +'  `*' 
-                     `*-*   `*-*  `*-*'
-
-
 *******************Inhalte der Anwendung:*********************
 Suche in der OMDB
 Ergebnis der Suche als Liste angezeigt
@@ -39,8 +21,8 @@ Merkliste:
 Anzeige der Merk-Liste und Detailansicht
 Film kann von dieser Liste entfernt werden
 Film kann von dieser Liste zu Fav hinzugefuegt werden!
-#######Film als gesehen markieren
-#######Liste zeigt erst gesehene und dann ungesehene Filme
+Film als gesehen markieren
+Liste zeigt erst gesehene und dann ungesehene Filme
 
 ************************NICE-TO-HAVE**************************
 Filmen auf Favoriten und Merkliste ein eigenes Rating geben
@@ -50,5 +32,6 @@ Favoriten und Merkliste sortieren
 SQL-Datenbank
 PDF-Ausdruck zu Detailansicht, Favliste und Merkliste
 
+***************************************************************
 
 

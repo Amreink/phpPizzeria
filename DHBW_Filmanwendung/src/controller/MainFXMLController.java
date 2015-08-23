@@ -421,9 +421,9 @@ public class MainFXMLController implements Initializable {
 
             if (movie != null) {
 
-                currentMovie = movie;
                 SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
                 selectionModel.select(0);
+                currentMovie = movie;
 
                 if (movie.getPoster().startsWith("http")) {
                     imageUrl = movie.getPoster();
