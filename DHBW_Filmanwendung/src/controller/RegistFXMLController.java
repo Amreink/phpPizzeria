@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import classes.SQLite;
@@ -17,11 +12,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-/**
- * FXML Controller class
- *
- * @author Arth
- */
 public class RegistFXMLController implements Initializable {
 
     @FXML
@@ -38,6 +28,7 @@ public class RegistFXMLController implements Initializable {
         if (!txtUserName.getText().isEmpty()) {
             SQLite sql = new SQLite();
 
+            //selektiert zu dem eingegeben namen alle einträge in der datenbank
             List rs = sql.select("User", "Username", "Username = '" + txtUserName.getText() + "'");
             String username = null;
             for (Object entrySet : rs) {

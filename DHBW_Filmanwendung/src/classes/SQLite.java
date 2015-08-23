@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package classes;
 
 import java.sql.*;
@@ -11,14 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- *
- * @author Arth
- */
 public class SQLite {
 
     private String dbname = "movieDB.db";
 
+    //--------------------------------------------------------------------------
+    //singelton-pattern
+    //--------------------------------------------------------------------------
     private static SQLite instance = null;
 
     public SQLite() {
@@ -30,7 +24,11 @@ public class SQLite {
         }
         return instance;
     }
+    //--------------------------------------------------------------------------
 
+    //erstellt falls nötig die benötigen tabelen in der datenbank
+    //über den befehl "CREATE TABLE IF NOT EXISTS" wird geprüft ob die tabelle
+    //exisiert und falls nicht wird sie erstellt
     public void createTable() {
         String sql;
         try {
@@ -79,6 +77,9 @@ public class SQLite {
         }
     }
 
+    //einfüge-methode um in die datenbank etwas einzufügen
+    //parameter: tabelen-name, die zu speicherenden werte werden als map mit-
+    //gegeben
     public void insert(String table, Map<String, String> map) {
         try {
             String col = "";
@@ -111,6 +112,9 @@ public class SQLite {
         }
     }
 
+    //aktualisiert einen datensatz in der datenbank
+    //parameter: tabellen-namen, werte die aktualsiert werden sollen als map, 
+    //where statement als string
     public void update(String table, Map<String, String> map, String statement) {
         try {
             String fields = "";
@@ -141,6 +145,9 @@ public class SQLite {
 
     }
 
+    //prüft ob element in der datenbank vorhanden ist
+    //falls etwas gefunden wurde gibt die methode die anzahl der gefundenen
+    //ergebnisse zurück
     public int exsists(String table, String field, String statement) {
         ResultSet rs = null;
         List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
@@ -180,6 +187,12 @@ public class SQLite {
         return resultList.size();
     }
 
+    //gibt geforderte datensätze zurück
+    //rückgabe typ ist eine List
+    //--> [{name:value},{name:value},...]
+    //zugriff auf diese liste:
+    //zurückgegebene list durch iterieren und bei bei jeder row ist kann über 
+    //row.getObject("name") auf value zugegriffen werden
     public List select(String table, String field, String statement) {
 
         ResultSet rs = null;

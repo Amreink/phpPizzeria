@@ -80,9 +80,10 @@ public class MainFXMLController implements Initializable {
         this.movies = MovieList.getInstance();
     }
 
-    //Öffnet ein POP-UP in der Favliste
+    //Öffnet ein POP-UP mit den Details zum Film in der Favliste
     @FXML
     public void onFavPressed(MouseEvent event) throws IOException {
+        //erst bei doppelklick wird die methode weiter ausgeführt
         if (event.getClickCount() == 2) {
             Movie movie = (Movie) favoriteTable.getSelectionModel().getSelectedItem();
             if (movie != null) {

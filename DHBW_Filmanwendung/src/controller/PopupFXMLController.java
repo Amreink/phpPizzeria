@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import classes.Movie;
@@ -28,10 +23,6 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.controlsfx.control.Rating;
 
-/**
- *
- * @author Timo
- */
 public class PopupFXMLController implements Initializable {
     
     MovieList movies = MovieList.getInstance();
@@ -55,12 +46,14 @@ public class PopupFXMLController implements Initializable {
     @FXML
     private Rating rating;
 
+    //methode um das popup-fenster zu schließen
     @FXML
     private void closePopup() {
         Stage stage = (Stage) btnSchließen.getScene().getWindow();
         stage.close();
     }
-    
+    //methode um movie zu bewerten
+    //user-rating
     @FXML
     private void onRate() {
         Movie movie = movies.getMovieById(this.movie.getId());
@@ -68,6 +61,7 @@ public class PopupFXMLController implements Initializable {
         movies.updateMovie(movie);
     }
 
+    //methode um movie-daten in das popup-fenster zu laden
     private void loadMoviePopup(Movie movie) {
 
         String imageUrl = null;
@@ -108,6 +102,7 @@ public class PopupFXMLController implements Initializable {
 
     }
 
+    //nimmt daten von einem anderen controller entgegen
     public void datenuebergabeMovie(Movie movie) {
         this.movie = movie;
         loadMoviePopup(this.movie);

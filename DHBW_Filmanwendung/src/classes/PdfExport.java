@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package classes;
 
 import com.itextpdf.text.Document;
@@ -20,21 +15,22 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 
-/**
- *
- * @author arth
- */
 public class PdfExport {
 
+    //exportiert ein movie objekt 
     public void exportMovie(Movie movie) {
+        //speicherort wird hier ausgewählt
         JFileChooser chooser = new JFileChooser();
         chooser.setCurrentDirectory(new java.io.File("."));
         chooser.setDialogTitle("Ordner wählen");
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         chooser.setAcceptAllFileFilterUsed(false);
 
+        //wenn speicherort ausgewählt wurde wird die methode weiter ausgeführt
         if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             try {
+                //mittels der itext-librarie wird ein dokument objekt erstellt
+                //und mit daten befüllt
                 Document document = new Document();
                 PdfWriter.getInstance(document, new FileOutputStream(chooser.getCurrentDirectory() + "/" + movie.getTitle() + ".pdf"));
                 document.open();
@@ -60,6 +56,8 @@ public class PdfExport {
         }
     }
 
+    //export eine ganze liste von movies
+    //parameter: arraylist vom typ movies, name der zu speicherden datei
     public void exportMovies(ArrayList<Movie> Movies, String outputname) {
         JFileChooser chooser = new JFileChooser();
         chooser.setCurrentDirectory(new java.io.File("."));

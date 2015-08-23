@@ -1,17 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package classes;
 
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- *
- * @author Artur
- */
 public class Movie {
 
     private String imdbID;
@@ -158,11 +149,14 @@ public class Movie {
         this.userRating = userRating;
     }
 
+    //toString-Methode bei der ausgabe der klasse movie wird der Titel
+    //des Movies zurück gegeben
     @Override
     public String toString() {
         return this.Title;
     }
-
+    
+    //gibt Filmdaten als map zurück
     public Map getMap() {
         Map<String, String> map = new HashMap<>();
         map.put("imdbID", imdbID);

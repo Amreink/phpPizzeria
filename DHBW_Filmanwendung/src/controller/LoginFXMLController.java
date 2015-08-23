@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import classes.SQLite;
@@ -28,11 +23,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.StageStyle;
 
-/**
- * FXML Controller class
- *
- * @author Artur
- */
 public class LoginFXMLController implements Initializable {
 
     @FXML
@@ -42,7 +32,10 @@ public class LoginFXMLController implements Initializable {
     @FXML
     private Label lblOnlineStatus;
 
-    //Lädt den User aus der DB
+    //Login-Methode 
+    //prüft den loginname ob dieser in der datenbank verfügbar ist
+    //wechselt die view
+    //übergibt den user vom login-controller an den main-controller
     @FXML
     public void login() throws SQLException {
 
@@ -56,7 +49,6 @@ public class LoginFXMLController implements Initializable {
             Map<String, Object> row = (Map<String, Object>) entrySet;
             username = (String) row.get("Username");
             userid = Integer.toString((int) row.get("UserID"));
-
         }
 
         if (username != null && username.contentEquals(txtLogin.getText())) {
@@ -101,6 +93,7 @@ public class LoginFXMLController implements Initializable {
     }
 
     //POP-UP der RegistFXML.fxml
+    //registrier-fenster
     @FXML
     public void Regist() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/RegistFXML.fxml"));
@@ -129,6 +122,7 @@ public class LoginFXMLController implements Initializable {
         }
     }
 
+    //methode um eine URL auf erreichbarkeit zur prüfen
     private static boolean netIsAvailable() {
         try {
             final URL url = new URL("http://www.omdbapi.com/");

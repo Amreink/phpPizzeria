@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package classes;
 
 import com.google.gson.Gson;
@@ -14,16 +9,14 @@ import java.util.ArrayList;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-/**
- *
- * @author Artur
- */
 public class OMDB {
 
+    //--------------------------------------------------------------------------
+    //Singelton-Pattern 
+    //--------------------------------------------------------------------------
     private static OMDB instance = null;
 
     public OMDB() {
-        // Exists only to defeat instantiation.
     }
 
     public static OMDB getInstance() {
@@ -32,7 +25,10 @@ public class OMDB {
         }
         return instance;
     }
+    //--------------------------------------------------------------------------
 
+    //sucht einen film anhand von titel und jahr in der OMDB datenbank und gibt 
+    //ein arraylist mit gefunden ergebnissen zurück
     public ArrayList searchByTitle(String movie_title, String year) throws MalformedURLException, IOException {
 
         String movieReplace = movie_title.replace(" ", "%");
@@ -47,6 +43,8 @@ public class OMDB {
         return movies.Search;
     }
 
+    //sucht einen film anhand der imdbID in der OMDB datenbank und gibt ein
+    //movie objekt zurück
     public Movie searchById(String id) throws MalformedURLException, IOException {
 
         String sURL = "http://www.omdbapi.com/?i=" + id + "&plot=full";
@@ -61,6 +59,8 @@ public class OMDB {
     }
 }
 
+//wird für die json Struktur gebraucht
+//siehe OMDB antwort /search/arraylist mit ergebnisen 
 class SearchResponse {
 
     ArrayList<Movie> Search;
