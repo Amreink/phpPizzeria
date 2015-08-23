@@ -14,7 +14,6 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -59,15 +58,6 @@ public class PopupFXMLController implements Initializable {
     private void closePopup() {
         Stage stage = (Stage) btnSchließen.getScene().getWindow();
         stage.close();
-        //Unterhalb löschen, falls keine Lösung
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/MainFXML.fxml"));
-            MainFXMLController mainController = (MainFXMLController) fxmlLoader.getController();
-            mainController.datenuebergabeRating(refreshtable);
-        }
-        catch(NullPointerException e){
-            System.out.println(refreshtable);
-        }
     }
 
     //methode um movie zu bewerten
@@ -124,10 +114,9 @@ public class PopupFXMLController implements Initializable {
     }
 
     //nimmt daten von einem anderen controller entgegen
-    public void datenuebergabeMovie(Movie movie, User user, boolean refreshtable) {
+    public void datenuebergabeMovie(Movie movie, User user) {
         this.movie = movie;
         this.user = user;
-        this.refreshtable = refreshtable;
         loadMoviePopup(this.movie);
     }
 

@@ -103,7 +103,7 @@ public class MainFXMLController implements Initializable {
         if (event.getClickCount() == 2) {
             Movie movie = (Movie) favoriteTable.getSelectionModel().getSelectedItem();
             if (movie != null) {
-                popup(movie, true);
+                popup(movie);
             }
         }
     }
@@ -115,7 +115,7 @@ public class MainFXMLController implements Initializable {
         if (event.getClickCount() == 2) {
             Movie movie = (Movie) bookmarkTable.getSelectionModel().getSelectedItem();
             if (movie != null) {
-                popup(movie, false);
+                popup(movie);
             }
         }
     }
@@ -131,7 +131,8 @@ public class MainFXMLController implements Initializable {
         }
     }
 
-    //Was tue ich genau? Threads für die Livesearch?
+    //Livesuche 
+    //buchstaben und zahlen werden getrennt und als titel oder jahr verstanden
     @FXML
     private void onSearch() {
         if (!searchbar.getText().isEmpty()) {
@@ -167,10 +168,13 @@ public class MainFXMLController implements Initializable {
 
     }
 
+    //fügt einen movie in die db ein
     private void sqlInsertToMovie(Movie movie) {
         sql.insert("Movie", movie.getMap());
     }
 
+    //fügt einen eintrag in die zwischentabelle movielist ein 
+    //zwischentabelle für user - movie 
     private void sqlInsertToMovielist(Movie movie) {
         Map<String, String> movielist = new HashMap<>();
         movielist.put("UserID", user.getId());
@@ -181,6 +185,7 @@ public class MainFXMLController implements Initializable {
         sql.insert("Movielist", movielist);
     }
 
+    //aktualisiert einen eintrag in der zwischentabelle movielist
     private void sqlUpdateMovielist(Movie movie) {
         if (sql.exsists("Movielist", "UserID, imdbID", "UserID = '" + user.getId() + "' and imdbID = '" + movie.getImdbID() + "'") > 0) {
             Map<String, String> movielist = new HashMap<>();
@@ -194,6 +199,7 @@ public class MainFXMLController implements Initializable {
         }
     }
 
+    //löscht einen eintrag aus der zwischentabelle movielist
     private void sqlDeleteFromMovielist(Movie movie) {
         if (!movie.isFavourite() && !movie.isBookmark()) {
             if (sql.exsists("Movielist", "UserID, imdbID", "UserID = '" + user.getId() + "' and imdbID = '" + movie.getImdbID() + "'") > 0) {
@@ -469,16 +475,6 @@ public class MainFXMLController implements Initializable {
         this.user = user;
         loadMovies();
     }
-    
-    //Übergabe des Wertes in welcher Tabelle das Popup Fenster geöffnet wurde.
-    public void datenuebergabeRating(boolean refreshtable) {
-        if (refreshtable == true) {
-            refreshFavorites();
-        }
-        if (refreshtable == false) {
-            refreshBookmarks();
-        }
-    }
 
     // Exportiert die Favoritenliste als PDF. Fehlermeldung falls kein Film in Liste.
     @FXML
@@ -598,7 +594,7 @@ public class MainFXMLController implements Initializable {
     }
 
     //Öffnet Popup Fenster. Aufgerufen durch Doppelklick in Favoriten- oder Merkliste (s.o.)
-    private void popup(Movie movie, boolean refreshtable) throws IOException {
+    private void popup(Movie movie) throws IOException {
         FXMLLoader fxmlLoader = null;
         fxmlLoader = new FXMLLoader(getClass().getResource("/view/PopupFXML.fxml"));
         Parent root = fxmlLoader.load();
@@ -613,7 +609,7 @@ public class MainFXMLController implements Initializable {
         stage.show();
         
         PopupFXMLController popupController = (PopupFXMLController) fxmlLoader.getController();
-        popupController.datenuebergabeMovie(movie, user, refreshtable);
+        popupController.datenuebergabeMovie(movie, user);
     }
 
     //Gibt Fehlermeldung aus, wenn kein Film ausgewählt, oder in der aktuellen Liste vorhanden ist. "label" legt fest welche Fehlermeldung gezeigt werden soll.
