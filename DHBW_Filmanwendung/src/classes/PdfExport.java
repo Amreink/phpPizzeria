@@ -29,7 +29,8 @@ public class PdfExport {
         chooser.setDialogTitle("Ordner wählen");
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         chooser.setAcceptAllFileFilterUsed(false);
-
+        chooser.setApproveButtonText("Speichern");
+        
         //wenn speicherort ausgewählt wurde wird die methode weiter ausgeführt
         if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             try {
@@ -84,6 +85,7 @@ public class PdfExport {
         chooser.setDialogTitle("Ordner wählen");
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         chooser.setAcceptAllFileFilterUsed(false);
+        chooser.setApproveButtonText("Speichern");
 
         if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             try {

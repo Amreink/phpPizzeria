@@ -103,22 +103,7 @@ public class MainFXMLController implements Initializable {
         if (event.getClickCount() == 2) {
             Movie movie = (Movie) favoriteTable.getSelectionModel().getSelectedItem();
             if (movie != null) {
-
-                FXMLLoader fxmlLoader = null;
-                fxmlLoader = new FXMLLoader(getClass().getResource("/view/PopupFXML.fxml"));
-                Parent root = fxmlLoader.load();
-
-                Stage stage = new Stage();
-                Scene scene = new Scene(root);
-
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.initStyle(StageStyle.TRANSPARENT);
-                stage.setScene(scene);
-                stage.setTitle("Details");
-                stage.show();
-
-                PopupFXMLController popupController = (PopupFXMLController) fxmlLoader.getController();
-                popupController.datenuebergabeMovie(movie, user);
+                popup(movie, true);
             }
         }
     }
@@ -130,21 +115,7 @@ public class MainFXMLController implements Initializable {
         if (event.getClickCount() == 2) {
             Movie movie = (Movie) bookmarkTable.getSelectionModel().getSelectedItem();
             if (movie != null) {
-                FXMLLoader fxmlLoader = null;
-                fxmlLoader = new FXMLLoader(getClass().getResource("/view/PopupFXML.fxml"));
-                Parent root = fxmlLoader.load();
-
-                Stage stage = new Stage();
-                Scene scene = new Scene(root);
-
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.initStyle(StageStyle.TRANSPARENT);
-                stage.setScene(scene);
-                stage.setTitle("Details");
-                stage.show();
-
-                PopupFXMLController popupController = (PopupFXMLController) fxmlLoader.getController();
-                popupController.datenuebergabeMovie(movie, user);
+                popup(movie, false);
             }
         }
     }
@@ -156,18 +127,7 @@ public class MainFXMLController implements Initializable {
             PdfExport pdf = new PdfExport();
             pdf.exportMovie(currentMovie);
         } else {
-            FXMLLoader fxmlLoader = null;
-            fxmlLoader = new FXMLLoader(getClass().getResource("/view/ErrorFXML.fxml"));
-            Parent root = fxmlLoader.load();
-
-            Stage stage = new Stage();
-            Scene scene = new Scene(root);
-
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.TRANSPARENT);
-            stage.setScene(scene);
-            stage.setTitle("Error");
-            stage.show();
+            error(1);
         }
     }
 
@@ -259,18 +219,7 @@ public class MainFXMLController implements Initializable {
             }
 
         } else {
-            FXMLLoader fxmlLoader = null;
-            fxmlLoader = new FXMLLoader(getClass().getResource("/view/ErrorFXML.fxml"));
-            Parent root = fxmlLoader.load();
-
-            Stage stage = new Stage();
-            Scene scene = new Scene(root);
-
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.TRANSPARENT);
-            stage.setScene(scene);
-            stage.setTitle("Error");
-            stage.show();
+            error(1);
         }
     }
 
@@ -290,24 +239,22 @@ public class MainFXMLController implements Initializable {
                 sqlInsertToMovielist(currentMovie);
             }
         } else {
-            FXMLLoader fxmlLoader = null;
-            fxmlLoader = new FXMLLoader(getClass().getResource("/view/ErrorFXML.fxml"));
-            Parent root = fxmlLoader.load();
-
-            Stage stage = new Stage();
-            Scene scene = new Scene(root);
-
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.TRANSPARENT);
-            stage.setScene(scene);
-            stage.setTitle("Error");
-            stage.show();
+            error(1);
         }
     }
 
-    //Lade die Filme in die Favoritenliste.
+    @FXML
+    private void loadBookmarks() {
+        refreshBookmarks();
+    }
+
     @FXML
     private void loadFavorites() {
+        refreshFavorites();
+    }
+
+    //Lade die Filme in die Favoritenliste.
+    private void refreshFavorites() {
 
         ArrayList<Movie> favorites = new ArrayList();
 
@@ -340,8 +287,7 @@ public class MainFXMLController implements Initializable {
     }
 
     //Lade die Filme in die Merkliste.
-    @FXML
-    private void loadBookmarks() {
+    private void refreshBookmarks() {
 
         ArrayList<Movie> bookmarks = new ArrayList();
 
@@ -360,7 +306,6 @@ public class MainFXMLController implements Initializable {
         TableColumn ratingCol = new TableColumn("Rating");
         TableColumn userRatCol = new TableColumn("Benutzer Wertung");
         TableColumn lookedCol = new TableColumn("Gesehen");
-        lookedCol.setSortType(TableColumn.SortType.ASCENDING);
 
         titleCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("Title"));
         yearCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("Year"));
@@ -372,9 +317,7 @@ public class MainFXMLController implements Initializable {
 
         bookmarkTable.getColumns().setAll(titleCol, yearCol, genreCol, userRatCol, runCol, ratingCol, lookedCol);
         bookmarkTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        
         bookmarkTable.setItems(bookmark);
-        bookmarkTable.getSortOrder().add(lookedCol);
     }
 
     //Lässt die Ergebnisliste der Suche nach verlassen der Liste verschwinden.
@@ -424,9 +367,9 @@ public class MainFXMLController implements Initializable {
 
             if (movie != null) {
 
+                currentMovie = movie;
                 SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
                 selectionModel.select(0);
-                currentMovie = movie;
 
                 if (movie.getPoster().startsWith("http")) {
                     imageUrl = movie.getPoster();
@@ -526,6 +469,16 @@ public class MainFXMLController implements Initializable {
         this.user = user;
         loadMovies();
     }
+    
+    //Übergabe des Wertes in welcher Tabelle das Popup Fenster geöffnet wurde.
+    public void datenuebergabeRating(boolean refreshtable) {
+        if (refreshtable == true) {
+            refreshFavorites();
+        }
+        if (refreshtable == false) {
+            refreshBookmarks();
+        }
+    }
 
     // Exportiert die Favoritenliste als PDF. Fehlermeldung falls kein Film in Liste.
     @FXML
@@ -542,18 +495,7 @@ public class MainFXMLController implements Initializable {
         if (array.size() > 0) {
             pdf.exportMovies(array, "Favoritenliste");
         } else {
-            FXMLLoader fxmlLoader = null;
-            fxmlLoader = new FXMLLoader(getClass().getResource("/view/ErrorFXML.fxml"));
-            Parent root = fxmlLoader.load();
-
-            Stage stage = new Stage();
-            Scene scene = new Scene(root);
-
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.TRANSPARENT);
-            stage.setScene(scene);
-            stage.setTitle("Error");
-            stage.show();
+            error(0);
         }
     }
 
@@ -572,18 +514,7 @@ public class MainFXMLController implements Initializable {
         if (array.size() > 0) {
             pdf.exportMovies(array, "Merkliste");
         } else {
-            FXMLLoader fxmlLoader = null;
-            fxmlLoader = new FXMLLoader(getClass().getResource("/view/ErrorFXML.fxml"));
-            Parent root = fxmlLoader.load();
-
-            Stage stage = new Stage();
-            Scene scene = new Scene(root);
-
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.TRANSPARENT);
-            stage.setScene(scene);
-            stage.setTitle("Error");
-            stage.show();
+            error(0);
         }
     }
 
@@ -598,6 +529,8 @@ public class MainFXMLController implements Initializable {
             currentMovie = null;
             sqlUpdateMovielist(movie);
             sqlDeleteFromMovielist(movie);
+        } else {
+            error(1);
         }
     }
 
@@ -612,6 +545,8 @@ public class MainFXMLController implements Initializable {
             currentMovie = null;
             sqlUpdateMovielist(movie);
             sqlDeleteFromMovielist(movie);
+        } else {
+            error(1);
         }
     }
 
@@ -628,7 +563,7 @@ public class MainFXMLController implements Initializable {
         currentMovie = null;
     }
 
-    //Markiert einen Film auf der Favoritenliste als gesehen/ungesehen. Fehlermeldung wenn kein Film vorhanden.
+    //Markiert einen Film auf der Merkliste als gesehen/ungesehen. Fehlermeldung wenn kein Film vorhanden.
     @FXML
     public void movieLooked() throws IOException {
         Movie movie = (Movie) bookmarkTable.getSelectionModel().getSelectedItem();
@@ -641,6 +576,8 @@ public class MainFXMLController implements Initializable {
             movies.updateMovie(movie);
             loadBookmarks();
             sqlUpdateMovielist(movie);
+        } else {
+            error(1);
         }
     }
 
@@ -655,7 +592,47 @@ public class MainFXMLController implements Initializable {
             loadBookmarks();
             currentMovie = null;
             sqlUpdateMovielist(movie);
+        } else {
+            error(1);
         }
+    }
+
+    //Öffnet Popup Fenster. Aufgerufen durch Doppelklick in Favoriten- oder Merkliste (s.o.)
+    private void popup(Movie movie, boolean refreshtable) throws IOException {
+        FXMLLoader fxmlLoader = null;
+        fxmlLoader = new FXMLLoader(getClass().getResource("/view/PopupFXML.fxml"));
+        Parent root = fxmlLoader.load();
+
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.setScene(scene);
+        stage.setTitle("Details");
+        stage.show();
+        
+        PopupFXMLController popupController = (PopupFXMLController) fxmlLoader.getController();
+        popupController.datenuebergabeMovie(movie, user, refreshtable);
+    }
+
+    //Gibt Fehlermeldung aus, wenn kein Film ausgewählt, oder in der aktuellen Liste vorhanden ist. "label" legt fest welche Fehlermeldung gezeigt werden soll.
+    private void error(int label) throws IOException {
+        FXMLLoader fxmlLoader = null;
+        fxmlLoader = new FXMLLoader(getClass().getResource("/view/ErrorFXML.fxml"));
+        Parent root = fxmlLoader.load();
+
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.setScene(scene);
+        stage.setTitle("Fehler");
+        stage.show();
+
+        ErrorFXMLController errorController = (ErrorFXMLController) fxmlLoader.getController();
+        errorController.datenuebergabeError(label);
     }
 
     //Verantwortlich für die Tooltips der einzelnen Buttons auf der MainFXML.fxml.

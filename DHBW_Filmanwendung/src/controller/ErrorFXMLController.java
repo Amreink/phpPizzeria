@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 /**
@@ -21,17 +21,31 @@ import javafx.stage.Stage;
 public class ErrorFXMLController implements Initializable {
 
     @FXML
-    private Button btnClose;
-    
+    private Button btnCloseError;
     @FXML
-    private void onClose() {
-        Stage stage = (Stage) btnClose.getScene().getWindow();
+    private Label lblError;
+
+    int label = 0;
+
+    @FXML
+    private void onCloseError() {
+        Stage stage = (Stage) btnCloseError.getScene().getWindow();
         stage.close();
     }
-    
+
+    public void datenuebergabeError(int label) {
+        if (label == 0) {
+            lblError.setText("Kein Film in Liste!");
+            this.label = label;
+        }
+        if (label == 1) {
+            lblError.setText("Kein Film ausgewählt!");
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
+    }
+
 }
