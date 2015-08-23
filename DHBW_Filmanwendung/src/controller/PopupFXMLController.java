@@ -2,10 +2,14 @@ package controller;
 
 import classes.Movie;
 import classes.MovieList;
+import classes.SQLite;
 import classes.TableRow;
+import classes.User;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,10 +28,12 @@ import javafx.stage.Stage;
 import org.controlsfx.control.Rating;
 
 public class PopupFXMLController implements Initializable {
-    
+
     MovieList movies = MovieList.getInstance();
+    SQLite sql = SQLite.getInstance();
 
     Movie movie = null;
+    User user = null;
 
     @FXML
     private Button btnSchließen;
@@ -52,6 +58,7 @@ public class PopupFXMLController implements Initializable {
         Stage stage = (Stage) btnSchließen.getScene().getWindow();
         stage.close();
     }
+
     //methode um movie zu bewerten
     //user-rating
     @FXML
@@ -59,6 +66,9 @@ public class PopupFXMLController implements Initializable {
         Movie movie = movies.getMovieById(this.movie.getId());
         movie.setUserRating((Double.toString(rating.getRating())));
         movies.updateMovie(movie);
+        if (sql.exsists("Movielist", "UserID, imdbID", "UserID = '" + user.getId() + "' and imdbID = '" + movie.getImdbID() + "'") > 0) {
+            sqlUpdateMovielist(movie);
+        }
     }
 
     //methode um movie-daten in das popup-fenster zu laden
@@ -103,12 +113,23 @@ public class PopupFXMLController implements Initializable {
     }
 
     //nimmt daten von einem anderen controller entgegen
-    public void datenuebergabeMovie(Movie movie) {
+    public void datenuebergabeMovie(Movie movie,User user) {
         this.movie = movie;
+        this.user = user;
         loadMoviePopup(this.movie);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+    }
+    
+    private void sqlUpdateMovielist(Movie movie) {
+        Map<String, String> movielist = new HashMap<>();
+        movielist.put("UserID", user.getId());
+        movielist.put("imdbID", movie.getImdbID());
+        movielist.put("MerkList", Boolean.toString(movie.isBookmark()));
+        movielist.put("FavList", Boolean.toString(movie.isFavourite()));
+        movielist.put("UserRate", movie.getUserRating());
+        sql.update("Movielist", movielist, "imdbID = '" + movie.getImdbID() + "'");
     }
 }

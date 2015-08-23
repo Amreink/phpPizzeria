@@ -155,7 +155,7 @@ public class Movie {
     public String toString() {
         return this.Title;
     }
-    
+
     //gibt Filmdaten als map zurück
     public Map getMap() {
         Map<String, String> map = new HashMap<>();
@@ -166,6 +166,7 @@ public class Movie {
         map.put("Genre", Genre);
         map.put("Poster", Poster);
         map.put("Director", Director);
+        map.put("Actors", Actors);
         map.put("Released", Released);
         map.put("Plot", Plot);
         map.put("imdbRating", imdbRating);

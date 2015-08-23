@@ -118,7 +118,7 @@ public class MainFXMLController implements Initializable {
                 stage.show();
 
                 PopupFXMLController popupController = (PopupFXMLController) fxmlLoader.getController();
-                popupController.datenuebergabeMovie(movie);
+                popupController.datenuebergabeMovie(movie, user);
             }
         }
     }
@@ -144,7 +144,7 @@ public class MainFXMLController implements Initializable {
                 stage.show();
 
                 PopupFXMLController popupController = (PopupFXMLController) fxmlLoader.getController();
-                popupController.datenuebergabeMovie(movie);
+                popupController.datenuebergabeMovie(movie, user);
             }
         }
     }
@@ -222,13 +222,24 @@ public class MainFXMLController implements Initializable {
     }
 
     private void sqlUpdateMovielist(Movie movie) {
-        Map<String, String> movielist = new HashMap<>();
-        movielist.put("UserID", user.getId());
-        movielist.put("imdbID", movie.getImdbID());
-        movielist.put("MerkList", Boolean.toString(movie.isBookmark()));
-        movielist.put("FavList", Boolean.toString(movie.isFavourite()));
-        movielist.put("UserRate", movie.getUserRating());
-        sql.update("Movielist", movielist, "imdbID = '" + movie.getImdbID() + "'");
+        if (sql.exsists("Movielist", "UserID, imdbID", "UserID = '" + user.getId() + "' and imdbID = '" + movie.getImdbID() + "'") > 0) {
+            Map<String, String> movielist = new HashMap<>();
+            movielist.put("UserID", user.getId());
+            movielist.put("imdbID", movie.getImdbID());
+            movielist.put("MerkList", Boolean.toString(movie.isBookmark()));
+            movielist.put("FavList", Boolean.toString(movie.isFavourite()));
+            movielist.put("UserRate", movie.getUserRating());
+            movielist.put("Looked", Boolean.toString(movie.isLooked()));
+            sql.update("Movielist", movielist, "imdbID = '" + movie.getImdbID() + "'");
+        }
+    }
+
+    private void sqlDeleteFromMovielist(Movie movie) {
+        if (!movie.isFavourite() && !movie.isBookmark()) {
+            if (sql.exsists("Movielist", "UserID, imdbID", "UserID = '" + user.getId() + "' and imdbID = '" + movie.getImdbID() + "'") > 0) {
+                sql.delete("Movielist", "UserID = '" + user.getId() + "' and imdbID = '" + movie.getImdbID() + "'");
+            }
+        }
     }
 
     //Setzt einen Film auf die Favoritenliste, oder entfernt ihn. Fehlermeldung falls kein Film gewählt.
@@ -314,7 +325,6 @@ public class MainFXMLController implements Initializable {
         TableColumn genreCol = new TableColumn("Genre");
         TableColumn runCol = new TableColumn("Laufzeit");
         TableColumn ratingCol = new TableColumn("IMDB Wertung");
-        TableColumn lookedCol = new TableColumn("Gesehen");
         TableColumn userRatCol = new TableColumn("Benutzer Wertung");
 
         titleCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("Title"));
@@ -323,9 +333,8 @@ public class MainFXMLController implements Initializable {
         runCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("Runtime"));
         ratingCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("imdbRating"));
         userRatCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("userRating"));
-        lookedCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("looked"));
 
-        favoriteTable.getColumns().setAll(titleCol, yearCol, genreCol, runCol, userRatCol, ratingCol, lookedCol);
+        favoriteTable.getColumns().setAll(titleCol, yearCol, genreCol, runCol, userRatCol, ratingCol);
         favoriteTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         favoriteTable.setItems(fav);
     }
@@ -350,6 +359,7 @@ public class MainFXMLController implements Initializable {
         TableColumn runCol = new TableColumn("Laufzeit");
         TableColumn ratingCol = new TableColumn("Rating");
         TableColumn userRatCol = new TableColumn("Benutzer Wertung");
+        TableColumn lookedCol = new TableColumn("Gesehen");
 
         titleCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("Title"));
         yearCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("Year"));
@@ -357,8 +367,9 @@ public class MainFXMLController implements Initializable {
         runCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("Runtime"));
         ratingCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("imdbRating"));
         userRatCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("userRating"));
+        lookedCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("looked"));
 
-        bookmarkTable.getColumns().setAll(titleCol, yearCol, genreCol, userRatCol, runCol, ratingCol);
+        bookmarkTable.getColumns().setAll(titleCol, yearCol, genreCol, userRatCol, runCol, ratingCol, lookedCol);
         bookmarkTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         bookmarkTable.setItems(bookmark);
     }
@@ -416,9 +427,8 @@ public class MainFXMLController implements Initializable {
 
                 if (movie.getPoster().startsWith("http")) {
                     imageUrl = movie.getPoster();
-                } else {
-                    imageUrl = "http://ozarktech.com/wp-content/uploads/2014/05/image-not-available-grid.jpg";
                 }
+
                 detailImage.setImage(new Image(imageUrl));
                 detailPlot.setText(movie.getPlot());
 
@@ -461,11 +471,11 @@ public class MainFXMLController implements Initializable {
                     imageRow3.setVisible(false);
                 }
 
-//                if (movie.isLooked()) {
-//                    imageRow1.setVisible(true);
-//                } else {
-//                    imageRow1.setVisible(false);
-//                }
+                if (movie.isLooked()) {
+                    imageRow1.setVisible(true);
+                } else {
+                    imageRow1.setVisible(false);
+                }
             }
         } catch (IOException ex) {
             Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
@@ -482,11 +492,12 @@ public class MainFXMLController implements Initializable {
             movie.setImdbID((String) movielistRow.get("imdbID"));
             movie.setBookmark(Boolean.parseBoolean((String) movielistRow.get("MerkList")));
             movie.setFavourite(Boolean.parseBoolean((String) movielistRow.get("FavList")));
-            movie.setUserRating((String) movielistRow.get("userRate"));
+            movie.setUserRating((String) movielistRow.get("UserRate"));
+            movie.setLooked(Boolean.parseBoolean((String) movielistRow.get("Looked")));
             List movieRS = sql.select("Movie", "*", "imdbID = '" + movie.getImdbID() + "'");
             for (Object movieElement : movieRS) {
                 Map<String, Object> movieRow = (Map<String, Object>) movieElement;
-                //movie.setActors((String) movieRow.get("Actors"));
+                movie.setActors((String) movieRow.get("Actors"));
                 movie.setGenre((String) movieRow.get("Genre"));
                 movie.setImdbRating((String) movieRow.get("imdbRating"));
                 movie.setPlot((String) movieRow.get("Plot"));
@@ -582,21 +593,9 @@ public class MainFXMLController implements Initializable {
             movies.updateMovie(movie);
             loadFavorites();
             currentMovie = null;
-        } 
-//            else {
-//            FXMLLoader fxmlLoader = null;
-//            fxmlLoader = new FXMLLoader(getClass().getResource("/view/ErrorFXML.fxml"));
-//            Parent root = fxmlLoader.load();
-//
-//            Stage stage = new Stage();
-//            Scene scene = new Scene(root);
-//
-//            stage.initModality(Modality.APPLICATION_MODAL);
-//            stage.initStyle(StageStyle.TRANSPARENT);
-//            stage.setScene(scene);
-//            stage.setTitle("Error");
-//            stage.show();
-//        }
+            sqlUpdateMovielist(movie);
+            sqlDeleteFromMovielist(movie);
+        }
     }
 
     //Entfernt gewählten Film aus Merkliste. Fehlermeldung wenn kein Film vorhanden.
@@ -608,21 +607,9 @@ public class MainFXMLController implements Initializable {
             movies.updateMovie(movie);
             loadBookmarks();
             currentMovie = null;
-        } 
-//        else {
-//            FXMLLoader fxmlLoader = null;
-//            fxmlLoader = new FXMLLoader(getClass().getResource("/view/ErrorFXML.fxml"));
-//            Parent root = fxmlLoader.load();
-//
-//            Stage stage = new Stage();
-//            Scene scene = new Scene(root);
-//
-//            stage.initModality(Modality.APPLICATION_MODAL);
-//            stage.initStyle(StageStyle.TRANSPARENT);
-//            stage.setScene(scene);
-//            stage.setTitle("Error");
-//            stage.show();
-//        }
+            sqlUpdateMovielist(movie);
+            sqlDeleteFromMovielist(movie);
+        }
     }
 
     //Leert die Detailansicht beim verlassen.
@@ -641,7 +628,7 @@ public class MainFXMLController implements Initializable {
     //Markiert einen Film auf der Favoritenliste als gesehen/ungesehen. Fehlermeldung wenn kein Film vorhanden.
     @FXML
     public void movieLooked() throws IOException {
-        Movie movie = (Movie) favoriteTable.getSelectionModel().getSelectedItem();
+        Movie movie = (Movie) bookmarkTable.getSelectionModel().getSelectedItem();
         if (movie != null) {
             if (movie.isLooked()) {
                 movie.setLooked(false);
@@ -649,22 +636,9 @@ public class MainFXMLController implements Initializable {
                 movie.setLooked(true);
             }
             movies.updateMovie(movie);
-            loadFavorites();
+            loadBookmarks();
+            sqlUpdateMovielist(movie);
         }
-//        else {
-//            FXMLLoader fxmlLoader = null;
-//            fxmlLoader = new FXMLLoader(getClass().getResource("/view/ErrorFXML.fxml"));
-//            Parent root = fxmlLoader.load();
-//
-//            Stage stage = new Stage();
-//            Scene scene = new Scene(root);
-//
-//            stage.initModality(Modality.APPLICATION_MODAL);
-//            stage.initStyle(StageStyle.TRANSPARENT);
-//            stage.setScene(scene);
-//            stage.setTitle("Error");
-//            stage.show();
-//        }
     }
 
     //Verschiebt einen Film aus der Merkliste in die Favoritenliste. Fehlermeldung wenn kein Film vorhanden.
@@ -677,24 +651,8 @@ public class MainFXMLController implements Initializable {
             movies.updateMovie(movie);
             loadBookmarks();
             currentMovie = null;
-            if (sql.exsists("Movielist", "UserID, imdbID", "UserID = '" + user.getId() + "' and imdbID = '" + movie.getImdbID() + "'") > 0) {
-                sqlUpdateMovielist(movie);
-            }
+            sqlUpdateMovielist(movie);
         }
-//        else {
-//            FXMLLoader fxmlLoader = null;
-//            fxmlLoader = new FXMLLoader(getClass().getResource("/view/ErrorFXML.fxml"));
-//            Parent root = fxmlLoader.load();
-//
-//            Stage stage = new Stage();
-//            Scene scene = new Scene(root);
-//
-//            stage.initModality(Modality.APPLICATION_MODAL);
-//            stage.initStyle(StageStyle.TRANSPARENT);
-//            stage.setScene(scene);
-//            stage.setTitle("Error");
-//            stage.show();
-//        }
     }
 
     //Verantwortlich für die Tooltips der einzelnen Buttons auf der MainFXML.fxml.

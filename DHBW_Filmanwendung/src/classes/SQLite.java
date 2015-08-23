@@ -43,7 +43,8 @@ public class SQLite {
                     + "imdbID char(20),"
                     + "MerkList bit,"
                     + "FavList bit,"
-                    + "UserRate char(3)"
+                    + "UserRate char(3),"
+                    + "Looked bit"
                     + ");";
             stmt.executeUpdate(sql);
 
@@ -56,6 +57,7 @@ public class SQLite {
                     + "Genre char(200),"
                     + "Poster text,"
                     + "Director char(200),"
+                    + "Actors char(200),"
                     + "Released char(20),"
                     + "Plot text,"
                     + "imdbRating char(3)"
@@ -143,6 +145,23 @@ public class SQLite {
             System.exit(0);
         }
 
+    }
+
+    public void delete(String table, String statement) {
+        try {
+            Class.forName("org.sqlite.JDBC");
+            Connection c = DriverManager.getConnection("jdbc:sqlite:" + dbname);
+            Statement stmt = c.createStatement();
+
+            String sql = "DELETE FROM " + table + " WHERE " + statement + ";";
+
+            stmt.executeUpdate(sql);
+            stmt.close();
+            c.close();
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
     }
 
     //prüft ob element in der datenbank vorhanden ist
