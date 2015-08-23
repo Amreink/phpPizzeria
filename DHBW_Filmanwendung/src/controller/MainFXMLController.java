@@ -360,6 +360,7 @@ public class MainFXMLController implements Initializable {
         TableColumn ratingCol = new TableColumn("Rating");
         TableColumn userRatCol = new TableColumn("Benutzer Wertung");
         TableColumn lookedCol = new TableColumn("Gesehen");
+        lookedCol.setSortType(TableColumn.SortType.ASCENDING);
 
         titleCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("Title"));
         yearCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("Year"));
@@ -371,7 +372,9 @@ public class MainFXMLController implements Initializable {
 
         bookmarkTable.getColumns().setAll(titleCol, yearCol, genreCol, userRatCol, runCol, ratingCol, lookedCol);
         bookmarkTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        
         bookmarkTable.setItems(bookmark);
+        bookmarkTable.getSortOrder().add(lookedCol);
     }
 
     //Lässt die Ergebnisliste der Suche nach verlassen der Liste verschwinden.

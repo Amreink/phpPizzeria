@@ -31,7 +31,4 @@ Schauspieler in der Detailansicht ausgeben
 Favoriten und Merkliste sortieren
 SQL-Datenbank
 PDF-Ausdruck zu Detailansicht, Favliste und Merkliste
-
 ***************************************************************
-
-
