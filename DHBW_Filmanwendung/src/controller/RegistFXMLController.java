@@ -30,7 +30,7 @@ public class RegistFXMLController implements Initializable {
 
             //selektiert zu dem eingegeben namen alle einträge in der datenbank
             List rs = sql.select("User", "Username", "Username = '" + txtUserName.getText() + "'");
-            String username = null;
+            String username = "";
             for (Object entrySet : rs) {
                 Map<String, Object> row = (Map<String, Object>) entrySet;
                 for (Map.Entry<String, Object> entry : row.entrySet()) {
@@ -39,7 +39,7 @@ public class RegistFXMLController implements Initializable {
             }
 
             //Überprüft ob der Name schon vergeben ist.
-            if (username != txtUserName.getText() && txtUserName.getText() != null ) {
+            if (!username.contentEquals(txtUserName.getText()) && txtUserName.getText() != null ) {
                 Map<String, String> map = new HashMap<>();
                 map.put("username", txtUserName.getText());
 
