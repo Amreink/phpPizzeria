@@ -5,6 +5,7 @@ import classes.MovieList;
 import classes.OMDB;
 import classes.PdfExport;
 import classes.SQLite;
+import classes.Search;
 import classes.TableRow;
 import classes.User;
 import java.io.IOException;
@@ -16,9 +17,12 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -43,6 +47,7 @@ public class MainFXMLController implements Initializable {
 
     User user = null;
 
+    private Search liveSearchService = new Search();
     private Movie currentMovie = null;
 
     @FXML
@@ -136,36 +141,48 @@ public class MainFXMLController implements Initializable {
     @FXML
     private void onSearch() {
         if (!searchbar.getText().isEmpty()) {
-            new Thread(new Runnable() {
+            liveSearchService.setOnRunning(new EventHandler<WorkerStateEvent>() {
                 @Override
-                public void run() {
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            String year = "";
-                            String title = "";
-                            String[] res = searchbar.getText().split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
-                            if (res.length > 1) {
-                                for (String t : res) {
-                                    if (t.matches(".*\\d.*")) {
-                                        year = t;
-                                    } else {
-                                        title = t;
-                                    }
-                                }
-                            } else {
-                                title = res[0];
-                            }
-                            showResults(title, year);
-                        }
-                    });
+                public void handle(WorkerStateEvent t) {
+                    ObservableList<String> items = FXCollections.observableArrayList("Ergebnisse werden geladen...");
+                    searchlist.setVisible(true);
+                    searchlist.setItems(items);
                 }
-            }).start();
-        } else {
-            searchlist.setItems(null);
-            searchlist.setVisible(false);
-        }
+            });
 
+            liveSearchService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+                @Override
+                public void handle(WorkerStateEvent t) {
+                    ArrayList<Movie> results_array = liveSearchService.getValue();
+                    if (results_array != null) {
+                        ObservableList<Movie> results_list = FXCollections.observableList(results_array);
+                        searchlist.setItems(results_list);
+                    }
+                }
+            });
+            
+            String year = "";
+            String title = "";
+            String[] res = searchbar.getText().split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
+            if (res.length > 1) {
+                for (String t : res) {
+                    if (t.matches(".*\\d.*")) {
+                        year = t;
+                    } else {
+                        title = t;
+                    }
+                }
+            } else {
+                title = res[0];
+            }
+            
+            liveSearchService.setTitle(title);
+            liveSearchService.setYear(year);
+            liveSearchService.restart();
+        } else {
+            searchlist.setVisible(false);
+            searchlist.setItems(null);
+        }
     }
 
     //fügt einen movie in die db ein
@@ -345,20 +362,6 @@ public class MainFXMLController implements Initializable {
         }
     }
 
-    //Zeige die Suchergebnisse aus der omdb.
-    private void showResults(String title, String year) {
-        try {
-            ArrayList<Movie> results_array = omdb.searchByTitle(title, year);
-            if (results_array != null) {
-                searchlist.setVisible(true);
-                ObservableList<Movie> results_list = FXCollections.observableList(results_array);
-                searchlist.setItems(results_list);
-            };
-        } catch (IOException ex) {
-            Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
     //Lade die Detailansicht.
     private void loadMovie(String id) {
         String imageUrl = null;
@@ -377,11 +380,7 @@ public class MainFXMLController implements Initializable {
                 SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
                 selectionModel.select(0);
 
-                if (movie.getPoster().startsWith("http")) {
-                    imageUrl = movie.getPoster();
-                }
-
-                detailImage.setImage(new Image(imageUrl));
+                detailImage.setImage(new Image(movie.getPoster()));
                 detailPlot.setText(movie.getPlot());
 
                 Pane header = (Pane) detailTable.lookup("TableHeaderRow");
@@ -467,6 +466,7 @@ public class MainFXMLController implements Initializable {
     //initialmethode wird aufgerufen wenn controller geladen wird.
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
     }
 
     //Übergabe des in LoginFXMLController eingegebenen Benutzernamens.
@@ -546,19 +546,6 @@ public class MainFXMLController implements Initializable {
         }
     }
 
-    //Leert die Detailansicht beim verlassen.
-    @FXML
-    public void onDetailClose() {
-        detailImage.setImage(null);
-        detailPlot.setText(null);
-        detailTable.setItems(null);
-        searchbar.setText("");
-        imageRow1.setVisible(false);
-        imageRow2.setVisible(false);
-        imageRow3.setVisible(false);
-        currentMovie = null;
-    }
-
     //Markiert einen Film auf der Merkliste als gesehen/ungesehen. Fehlermeldung wenn kein Film vorhanden.
     @FXML
     public void movieLooked() throws IOException {
@@ -607,7 +594,7 @@ public class MainFXMLController implements Initializable {
         stage.setScene(scene);
         stage.setTitle("Details");
         stage.show();
-        
+
         PopupFXMLController popupController = (PopupFXMLController) fxmlLoader.getController();
         popupController.datenuebergabeMovie(movie, user);
     }

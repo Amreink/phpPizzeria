@@ -10,8 +10,10 @@ import com.itextpdf.text.Image;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.LineSeparator;
 import controller.MainFXMLController;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -30,20 +32,19 @@ public class PdfExport {
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         chooser.setAcceptAllFileFilterUsed(false);
         chooser.setApproveButtonText("Speichern");
-        
+
         //wenn speicherort ausgewählt wurde wird die methode weiter ausgeführt
         if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             try {
                 //mittels der itext-librarie wird ein dokument objekt erstellt
                 //und mit daten befüllt
+
+                OutputStream file = new FileOutputStream(new File(chooser.getSelectedFile() + "/" + movie.getTitle() + ".pdf"));
                 Document document = new Document();
-                PdfWriter.getInstance(document, new FileOutputStream(chooser.getCurrentDirectory() + "/" + movie.getTitle() + ".pdf"));
+                PdfWriter.getInstance(document, file);
 
                 document.open();
 
-                Image image = Image.getInstance(new URL(movie.getPoster()));
-                image.setAlignment(1);
-                image.scalePercent(70);
                 LineSeparator ls = new LineSeparator();
                 Font boldFont = FontFactory.getFont("Times-Roman", 20, Font.BOLD);
 
@@ -54,7 +55,12 @@ public class PdfExport {
                 document.add(title);
                 document.add(new Chunk(ls));
                 document.add(new Chunk().NEWLINE);
-                document.add(image);
+                if (movie.getPoster().startsWith("http")) {
+                    Image image = Image.getInstance(new URL(movie.getPoster()));
+                    image.setAlignment(1);
+                    image.scalePercent(70);
+                    document.add(image);
+                }
                 document.add(new Paragraph("Jahr: " + movie.getYear()));
                 document.add(new Paragraph("Genre: " + movie.getGenre()));
                 document.add(new Paragraph("IMDB-Rating: " + movie.getImdbRating()));
@@ -64,7 +70,10 @@ public class PdfExport {
                 document.add(new Chunk(ls));
                 document.add(new Paragraph(movie.getPlot()));
                 document.add(new Chunk(ls));
+
                 document.close();
+                file.close();
+
             } catch (DocumentException ex) {
                 Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
             } catch (MalformedURLException ex) {

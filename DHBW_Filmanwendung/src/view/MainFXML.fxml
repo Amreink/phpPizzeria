@@ -22,7 +22,7 @@
             <children>
                 <BorderPane prefHeight="600.0" prefWidth="1000.0">
                     <top>
-                        <TextField fx:id="searchbar" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onKeyPressed="#onSearch" promptText="Filmsuche" styleClass="searchbar" BorderPane.alignment="CENTER">
+                        <TextField fx:id="searchbar" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onKeyReleased="#onSearch" promptText="Filmsuche" styleClass="searchbar" BorderPane.alignment="CENTER">
                             <BorderPane.margin>
                                 <Insets left="10.0" right="10.0" top="10.0" />
                             </BorderPane.margin>
@@ -34,7 +34,7 @@
                     <center>
                         <TabPane fx:id="tabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" side="BOTTOM" styleClass="tabPane" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
                             <tabs>
-                                <Tab onSelectionChanged="#onDetailClose" styleClass="tabButton" text="Detailansicht">
+                                <Tab styleClass="tabButton" text="Detailansicht">
                                     <content>
                                         <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                                             <children>

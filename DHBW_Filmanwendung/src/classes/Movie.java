@@ -62,7 +62,11 @@ public class Movie {
     }
 
     public String getPoster() {
-        return Poster;
+        if (Poster.startsWith("http")) {
+            return Poster;
+        } else {
+            return "icon/x-button.png";
+        }
     }
 
     public void setPoster(String Poster) {
