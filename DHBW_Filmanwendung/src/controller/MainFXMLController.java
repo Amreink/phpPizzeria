@@ -26,6 +26,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -158,7 +159,7 @@ public class MainFXMLController implements Initializable {
                     }
                 }
             });
-            
+
             String year = "";
             String title = "";
             String[] res = searchbar.getText().split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
@@ -173,7 +174,7 @@ public class MainFXMLController implements Initializable {
             } else {
                 title = res[0];
             }
-            
+
             liveSearchService.setTitle(title);
             liveSearchService.setYear(year);
             liveSearchService.restart();
@@ -669,5 +670,23 @@ public class MainFXMLController implements Initializable {
     public void onBookmarkToFavEntered() {
         Tooltip bookmarktofav = new Tooltip("Film in Favoritenliste verschieben");
         Tooltip.install(btnBookmarkToFav, bookmarktofav);
+    }
+
+    @FXML
+    private PieChart kreisdiagram;
+
+    @FXML
+    private void loadDiagram() {
+        
+        ObservableList<PieChart.Data> pieChartData
+                = FXCollections.observableArrayList(
+                        new PieChart.Data("Grapefruit", 13),
+                        new PieChart.Data("Oranges", 25),
+                        new PieChart.Data("Plums", 10),
+                        new PieChart.Data("Pears", 22),
+                        new PieChart.Data("Apples", 30));
+        
+        
+        kreisdiagram.setData(pieChartData);
     }
 }
