@@ -159,6 +159,9 @@ public class MainFXMLController implements Initializable {
                     if (results_array != null) {
                         ObservableList<Movie> results_list = FXCollections.observableList(results_array);
                         searchlist.setItems(results_list);
+                    } else {
+                        ObservableList<String> items = FXCollections.observableArrayList("Keine Treffer gefunden...");
+                        searchlist.setItems(items);
                     }
                 }
             });
