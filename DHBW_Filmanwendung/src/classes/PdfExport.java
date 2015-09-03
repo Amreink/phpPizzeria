@@ -99,7 +99,7 @@ public class PdfExport {
         if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             try {
                 Document document = new Document();
-                PdfWriter.getInstance(document, new FileOutputStream(chooser.getCurrentDirectory() + "/" + outputname + ".pdf"));
+                PdfWriter.getInstance(document, new FileOutputStream(chooser.getSelectedFile() + "/" + outputname + ".pdf"));
                 document.open();
                 for (Movie movie : Movies) {
                     Image image = Image.getInstance(new URL(movie.getPoster()));
