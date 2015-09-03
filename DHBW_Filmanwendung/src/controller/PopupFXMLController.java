@@ -5,18 +5,26 @@ import classes.MovieList;
 import classes.SQLite;
 import classes.TableRow;
 import classes.User;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.SingleSelectionModel;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -34,7 +42,6 @@ public class PopupFXMLController implements Initializable {
 
     Movie movie = null;
     User user = null;
-    boolean refreshtable = true;
 
     @FXML
     private Button btnSchließen;
@@ -56,6 +63,7 @@ public class PopupFXMLController implements Initializable {
     //methode um das popup-fenster zu schließen
     @FXML
     private void closePopup() {
+        //TODO konvention btnSchließen umbennen
         Stage stage = (Stage) btnSchließen.getScene().getWindow();
         stage.close();
     }
@@ -114,6 +122,7 @@ public class PopupFXMLController implements Initializable {
     }
 
     //nimmt daten von einem anderen controller entgegen
+    //TODO konvention datenuebergabeMovie umbennen
     public void datenuebergabeMovie(Movie movie, User user) {
         this.movie = movie;
         this.user = user;

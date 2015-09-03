@@ -21,21 +21,18 @@ public class DHBW_Filmanwendung extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+
         Parent root = FXMLLoader.load(getClass().getResource("/view/LoginFXML.fxml"));
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
         stage.setMinHeight(840);
-        // stage.setMaxHeight(840);
         stage.setMinWidth(1300);
-
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/icon/youtube1_1.png")));
         stage.setTitle("DHBW Filmanwendung");
-
         stage.show();
 
         new SQLite().createTable();
-
     }
 
     /**

@@ -8,6 +8,7 @@ import classes.SQLite;
 import classes.Search;
 import classes.TableRow;
 import classes.User;
+import dhbw_filmanwendung.DHBW_Filmanwendung;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -60,7 +61,7 @@ public class MainFXMLController implements Initializable {
     @FXML
     private TableView detailTable;
     @FXML
-    private TabPane tabPane;
+    public TabPane tabPane;
     @FXML
     private ImageView imageRow1;
     @FXML
@@ -276,7 +277,7 @@ public class MainFXMLController implements Initializable {
     }
 
     //Lade die Filme in die Favoritenliste.
-    private void refreshFavorites() {
+    public void refreshFavorites() {
 
         ArrayList<Movie> favorites = new ArrayList();
 
@@ -309,8 +310,7 @@ public class MainFXMLController implements Initializable {
     }
 
     //Lade die Filme in die Merkliste.
-    private void refreshBookmarks() {
-
+    public void refreshBookmarks() {
         ArrayList<Movie> bookmarks = new ArrayList();
 
         for (Object element : movies.movies) {
@@ -336,10 +336,12 @@ public class MainFXMLController implements Initializable {
         ratingCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("imdbRating"));
         userRatCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("userRating"));
         lookedCol.setCellValueFactory(new PropertyValueFactory<Movie, String>("looked"));
+        lookedCol.setSortType(TableColumn.SortType.ASCENDING);
 
         bookmarkTable.getColumns().setAll(titleCol, yearCol, genreCol, userRatCol, runCol, ratingCol, lookedCol);
         bookmarkTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         bookmarkTable.setItems(bookmark);
+        bookmarkTable.getSortOrder().add(lookedCol);
     }
 
     //Lässt die Ergebnisliste der Suche nach verlassen der Liste verschwinden.
@@ -588,7 +590,7 @@ public class MainFXMLController implements Initializable {
         Stage stage = new Stage();
         Scene scene = new Scene(root);
 
-        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initModality(Modality.WINDOW_MODAL);
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.setScene(scene);
         stage.setTitle("Details");
@@ -677,7 +679,7 @@ public class MainFXMLController implements Initializable {
 
     @FXML
     private void loadDiagram() {
-        
+
         ObservableList<PieChart.Data> pieChartData
                 = FXCollections.observableArrayList(
                         new PieChart.Data("Grapefruit", 13),
@@ -685,8 +687,7 @@ public class MainFXMLController implements Initializable {
                         new PieChart.Data("Plums", 10),
                         new PieChart.Data("Pears", 22),
                         new PieChart.Data("Apples", 30));
-        
-        
+
         kreisdiagram.setData(pieChartData);
     }
 }
