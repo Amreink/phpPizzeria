@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.web.*?>
 <?import javafx.scene.text.*?>
@@ -107,14 +108,17 @@
                                                                 </VBox>
                                                                 <FlowPane alignment="CENTER_LEFT" hgap="100.0" maxHeight="150.0">
                                                                     <children>
-                                                                        <Label fx:id="lblWelcome" text="Willkommen" textFill="#0093ff">
-                                                                            <FlowPane.margin>
-                                                                                <Insets left="20.0" />
-                                                                            </FlowPane.margin>
-                                                                            <font>
-                                                                                <Font name="System Italic" size="16.0" />
-                                                                            </font>
-                                                                        </Label>
+                                                      <MenuButton fx:id="userBtn" mnemonicParsing="false" text="user" textFill="#b23030">
+                                                        <items>
+                                                          <MenuItem fx:id="logoutBtn" mnemonicParsing="false" onAction="#onLogout" text="Logout" />
+                                                        </items>
+                                                         <FlowPane.margin>
+                                                            <Insets left="5.0" />
+                                                         </FlowPane.margin>
+                                                         <font>
+                                                            <Font name="System Italic" size="16.0" />
+                                                         </font>
+                                                      </MenuButton>
                                                                         <ImageView fx:id="imageRow1" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" visible="false">
                                                                             <image>
                                                                                 <Image url="@../icon/iris.png" />

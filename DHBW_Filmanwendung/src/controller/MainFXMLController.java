@@ -96,6 +96,8 @@ public class MainFXMLController implements Initializable {
     private TableView favoriteTable;
     @FXML
     private TableView bookmarkTable;
+    @FXML
+    private MenuButton userBtn;
 
     public MainFXMLController() {
         this.movies = MovieList.getInstance();
@@ -472,7 +474,7 @@ public class MainFXMLController implements Initializable {
 
     //Übergabe des in LoginFXMLController eingegebenen Benutzernamens.
     public void datenuebergabe(User user) {
-        lblWelcome.setText("Hallo " + user.getName());
+        userBtn.setText("Hallo " + user.getName());
         this.user = user;
         loadMovies();
     }
@@ -624,6 +626,20 @@ public class MainFXMLController implements Initializable {
     public void onFavEntered() {
         Tooltip fav = new Tooltip("Film zur Favoritenliste hinzufügen");
         Tooltip.install(btnDetailFav, fav);
+    }
+
+    @FXML
+    private void onLogout() throws IOException {
+
+        Stage stage = (Stage) userBtn.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/LoginFXML.fxml"));
+        Parent root = fxmlLoader.load();
+
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+
+        movies.movies.clear();
     }
 
     @FXML

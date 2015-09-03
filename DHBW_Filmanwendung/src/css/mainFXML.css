@@ -73,6 +73,16 @@
     -fx-text-fill: white;
 }
 
+.menu-button {
+    -fx-background-color: white;
+    -fx-text-fill: #0093ff;
+}
+
+.menu-button:hover {
+    -fx-background-color: #64BFFF;
+    -fx-text-fill: white;
+}
+
 .btnDetailFav{
     -fx-background-image: url('../icon/social16.png');
     -fx-background-size: 32 32 ;
@@ -241,3 +251,4 @@
 .btnToFav:hover{
     -fx-background-image: url('../icon/arrow_1.png');
 }
+
