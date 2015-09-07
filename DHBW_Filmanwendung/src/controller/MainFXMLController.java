@@ -694,10 +694,34 @@ public class MainFXMLController implements Initializable {
     }
 
     @FXML
-    private PieChart kreisdiagram;
+    private PieChart kreisdiagramm;
 
     @FXML
-    private void loadDiagram() {
+    private void loadDiagramm() {
+
+        List movieListRS = sql.select("Movielist", "imdbID", "UserID = '" + user.getId() + "'");
+
+        String movieRating[][] = new String[movieListRS.size()][2];
+        int i = 0;
+        int p = 0;
+        for (Object movielistElement : movieListRS) {
+            Map<String, String> movielistRow = (Map<String, String>) movielistElement;
+            movieRating[i][0] = movielistRow.get("imdbID");
+            List movieRS = sql.select("Movie", "imdbRating", "imdbID = '" + movieRating[i][0] + "'");
+
+            for (Object movieElement : movieRS) {
+                Map<String, String> movieRow = (Map<String, String>) movieElement;
+                movieRating[p][1] = movieRow.get("imdbRating");
+                p++;
+            }
+            i++;
+        }
+
+        for (int j = 0; j < movieRating.length; j++) {
+            for (int k = 0; k < movieRating[j].length; k++) {
+                System.out.println(movieRating[j][k]);
+            }
+        }
 
         ObservableList<PieChart.Data> pieChartData
                 = FXCollections.observableArrayList(
@@ -707,6 +731,24 @@ public class MainFXMLController implements Initializable {
                         new PieChart.Data("Pears", 22),
                         new PieChart.Data("Apples", 30));
 
-        kreisdiagram.setData(pieChartData);
+        kreisdiagramm.setData(pieChartData);
+    }
+
+    @FXML
+    private PieChart kreisdiagramm1;
+
+    @FXML
+    private void loadDiagramm1() {
+
+        ObservableList<PieChart.Data> pieChartData
+                = FXCollections.observableArrayList(
+                        new PieChart.Data("Grapefruit", 30),
+                        new PieChart.Data("Oranges", 10),
+                        new PieChart.Data("Plums", 5),
+                        new PieChart.Data("Pears", 20),
+                        new PieChart.Data("Apples", 10));
+
+        kreisdiagramm1.setData(pieChartData);
+
     }
 }
