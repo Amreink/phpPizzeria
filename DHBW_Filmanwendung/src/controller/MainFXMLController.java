@@ -25,6 +25,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Side;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.*;
@@ -701,37 +702,30 @@ public class MainFXMLController implements Initializable {
 
         List movieListRS = sql.select("Movielist", "imdbID", "UserID = '" + user.getId() + "'");
 
-        String movieRating[][] = new String[movieListRS.size()][2];
-        int i = 0;
-        int p = 0;
+        int movieRating[] = new int[11];
         for (Object movielistElement : movieListRS) {
             Map<String, String> movielistRow = (Map<String, String>) movielistElement;
-            movieRating[i][0] = movielistRow.get("imdbID");
-            List movieRS = sql.select("Movie", "imdbRating", "imdbID = '" + movieRating[i][0] + "'");
+            List movieRS = sql.select("Movie", "imdbRating", "imdbID = '" + movielistRow.get("imdbID") + "'");
 
             for (Object movieElement : movieRS) {
                 Map<String, String> movieRow = (Map<String, String>) movieElement;
-                movieRating[p][1] = movieRow.get("imdbRating");
-                p++;
-            }
-            i++;
-        }
-
-        for (int j = 0; j < movieRating.length; j++) {
-            for (int k = 0; k < movieRating[j].length; k++) {
-                System.out.println(movieRating[j][k]);
+                int groupNumber = (int) Math.rint(Double.parseDouble(movieRow.get("imdbRating")));
+                movieRating[groupNumber] = movieRating[groupNumber] + 1;
             }
         }
+        
+        ArrayList<PieChart.Data> test = new ArrayList<>();
+        for (int j = 1; j < movieRating.length; j++) {
+            if (movieRating[j]!= 0){
+            test.add(new PieChart.Data(String.valueOf(j) + "-Bewertung", movieRating[j]));
+            }
+        }
 
-        ObservableList<PieChart.Data> pieChartData
-                = FXCollections.observableArrayList(
-                        new PieChart.Data("Grapefruit", 13),
-                        new PieChart.Data("Oranges", 25),
-                        new PieChart.Data("Plums", 10),
-                        new PieChart.Data("Pears", 22),
-                        new PieChart.Data("Apples", 30));
-
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(test);
         kreisdiagramm.setData(pieChartData);
+        kreisdiagramm.setTitle("Verteilung der Film-Bewertungen");
+        kreisdiagramm.setLegendSide(Side.LEFT);
+        
     }
 
     @FXML
