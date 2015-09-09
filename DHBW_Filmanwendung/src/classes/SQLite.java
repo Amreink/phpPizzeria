@@ -26,8 +26,8 @@ public class SQLite {
     }
     //--------------------------------------------------------------------------
 
-    //erstellt falls nötig die benötigen tabelen in der datenbank
-    //über den befehl "CREATE TABLE IF NOT EXISTS" wird geprüft ob die tabelle
+    //erstellt falls nötig die benötigen Tabellen in der Datenbank
+    //über den Befehl "CREATE TABLE IF NOT EXISTS" wird geprüft ob die tabelle
     //exisiert und falls nicht wird sie erstellt
     public void createTable() {
         String sql;

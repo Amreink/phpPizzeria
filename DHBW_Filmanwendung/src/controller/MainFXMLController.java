@@ -24,6 +24,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Side;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.*;
@@ -693,20 +694,54 @@ public class MainFXMLController implements Initializable {
     }
 
     @FXML
-    private PieChart kreisdiagram;
+    private PieChart kreisdiagramm;
 
     @FXML
-    private void loadDiagram() {
+    private void loadDiagramm() {
+
+        List movieListRS = sql.select("Movielist", "imdbID", "UserID = '" + user.getId() + "'");
+
+        int movieRating[] = new int[11];
+        for (Object movielistElement : movieListRS) {
+            Map<String, String> movielistRow = (Map<String, String>) movielistElement;
+            List movieRS = sql.select("Movie", "imdbRating", "imdbID = '" + movielistRow.get("imdbID") + "'");
+
+            for (Object movieElement : movieRS) {
+                Map<String, String> movieRow = (Map<String, String>) movieElement;
+                int groupNumber = (int) Math.rint(Double.parseDouble(movieRow.get("imdbRating")));
+                movieRating[groupNumber] = movieRating[groupNumber] + 1;
+            }
+        }
         
+        ArrayList<PieChart.Data> test = new ArrayList<>();
+        for (int j = 1; j < movieRating.length; j++) {
+            if (movieRating[j]!= 0){
+            test.add(new PieChart.Data(String.valueOf(j) + "-Bewertung", movieRating[j]));
+            }
+        }
+
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(test);
+        kreisdiagramm.setData(pieChartData);
+        kreisdiagramm.setTitle("Verteilung der Film-Bewertungen");
+        kreisdiagramm.setLegendSide(Side.LEFT);
+        
+    }
+
+    @FXML
+    private PieChart kreisdiagramm1;
+
+    @FXML
+    private void loadDiagramm1() {
 
         ObservableList<PieChart.Data> pieChartData
                 = FXCollections.observableArrayList(
-                        new PieChart.Data("Grapefruit", 13),
-                        new PieChart.Data("Oranges", 25),
-                        new PieChart.Data("Plums", 10),
-                        new PieChart.Data("Pears", 22),
-                        new PieChart.Data("Apples", 30));
+                        new PieChart.Data("Grapefruit", 30),
+                        new PieChart.Data("Oranges", 10),
+                        new PieChart.Data("Plums", 5),
+                        new PieChart.Data("Pears", 20),
+                        new PieChart.Data("Apples", 10));
 
-        kreisdiagram.setData(pieChartData);
+        kreisdiagramm1.setData(pieChartData);
+
     }
 }
