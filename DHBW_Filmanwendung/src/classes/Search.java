@@ -31,6 +31,7 @@ public class Search extends Service<ArrayList<Movie>> {
         return new Task<ArrayList<Movie>>() {
             @Override
             protected ArrayList<Movie> call() throws Exception {
+                Thread.sleep(500);
                 OMDB omdb = new OMDB();
                 ArrayList<Movie> results_array = omdb.searchByTitle(title, year);
                 return results_array;

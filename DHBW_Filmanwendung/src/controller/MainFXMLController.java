@@ -8,7 +8,6 @@ import classes.SQLite;
 import classes.Search;
 import classes.TableRow;
 import classes.User;
-import dhbw_filmanwendung.DHBW_Filmanwendung;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -698,6 +697,7 @@ public class MainFXMLController implements Initializable {
 
     @FXML
     private void loadDiagram() {
+        
 
         ObservableList<PieChart.Data> pieChartData
                 = FXCollections.observableArrayList(
