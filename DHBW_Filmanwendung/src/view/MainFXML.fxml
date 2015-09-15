@@ -240,7 +240,7 @@
                                         </AnchorPane>
                                     </content>
                                 </Tab>
-                                <Tab styleClass="tabButton" text="Statistik">
+                                <Tab onSelectionChanged="#loadStatistic" styleClass="tabButton" text="Statistik">
                                     <content>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
@@ -250,16 +250,6 @@
                                              <children>
                                                 <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="340.0" prefWidth="1005.0">
                                                    <children>
-                                                      <PieChart fx:id="kreisdiagramm1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="408.0" prefWidth="500.0" />
-                                                      <Button mnemonicParsing="false" onAction="#loadDiagramm1" text="Aktualisieren">
-                                                         <VBox.margin>
-                                                            <Insets top="50.0" />
-                                                         </VBox.margin>
-                                                      </Button>
-                                                   </children>
-                                                </VBox>
-                                                <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="340.0" prefWidth="1005.0">
-                                                   <children>
                                                       <PieChart fx:id="kreisdiagramm" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="408.0" prefWidth="500.0" />
                                                       <Button mnemonicParsing="false" onAction="#loadDiagramm" text="Aktualisieren">
                                                          <VBox.margin>
@@ -267,9 +257,14 @@
                                                          </VBox.margin>
                                                       </Button>
                                                    </children>
+                                                </VBox>
+                                                <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="340.0" prefWidth="1005.0">
                                                    <opaqueInsets>
                                                       <Insets />
                                                    </opaqueInsets>
+                                                   <children>
+                                                      <TableView fx:id="statisticTable" focusTraversable="false" maxHeight="502.0" maxWidth="1.7976931348623157E308" prefHeight="502.0" prefWidth="475.0" />
+                                                   </children>
                                                 </VBox>
                                              </children>
                                           </HBox>

@@ -222,31 +222,60 @@ public class SQLite {
             field = "*";
         }
 
-        try {
-            Class.forName("org.sqlite.JDBC");
-            Connection c = DriverManager.getConnection("jdbc:sqlite:" + dbname);
-            c.setAutoCommit(false);
-            Statement stmt = c.createStatement();
+        if (statement.isEmpty()) {
+            try {
+                Class.forName("org.sqlite.JDBC");
+                Connection c = DriverManager.getConnection("jdbc:sqlite:" + dbname);
+                c.setAutoCommit(false);
+                Statement stmt = c.createStatement();
 
-            rs = stmt.executeQuery("SELECT " + field + " FROM " + table + " WHERE " + statement + ";");
+                rs = stmt.executeQuery("SELECT " + field + " FROM " + table + ";");
 
-            ResultSetMetaData metaData = rs.getMetaData();
-            Integer columnCount = metaData.getColumnCount();
+                ResultSetMetaData metaData = rs.getMetaData();
+                Integer columnCount = metaData.getColumnCount();
 
-            while (rs.next()) {
-                row = new HashMap<String, Object>();
-                for (int i = 1; i <= columnCount; i++) {
-                    row.put(metaData.getColumnName(i), rs.getObject(i));
+                while (rs.next()) {
+                    row = new HashMap<String, Object>();
+                    for (int i = 1; i <= columnCount; i++) {
+                        row.put(metaData.getColumnName(i), rs.getObject(i));
+                    }
+                    resultList.add(row);
                 }
-                resultList.add(row);
-            }
 
-            rs.close();
-            stmt.close();
-            c.close();
-        } catch (Exception e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
+                rs.close();
+                stmt.close();
+                c.close();
+            } catch (Exception e) {
+                System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                System.exit(0);
+            }
+        } else {
+            try {
+                Class.forName("org.sqlite.JDBC");
+                Connection c = DriverManager.getConnection("jdbc:sqlite:" + dbname);
+                c.setAutoCommit(false);
+                Statement stmt = c.createStatement();
+
+                rs = stmt.executeQuery("SELECT " + field + " FROM " + table + " WHERE " + statement + ";");
+
+                ResultSetMetaData metaData = rs.getMetaData();
+                Integer columnCount = metaData.getColumnCount();
+
+                while (rs.next()) {
+                    row = new HashMap<String, Object>();
+                    for (int i = 1; i <= columnCount; i++) {
+                        row.put(metaData.getColumnName(i), rs.getObject(i));
+                    }
+                    resultList.add(row);
+                }
+
+                rs.close();
+                stmt.close();
+                c.close();
+            } catch (Exception e) {
+                System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                System.exit(0);
+            }
         }
 
         return resultList;

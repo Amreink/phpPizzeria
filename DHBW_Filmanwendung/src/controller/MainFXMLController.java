@@ -98,6 +98,8 @@ public class MainFXMLController implements Initializable {
     private TableView bookmarkTable;
     @FXML
     private MenuButton userBtn;
+    @FXML
+    private TableView statisticTable;
 
     public MainFXMLController() {
         this.movies = MovieList.getInstance();
@@ -699,11 +701,13 @@ public class MainFXMLController implements Initializable {
     @FXML
     private void loadDiagramm() {
 
+        int movieCount = 0;
         List movieListRS = sql.select("Movielist", "imdbID", "UserID = '" + user.getId() + "'");
 
         int movieRating[] = new int[11];
         for (Object movielistElement : movieListRS) {
             Map<String, String> movielistRow = (Map<String, String>) movielistElement;
+            movieCount = movieCount + 1;
             List movieRS = sql.select("Movie", "imdbRating", "imdbID = '" + movielistRow.get("imdbID") + "'");
 
             for (Object movieElement : movieRS) {
@@ -712,36 +716,57 @@ public class MainFXMLController implements Initializable {
                 movieRating[groupNumber] = movieRating[groupNumber] + 1;
             }
         }
-        
+
         ArrayList<PieChart.Data> test = new ArrayList<>();
         for (int j = 1; j < movieRating.length; j++) {
-            if (movieRating[j]!= 0){
-            test.add(new PieChart.Data(String.valueOf(j) + "-Bewertung", movieRating[j]));
+            if (movieRating[j] != 0) {
+                test.add(new PieChart.Data(String.valueOf(j) + "-Bewertung", movieRating[j]));
             }
         }
 
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(test);
         kreisdiagramm.setData(pieChartData);
-        kreisdiagramm.setTitle("Verteilung der Film-Bewertungen");
+        kreisdiagramm.setTitle("Verteilung der Imdb-Bewertungen auf " + movieCount +" Filme");
         kreisdiagramm.setLegendSide(Side.LEFT);
-        
+
     }
 
     @FXML
-    private PieChart kreisdiagramm1;
+    public void loadStatistic() {
+        
+        
+        List userListRS = sql.select("User", "UserID", "");
+        int userCount = 0;
+        for (Object userListElement : userListRS) {
+            Map<String, String> userListRow = (Map<String, String>) userListElement;
+            userCount = userCount + 1;
+        }
+        List movieListRS = sql.select("Movie", "imdbID", "");
+        int movieCount = 0;
+        for (Object movieListElement : movieListRS) {
+            Map<String, String> movieListRow = (Map<String, String>) movieListElement;
+            movieCount = movieCount + 1;
+        }
 
-    @FXML
-    private void loadDiagramm1() {
-
-        ObservableList<PieChart.Data> pieChartData
-                = FXCollections.observableArrayList(
-                        new PieChart.Data("Grapefruit", 30),
-                        new PieChart.Data("Oranges", 10),
-                        new PieChart.Data("Plums", 5),
-                        new PieChart.Data("Pears", 20),
-                        new PieChart.Data("Apples", 10));
-
-        kreisdiagramm1.setData(pieChartData);
-
+        double userMovieRate = (double) movieCount / (double) userCount;
+        Pane header = (Pane) statisticTable.lookup("TableHeaderRow");
+        header.setMaxHeight(0);
+        header.setMinHeight(0);
+        header.setPrefHeight(0);
+        header.setVisible(false);
+        header.setManaged(false);
+        List infoList = new ArrayList();
+        infoList.add(new TableRow("Anzahl der Nutzer", String.valueOf(userCount)));
+        infoList.add(new TableRow("Anzahl der Filme in der Datenbank", String.valueOf(movieCount)));
+        infoList.add(new TableRow("Filme pro Nutzer", String.valueOf(Math.rint(userMovieRate))));
+        ObservableList data = FXCollections.observableList(infoList);
+        statisticTable.setItems(data);
+        TableColumn nameCol = new TableColumn();
+        TableColumn valueCol = new TableColumn();
+        nameCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("name"));
+        nameCol.setVisible(true);
+        valueCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("value"));
+        valueCol.setVisible(true);
+        statisticTable.getColumns().setAll(nameCol, valueCol);
     }
 }
