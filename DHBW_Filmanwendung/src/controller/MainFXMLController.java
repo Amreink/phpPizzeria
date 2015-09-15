@@ -699,13 +699,15 @@ public class MainFXMLController implements Initializable {
     private PieChart kreisdiagramm;
 
     @FXML
-    private void loadDiagramm() {
+    public void loadStatistic() {
 
+        //Kreisdiagramm
         int movieCount = 0;
-        List movieListRS = sql.select("Movielist", "imdbID", "UserID = '" + user.getId() + "'");
+        List movieListRS = sql.select("Movielist", "imdbID, FavList, MerkList", "UserID = '" + user.getId() + "'");
 
         int movieRating[] = new int[11];
         for (Object movielistElement : movieListRS) {
+            System.out.println(movielistElement);
             Map<String, String> movielistRow = (Map<String, String>) movielistElement;
             movieCount = movieCount + 1;
             List movieRS = sql.select("Movie", "imdbRating", "imdbID = '" + movielistRow.get("imdbID") + "'");
@@ -726,13 +728,12 @@ public class MainFXMLController implements Initializable {
 
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(test);
         kreisdiagramm.setData(pieChartData);
-        kreisdiagramm.setTitle("Verteilung der Imdb-Bewertungen auf " + movieCount +" Filme");
+        kreisdiagramm.setTitle("Verteilung der Imdb-Bewertungen auf " + movieCount + " Filme");
         kreisdiagramm.setLegendSide(Side.LEFT);
 
-    }
-
-    @FXML
-    public void loadStatistic() {
+        //
+        //Statistic Table
+        //
         
         
         List userListRS = sql.select("User", "UserID", "");
@@ -741,14 +742,15 @@ public class MainFXMLController implements Initializable {
             Map<String, String> userListRow = (Map<String, String>) userListElement;
             userCount = userCount + 1;
         }
-        List movieListRS = sql.select("Movie", "imdbID", "");
-        int movieCount = 0;
-        for (Object movieListElement : movieListRS) {
+        List everyMovieListRS = sql.select("Movie", "imdbID", "");
+        int statisticMovieCount = 0;
+        for (Object movieListElement : everyMovieListRS) {
             Map<String, String> movieListRow = (Map<String, String>) movieListElement;
-            movieCount = movieCount + 1;
+            statisticMovieCount = statisticMovieCount + 1;
         }
 
-        double userMovieRate = (double) movieCount / (double) userCount;
+        
+        
         Pane header = (Pane) statisticTable.lookup("TableHeaderRow");
         header.setMaxHeight(0);
         header.setMinHeight(0);
@@ -757,8 +759,8 @@ public class MainFXMLController implements Initializable {
         header.setManaged(false);
         List infoList = new ArrayList();
         infoList.add(new TableRow("Anzahl der Nutzer", String.valueOf(userCount)));
-        infoList.add(new TableRow("Anzahl der Filme in der Datenbank", String.valueOf(movieCount)));
-        infoList.add(new TableRow("Filme pro Nutzer", String.valueOf(Math.rint(userMovieRate))));
+        infoList.add(new TableRow("Anzahl der Filme in der Datenbank", String.valueOf(statisticMovieCount)));
+
         ObservableList data = FXCollections.observableList(infoList);
         statisticTable.setItems(data);
         TableColumn nameCol = new TableColumn();
