@@ -6,6 +6,7 @@ import classes.OMDB;
 import classes.PdfExport;
 import classes.SQLite;
 import classes.Search;
+import classes.Statistic;
 import classes.TableRow;
 import classes.User;
 import java.io.IOException;
@@ -99,7 +100,15 @@ public class MainFXMLController implements Initializable {
     @FXML
     private MenuButton userBtn;
     @FXML
-    private TableView statisticTable;
+    private Label lblFav;
+    @FXML
+    private Label lblBook;
+    @FXML
+    private Label lblSeenMovies;
+    @FXML
+    private Label lblUserRate;
+    @FXML
+    private PieChart piechartImdbRating;
 
     public MainFXMLController() {
         this.movies = MovieList.getInstance();
@@ -113,6 +122,7 @@ public class MainFXMLController implements Initializable {
             Movie movie = (Movie) favoriteTable.getSelectionModel().getSelectedItem();
             if (movie != null) {
                 popup(movie);
+
             }
         }
     }
@@ -696,79 +706,58 @@ public class MainFXMLController implements Initializable {
     }
 
     @FXML
-    private PieChart kreisdiagramm;
-
-    @FXML
     public void loadStatistic() {
+        
+        //Konstruktor
+        Statistic stats = new Statistic();
 
         //Kreisdiagramm
-        int movieCount = 0;
-        List movieListRS = sql.select("Movielist", "imdbID, FavList, MerkList", "UserID = '" + user.getId() + "'");
+        List movieListRS = sql.select("Movielist", "imdbID", "UserID = '" + user.getId() + "'");
 
+        //Array initialisieren
         int movieRating[] = new int[11];
+        
         for (Object movielistElement : movieListRS) {
-            System.out.println(movielistElement);
+            //Die einzelnen Elemente werden gemappt
             Map<String, String> movielistRow = (Map<String, String>) movielistElement;
-            movieCount = movieCount + 1;
             List movieRS = sql.select("Movie", "imdbRating", "imdbID = '" + movielistRow.get("imdbID") + "'");
 
             for (Object movieElement : movieRS) {
                 Map<String, String> movieRow = (Map<String, String>) movieElement;
+                //imdbRating in double umwandeln, dann runden und in int casten
                 int groupNumber = (int) Math.rint(Double.parseDouble(movieRow.get("imdbRating")));
+                //Counter, welcher für jede Bewertung die entsprechende Gruppe hochzählt
                 movieRating[groupNumber] = movieRating[groupNumber] + 1;
             }
         }
-
-        ArrayList<PieChart.Data> test = new ArrayList<>();
+        
+        
+        ArrayList<PieChart.Data> data = new ArrayList<>();
         for (int j = 1; j < movieRating.length; j++) {
             if (movieRating[j] != 0) {
-                test.add(new PieChart.Data(String.valueOf(j) + "-Bewertung", movieRating[j]));
+                //Daten in die Arraylist übertragen
+                data.add(new PieChart.Data(String.valueOf(j) + "-Bewertung", movieRating[j]));
             }
         }
+ 
+        //Datenübergabe an ObservableList, Befüllung des Diagramms und Benennung des Titels
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(data);
+        piechartImdbRating.setData(pieChartData);
+        piechartImdbRating.setTitle("Verteilung der Imdb-Bewertungen auf " + movieListRS.size() + " Filme");
 
-        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(test);
-        kreisdiagramm.setData(pieChartData);
-        kreisdiagramm.setTitle("Verteilung der Imdb-Bewertungen auf " + movieCount + " Filme");
-        kreisdiagramm.setLegendSide(Side.LEFT);
-
-        //
+        
         //Statistic Table
-        //
-        
-        
-        List userListRS = sql.select("User", "UserID", "");
-        int userCount = 0;
-        for (Object userListElement : userListRS) {
-            Map<String, String> userListRow = (Map<String, String>) userListElement;
-            userCount = userCount + 1;
-        }
-        List everyMovieListRS = sql.select("Movie", "imdbID", "");
-        int statisticMovieCount = 0;
-        for (Object movieListElement : everyMovieListRS) {
-            Map<String, String> movieListRow = (Map<String, String>) movieListElement;
-            statisticMovieCount = statisticMovieCount + 1;
-        }
+        //SQL-Abfragen
+        List bookListRS = sql.select("Movielist", "imdbID", "UserID = '" + user.getId() + "' AND MerkList = 'true'");
+        List favListRS = sql.select("Movielist", "imdbID", "UserID = '" + user.getId() + "' AND FavList = 'true'");
+        List bookSeenRS = sql.select("Movielist", "imdbID", "UserID = '" + user.getId() + "' AND MerkList = 'true' AND Looked = 'true'");
+        List userRateRS = sql.select("Movielist", "UserRate", "UserID = '" + user.getId() + "'");
 
-        
-        
-        Pane header = (Pane) statisticTable.lookup("TableHeaderRow");
-        header.setMaxHeight(0);
-        header.setMinHeight(0);
-        header.setPrefHeight(0);
-        header.setVisible(false);
-        header.setManaged(false);
-        List infoList = new ArrayList();
-        infoList.add(new TableRow("Anzahl der Nutzer", String.valueOf(userCount)));
-        infoList.add(new TableRow("Anzahl der Filme in der Datenbank", String.valueOf(statisticMovieCount)));
+        //Befüllung der Statistik-Labels mit der Statistik-Klasse
+        lblBook.setText(String.valueOf(stats.getNumber(bookListRS)));
+        lblFav.setText(String.valueOf(stats.getNumber(favListRS)));
+        lblSeenMovies.setText(String.valueOf(stats.getNumber(bookSeenRS)));
+        lblUserRate.setText(String.valueOf(stats.getAverage(userRateRS)) + "/5");
 
-        ObservableList data = FXCollections.observableList(infoList);
-        statisticTable.setItems(data);
-        TableColumn nameCol = new TableColumn();
-        TableColumn valueCol = new TableColumn();
-        nameCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("name"));
-        nameCol.setVisible(true);
-        valueCol.setCellValueFactory(new PropertyValueFactory<TableRow, String>("value"));
-        valueCol.setVisible(true);
-        statisticTable.getColumns().setAll(nameCol, valueCol);
     }
 }
