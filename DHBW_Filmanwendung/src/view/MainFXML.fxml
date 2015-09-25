@@ -325,6 +325,61 @@
                                  </children></AnchorPane>
                                     </content>
                                 </Tab>
+                        <Tab styleClass="tabButton" text="Im- &amp; Export">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <StackPane prefHeight="505.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <GridPane alignment="CENTER">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="495.0" minWidth="10.0" prefWidth="491.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="494.0" minWidth="10.0" prefWidth="492.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints maxHeight="383.0" minHeight="10.0" prefHeight="259.0" vgrow="SOMETIMES" />
+                                              <RowConstraints maxHeight="466.0" minHeight="10.0" prefHeight="246.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                                                   <children>
+                                                      <TextField fx:id="txtImport" />
+                                                      <Button fx:id="btnImSearch" mnemonicParsing="false" text="Durchsuchen" />
+                                                   </children>
+                                                   <opaqueInsets>
+                                                      <Insets />
+                                                   </opaqueInsets>
+                                                   <GridPane.margin>
+                                                      <Insets left="5.0" right="5.0" />
+                                                   </GridPane.margin>
+                                                </VBox>
+                                                <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.columnIndex="1">
+                                                   <children>
+                                                      <TextField fx:id="txtExport" />
+                                                      <Button fx:id="btnExSearch" mnemonicParsing="false" text="Durchsuchen" />
+                                                   </children>
+                                                   <GridPane.margin>
+                                                      <Insets left="5.0" right="5.0" />
+                                                   </GridPane.margin>
+                                                </VBox>
+                                                <VBox alignment="BASELINE_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
+                                                   <children>
+                                                      <Button fx:id="btnImport" mnemonicParsing="false" onAction="#xmlImport" text="Import" />
+                                                   </children>
+                                                </VBox>
+                                                <VBox alignment="BASELINE_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                   <children>
+                                                      <Button fx:id="btnExport" mnemonicParsing="false" onAction="#xmlExport" text="Export" />
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </GridPane>
+                                       </children>
+                                    </StackPane>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
                             </tabs>
                         </TabPane>
                     </center>

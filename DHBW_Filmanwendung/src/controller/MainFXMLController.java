@@ -25,7 +25,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Side;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.*;
@@ -109,6 +108,18 @@ public class MainFXMLController implements Initializable {
     private Label lblUserRate;
     @FXML
     private PieChart piechartImdbRating;
+    @FXML
+    private TextField txtImport;
+    @FXML
+    private Button btnImSearch;
+    @FXML
+    private Button btnImport;
+    @FXML
+    private TextField txtExport;
+    @FXML
+    private Button btnExSearch;
+    @FXML
+    private Button btnExport;
 
     public MainFXMLController() {
         this.movies = MovieList.getInstance();
@@ -707,8 +718,7 @@ public class MainFXMLController implements Initializable {
 
     @FXML
     public void loadStatistic() {
-        
-        //Konstruktor
+
         Statistic stats = new Statistic();
 
         //Kreisdiagramm
@@ -716,7 +726,7 @@ public class MainFXMLController implements Initializable {
 
         //Array initialisieren
         int movieRating[] = new int[11];
-        
+
         for (Object movielistElement : movieListRS) {
             //Die einzelnen Elemente werden gemappt
             Map<String, String> movielistRow = (Map<String, String>) movielistElement;
@@ -730,8 +740,7 @@ public class MainFXMLController implements Initializable {
                 movieRating[groupNumber] = movieRating[groupNumber] + 1;
             }
         }
-        
-        
+
         ArrayList<PieChart.Data> data = new ArrayList<>();
         for (int j = 1; j < movieRating.length; j++) {
             if (movieRating[j] != 0) {
@@ -739,13 +748,12 @@ public class MainFXMLController implements Initializable {
                 data.add(new PieChart.Data(String.valueOf(j) + "-Bewertung", movieRating[j]));
             }
         }
- 
+
         //Datenübergabe an ObservableList, Befüllung des Diagramms und Benennung des Titels
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(data);
         piechartImdbRating.setData(pieChartData);
         piechartImdbRating.setTitle("Verteilung der Imdb-Bewertungen auf " + movieListRS.size() + " Filme");
 
-        
         //Statistic Table
         //SQL-Abfragen
         List bookListRS = sql.select("Movielist", "imdbID", "UserID = '" + user.getId() + "' AND MerkList = 'true'");
@@ -758,6 +766,18 @@ public class MainFXMLController implements Initializable {
         lblFav.setText(String.valueOf(stats.getNumber(favListRS)));
         lblSeenMovies.setText(String.valueOf(stats.getNumber(bookSeenRS)));
         lblUserRate.setText(String.valueOf(stats.getAverage(userRateRS)) + "/5");
+    }
+    
+    
+
+    @FXML
+    public void xmlExport() {      
 
     }
+
+    @FXML
+    public void xmlImport() {
+
+    }
+
 }
