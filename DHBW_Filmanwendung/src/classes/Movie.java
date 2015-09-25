@@ -2,7 +2,12 @@ package classes;
 
 import java.util.HashMap;
 import java.util.Map;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "movie")
 public class Movie {
 
     private String imdbID;

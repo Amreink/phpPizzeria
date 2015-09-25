@@ -40,6 +40,7 @@ public class OMDB {
         request.connect();
 
         SearchResponse movies = new Gson().fromJson(new InputStreamReader((InputStream) request.getContent()), SearchResponse.class);
+
         return movies.Search;
     }
 

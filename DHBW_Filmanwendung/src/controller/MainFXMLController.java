@@ -9,6 +9,7 @@ import classes.Search;
 import classes.Statistic;
 import classes.TableRow;
 import classes.User;
+import classes.XML;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -38,6 +39,11 @@ import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 
 public class MainFXMLController implements Initializable {
 
@@ -767,17 +773,56 @@ public class MainFXMLController implements Initializable {
         lblSeenMovies.setText(String.valueOf(stats.getNumber(bookSeenRS)));
         lblUserRate.setText(String.valueOf(stats.getAverage(userRateRS)) + "/5");
     }
-    
-    
 
     @FXML
-    public void xmlExport() {      
-
+    public void xmlExport() {
+        XML xml = new XML();
+        JFileChooser chooser = new JFileChooser();
+        chooser.setCurrentDirectory(new java.io.File("."));
+        chooser.setDialogTitle("Pfad wählen");
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        chooser.setAcceptAllFileFilterUsed(false);
+        chooser.setApproveButtonText("Exportieren");
+        if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            try {
+                JAXBContext jaxbContext = JAXBContext.newInstance(MovieList.class);
+                xml.exportXml(movies, jaxbContext, chooser.getSelectedFile() + "/movieExport.xml");
+            } catch (JAXBException ex) {
+                Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     @FXML
     public void xmlImport() {
+        XML xml = new XML();
+        JFileChooser chooser = new JFileChooser();
+        chooser.setCurrentDirectory(new java.io.File("."));
+        chooser.setDialogTitle("XML wählen");
+        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        FileFilter filter = new FileNameExtensionFilter("XML File", "xml");
+        chooser.setFileFilter(filter);
+        chooser.setApproveButtonText("Importieren");
+        if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            try {
+                JAXBContext jaxbContext = JAXBContext.newInstance(MovieList.class);
+                MovieList movielist = (MovieList) xml.importXml(jaxbContext, chooser.getSelectedFile().toString());
 
+                //importiertes XML-File
+                for (Object element : movielist.movies) {
+                    Movie movie = (Movie) element;
+                    if (movies.movieExists(movie) == -1) {
+                        movies.addMovie(movie);
+                        if (sql.exsists("Movie", "imdbID", "imdbID = '" + movie.getImdbID() + "'") < 1) {
+                            sqlInsertToMovie(movie);
+                        }
+                        sqlInsertToMovielist(movie);
+                    }
+                }
+
+            } catch (JAXBException ex) {
+                Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
-
 }
