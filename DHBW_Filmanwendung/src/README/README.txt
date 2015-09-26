@@ -2,7 +2,7 @@
 *************************Filmanwendung************************
 **Autoren: Artur Stalbaum, Timo Schmidt, Karsten Amrein     **
 **Kurs:WWI14B                                               **
-**Datum: 23.08.2015                                         **
+**Datum: 26.09.2015                                         **
 **Dozent: Prof. Dr. Erik Behrends                           **
 **************************************************************
 ****************************README:***************************
@@ -37,4 +37,31 @@ Schauspieler in der Detailansicht ausgeben
 Favoriten und Merkliste sortieren
 SQL-Datenbank
 PDF-Ausdruck zu Detailansicht, Favliste und Merkliste
+**************************************************************
+**************************Teil 2******************************
+ -Karsten: 
+    Must-Have
+        -Statistik-Seite
+            -Diagramme
+            -Auswertungen (Labels)
+    Nice-to-Have
+        -XML-Import und Export
+**************************************************************
+    -Timo:
+        ​-Popup Rücksprung -> Main Window aktualisieren 
+        -Code aufräumen / verschönern
+**************************************************************
+    -Artur:
+        - live-suche als service umgesetzt
+        - regestrierung gefixt (!= null fehler)
+        - tab-reiter wechsel fehler behoben 
+            (currentmovie wurde gelöscht bei wechsel)
+        - kein bild verfügbar fehler
+    - pdf export (wenn keine url verfügbar ist wird 
+            überhaupt kein bild angezeigt)
+    - detailansicht (x icon wird angezeigt)
+        - pdf export ausgewählter ordner fehler 
+            (Permission denied)
+        - bug fixing
+        - logout ​
 **************************************************************

@@ -246,7 +246,7 @@
                                  <children>
                                     <StackPane prefHeight="150.0" prefWidth="989.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
-                                          <HBox prefHeight="100.0" prefWidth="200.0">
+                                          <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                                              <children>
                                                 <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="505.0" prefWidth="1197.0">
                                                    <children>
@@ -258,14 +258,14 @@
                                                       <Insets />
                                                    </opaqueInsets>
                                                    <children>
-                                                      <GridPane prefHeight="553.0" prefWidth="500.0">
+                                                      <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                                                         <columnConstraints>
                                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="343.0" minWidth="10.0" prefWidth="286.0" />
                                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="197.0" minWidth="10.0" prefWidth="118.0" />
                                                         </columnConstraints>
                                                         <rowConstraints>
-                                                          <RowConstraints maxHeight="490.0" minHeight="10.0" prefHeight="490.0" vgrow="SOMETIMES" />
-                                                            <RowConstraints maxHeight="252.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                                                          <RowConstraints maxHeight="490.0" minHeight="10.0" prefHeight="328.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints maxHeight="252.0" minHeight="10.0" prefHeight="177.0" vgrow="SOMETIMES" />
                                                         </rowConstraints>
                                                          <children>
                                                             <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="150.0" spacing="50.0">
@@ -315,12 +315,20 @@
                                                                      </font></Label>
                                                                </children>
                                                             </VBox>
-                                                            <HBox alignment="CENTER" prefHeight="27.0" prefWidth="286.0" GridPane.rowIndex="1">
+                                                            <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.rowIndex="1">
                                                                <children>
-                                                                  <Button fx:id="btnImport" mnemonicParsing="false" onAction="#xmlImport" text="Import" />
-                                                                  <Button fx:id="btnExport" mnemonicParsing="false" onAction="#xmlExport" text="Export" />
+                                                                  <Label prefHeight="85.0" prefWidth="277.0" text="Über diese Button werden alle Filme des Nutzers als xml-Datei exportiert oder eine bereits existierende xml-Datei importiert." wrapText="true" />
+                                                                  <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="68.0" prefWidth="266.0">
+                                                                     <children>
+                                                                        <Button fx:id="btnExport" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#xmlExport" onMouseEntered="#onXmlExport" styleClass="btnExport" />
+                                                                        <Button fx:id="btnImport" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#xmlImport" onMouseEntered="#onXmlImport" styleClass="btnImport" />
+                                                                     </children>
+                                                                  </HBox>
                                                                </children>
-                                                            </HBox>
+                                                               <GridPane.margin>
+                                                                  <Insets />
+                                                               </GridPane.margin>
+                                                            </VBox>
                                                          </children>
                                                       </GridPane>
                                                    </children>
@@ -332,53 +340,6 @@
                                  </children></AnchorPane>
                                     </content>
                                 </Tab>
-                        <Tab styleClass="tabButton" text="Im- &amp; Export">
-                           <content>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                 <children>
-                                    <StackPane prefHeight="505.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                       <children>
-                                          <GridPane alignment="CENTER">
-                                            <columnConstraints>
-                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="495.0" minWidth="10.0" prefWidth="491.0" />
-                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="494.0" minWidth="10.0" prefWidth="492.0" />
-                                            </columnConstraints>
-                                            <rowConstraints>
-                                              <RowConstraints maxHeight="383.0" minHeight="10.0" prefHeight="259.0" vgrow="SOMETIMES" />
-                                              <RowConstraints maxHeight="466.0" minHeight="10.0" prefHeight="246.0" vgrow="SOMETIMES" />
-                                            </rowConstraints>
-                                             <children>
-                                                <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
-                                                   <children>
-                                                      <TextField fx:id="txtImport" />
-                                                      <Button fx:id="btnImSearch" mnemonicParsing="false" text="Durchsuchen" />
-                                                   </children>
-                                                   <opaqueInsets>
-                                                      <Insets />
-                                                   </opaqueInsets>
-                                                   <GridPane.margin>
-                                                      <Insets left="5.0" right="5.0" />
-                                                   </GridPane.margin>
-                                                </VBox>
-                                                <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.columnIndex="1">
-                                                   <children>
-                                                      <TextField fx:id="txtExport" />
-                                                      <Button fx:id="btnExSearch" mnemonicParsing="false" text="Durchsuchen" />
-                                                   </children>
-                                                   <GridPane.margin>
-                                                      <Insets left="5.0" right="5.0" />
-                                                   </GridPane.margin>
-                                                </VBox>
-                                                <VBox alignment="BASELINE_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1" />
-                                                <VBox alignment="BASELINE_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                             </children>
-                                          </GridPane>
-                                       </children>
-                                    </StackPane>
-                                 </children>
-                              </AnchorPane>
-                           </content>
-                        </Tab>
                             </tabs>
                         </TabPane>
                     </center>

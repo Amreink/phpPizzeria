@@ -252,3 +252,26 @@
     -fx-background-image: url('../icon/arrow_1.png');
 }
 
+.btnExport{
+    -fx-background-image: url('../icon/Export.png');
+    -fx-background-size: 48 48 ;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:center;   
+    -fx-padding: 30 40 30 40;
+}
+
+.btnExport:hover{
+    -fx-background-image: url('../icon/Export_1.png');
+}
+
+.btnImport{
+    -fx-background-image: url('../icon/Import.png');
+    -fx-background-size: 48 48 ;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:center;   
+    -fx-padding: 30 40 30 40;
+}
+
+.btnImport:hover{
+    -fx-background-image: url('../icon/Import_1.png');
+}

@@ -115,17 +115,9 @@ public class MainFXMLController implements Initializable {
     @FXML
     private PieChart piechartImdbRating;
     @FXML
-    private TextField txtImport;
-    @FXML
-    private Button btnImSearch;
+    private Button btnExport;
     @FXML
     private Button btnImport;
-    @FXML
-    private TextField txtExport;
-    @FXML
-    private Button btnExSearch;
-    @FXML
-    private Button btnExport;
 
     public MainFXMLController() {
         this.movies = MovieList.getInstance();
@@ -723,6 +715,19 @@ public class MainFXMLController implements Initializable {
     }
 
     @FXML
+    public void onXmlExport() {
+        Tooltip xmlExport = new Tooltip("Alle Filme exportieren");
+        Tooltip.install(btnExport, xmlExport);
+
+    }
+
+    @FXML
+    public void onXmlImport() {
+        Tooltip xmlImport = new Tooltip("XML-Datei importieren");
+        Tooltip.install(btnImport, xmlImport);
+    }
+
+    @FXML
     public void loadStatistic() {
 
         Statistic stats = new Statistic();
@@ -775,17 +780,23 @@ public class MainFXMLController implements Initializable {
     }
 
     @FXML
+    //Exportiert eine XML-Datei mit allen Filmen des aktuell angemeldeten Nutzers
     public void xmlExport() {
+        //Konstruktor
         XML xml = new XML();
         JFileChooser chooser = new JFileChooser();
+        //Pop-Up für die Pfadwahl
         chooser.setCurrentDirectory(new java.io.File("."));
         chooser.setDialogTitle("Pfad wählen");
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         chooser.setAcceptAllFileFilterUsed(false);
         chooser.setApproveButtonText("Exportieren");
+        //Bei Klick auf Exportieren (Im Dialogfenster) exportiere XML
         if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             try {
+                //Instanz der JAXBContext-Klasse erstellen
                 JAXBContext jaxbContext = JAXBContext.newInstance(MovieList.class);
+                //Aufruf der Methode exportXml in der KLasse xml inklusive Übergabe der Parameter
                 xml.exportXml(movies, jaxbContext, chooser.getSelectedFile() + "/movieExport.xml");
             } catch (JAXBException ex) {
                 Logger.getLogger(MainFXMLController.class.getName()).log(Level.SEVERE, null, ex);
@@ -793,26 +804,32 @@ public class MainFXMLController implements Initializable {
         }
     }
 
+    //Liest eine xml-Datei ein
     @FXML
     public void xmlImport() {
         XML xml = new XML();
+        //Öffnet ein Pop-Up, in welchem der Pfad zur xml-Datei angegeben wird
         JFileChooser chooser = new JFileChooser();
         chooser.setCurrentDirectory(new java.io.File("."));
         chooser.setDialogTitle("XML wählen");
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        //Filter, damit nur xml-Dateien angezeigt werden
         FileFilter filter = new FileNameExtensionFilter("XML File", "xml");
         chooser.setFileFilter(filter);
         chooser.setApproveButtonText("Importieren");
         if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             try {
+                //Instanz der JAXBContext-Klasse erstellen
                 JAXBContext jaxbContext = JAXBContext.newInstance(MovieList.class);
+                //Die Methode importXml aus der Klasse xml wird aufgerufen und der zurückgegebene Wert in ein Obejekt des Typs MovieList gecastet
                 MovieList movielist = (MovieList) xml.importXml(jaxbContext, chooser.getSelectedFile().toString());
-
-                //importiertes XML-File
+                //movielist aufteilen
                 for (Object element : movielist.movies) {
                     Movie movie = (Movie) element;
+                    //Überprüfung, ob der movie schon geladen ist (Wenn nicht, hinzufügen)
                     if (movies.movieExists(movie) == -1) {
                         movies.addMovie(movie);
+                        //Überprüfung, ob der movie schon in der SQL-Datenbank vorhanden ist (Wenn nicht, hinzufügen)
                         if (sql.exsists("Movie", "imdbID", "imdbID = '" + movie.getImdbID() + "'") < 1) {
                             sqlInsertToMovie(movie);
                         }
