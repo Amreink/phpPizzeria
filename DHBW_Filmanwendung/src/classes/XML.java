@@ -22,7 +22,7 @@ import javax.xml.bind.Unmarshaller;
  */
 public class XML {
 
-    //Erzeugt eine xml-Datei
+    //Erzeugt eine xml-Datei aus einem Objekt
     public void exportXml(Object object, JAXBContext jaxbContext, String path) {
         try {
             //Erzeugt eine Datei in "path"

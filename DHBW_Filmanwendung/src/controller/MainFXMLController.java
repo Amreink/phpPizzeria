@@ -782,7 +782,7 @@ public class MainFXMLController implements Initializable {
     @FXML
     //Exportiert eine XML-Datei mit allen Filmen des aktuell angemeldeten Nutzers
     public void xmlExport() {
-        //Konstruktor
+        //XML Objekt Instanziierung
         XML xml = new XML();
         JFileChooser chooser = new JFileChooser();
         //Pop-Up für die Pfadwahl
