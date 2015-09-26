@@ -179,7 +179,7 @@
                                                                     <children>
                                                                         <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="100.0" StackPane.alignment="CENTER">
                                                                             <children>
-                                                                                <Button fx:id="btnFavDel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#FavoriteDelet" onMouseEntered="#onFavDelEntered" styleClass="btnDelete" />
+                                                                                <Button fx:id="btnFavDel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#favoriteDelete" onMouseEntered="#onFavDelEntered" styleClass="btnDelete" />
                                                                                 <Button fx:id="btnFavPdf" mnemonicParsing="false" onAction="#pdfListExportFav" onMouseEntered="#onFavPdfEntered" styleClass="btnPdfList" />
                                                                             </children>
                                                                         </VBox>
@@ -226,7 +226,7 @@
                                                                             <children>
                                                                                 <Button fx:id="btnFavLooked" mnemonicParsing="false" onAction="#movieLooked" onMouseEntered="#onFavLookedEntered" styleClass="btnLooked" />
                                                                                 <Button fx:id="btnBookmarkToFav" mnemonicParsing="false" onAction="#movieToFav" onMouseEntered="#onBookmarkToFavEntered" styleClass="btnToFav" />
-                                                                                <Button fx:id="btnBookmarkDel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#BookmarkDelet" onMouseEntered="#onBookmarkDelEntered" styleClass="btnDelete" />
+                                                                                <Button fx:id="btnBookmarkDel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#bookmarkDelete" onMouseEntered="#onBookmarkDelEntered" styleClass="btnDelete" />
                                                                                 <Button fx:id="btnBookmarkPdf" mnemonicParsing="false" onAction="#pdfListExportBook" onMouseEntered="#onBookmarkPdfEntered" styleClass="btnPdfList" />
                                                                             </children>
                                                                         </VBox>
@@ -250,7 +250,7 @@
                                              <children>
                                                 <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="505.0" prefWidth="1197.0">
                                                    <children>
-                                                      <PieChart fx:id="piechartImdbRating" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="505.0" prefWidth="601.0" />
+                                                      <PieChart fx:id="pieChartImdbRating" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="505.0" prefWidth="601.0" />
                                                    </children>
                                                 </VBox>
                                                 <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="340.0" prefWidth="1005.0">

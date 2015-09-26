@@ -53,12 +53,12 @@ public class RegistFXMLController implements Initializable {
     }
     //Enter kann Mausclick ersetzen
     @FXML
-    public void Enterpress1() throws SQLException{
+    public void enterPressReg() throws SQLException{
         regist();
     }
     //Klick in das Textfeld leert dieses
     @FXML
-    public void Feldleeren1() {
+    public void emptyFieldReg() {
         txtUserName.setText("");
     }
     //Schließt RegistFXML.fxml

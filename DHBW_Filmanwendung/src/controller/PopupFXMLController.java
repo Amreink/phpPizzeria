@@ -123,7 +123,7 @@ public class PopupFXMLController implements Initializable {
 
     //nimmt daten von einem anderen controller entgegen
     //TODO konvention datenuebergabeMovie umbennen
-    public void datenuebergabeMovie(Movie movie, User user) {
+    public void dataTransferMain(Movie movie, User user) {
         this.movie = movie;
         this.user = user;
         loadMoviePopup(this.movie);

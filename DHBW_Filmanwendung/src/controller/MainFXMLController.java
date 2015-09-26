@@ -113,7 +113,7 @@ public class MainFXMLController implements Initializable {
     @FXML
     private Label lblUserRate;
     @FXML
-    private PieChart piechartImdbRating;
+    private PieChart pieChartImdbRating;
     @FXML
     private Button btnExport;
     @FXML
@@ -497,7 +497,7 @@ public class MainFXMLController implements Initializable {
     }
 
     //Übergabe des in LoginFXMLController eingegebenen Benutzernamens.
-    public void datenuebergabe(User user) {
+    public void dataTransferLogin(User user) {
         userBtn.setText("Hallo " + user.getName());
         this.user = user;
         loadMovies();
@@ -543,7 +543,7 @@ public class MainFXMLController implements Initializable {
 
     //Entfernt gewählten Film aus Favoritenliste. Fehlermeldung wenn kein Film vorhanden.
     @FXML
-    public void FavoriteDelet() throws IOException {
+    public void favoriteDelete() throws IOException {
         Movie movie = (Movie) favoriteTable.getSelectionModel().getSelectedItem();
         if (movie != null) {
             movie.setFavourite(false);
@@ -559,7 +559,7 @@ public class MainFXMLController implements Initializable {
 
     //Entfernt gewählten Film aus Merkliste. Fehlermeldung wenn kein Film vorhanden.
     @FXML
-    public void BookmarkDelet() throws IOException {
+    public void bookmarkDelete() throws IOException {
         Movie movie = (Movie) bookmarkTable.getSelectionModel().getSelectedItem();
         if (movie != null) {
             movie.setBookmark(false);
@@ -623,7 +623,7 @@ public class MainFXMLController implements Initializable {
         stage.show();
 
         PopupFXMLController popupController = (PopupFXMLController) fxmlLoader.getController();
-        popupController.datenuebergabeMovie(movie, user);
+        popupController.dataTransferMain(movie, user);
     }
 
     //Gibt Fehlermeldung aus, wenn kein Film ausgewählt, oder in der aktuellen Liste vorhanden ist. "label" legt fest welche Fehlermeldung gezeigt werden soll.
@@ -642,7 +642,7 @@ public class MainFXMLController implements Initializable {
         stage.show();
 
         ErrorFXMLController errorController = (ErrorFXMLController) fxmlLoader.getController();
-        errorController.datenuebergabeError(label);
+        errorController.dataTransferError(label);
     }
 
     //Verantwortlich für die Tooltips der einzelnen Buttons auf der MainFXML.fxml.
@@ -762,8 +762,8 @@ public class MainFXMLController implements Initializable {
 
         //Datenübergabe an ObservableList, Befüllung des Diagramms und Benennung des Titels
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(data);
-        piechartImdbRating.setData(pieChartData);
-        piechartImdbRating.setTitle("Verteilung der Imdb-Bewertungen auf " + movieListRS.size() + " Filme");
+        pieChartImdbRating.setData(pieChartData);
+        pieChartImdbRating.setTitle("Verteilung der Imdb-Bewertungen auf " + movieListRS.size() + " Filme");
 
         //Statistic Table
         //SQL-Abfragen

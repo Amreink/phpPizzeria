@@ -33,7 +33,7 @@ public class ErrorFXMLController implements Initializable {
         stage.close();
     }
 
-    public void datenuebergabeError(int label) {
+    public void dataTransferError(int label) {
         if (label == 0) {
             lblError.setText("Kein Film in Liste!");
             this.label = label;

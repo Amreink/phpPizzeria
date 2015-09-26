@@ -66,7 +66,7 @@ public class LoginFXMLController implements Initializable {
                 stage.show();
                 
                 MainFXMLController mainController = (MainFXMLController) fxmlLoader.getController();
-                mainController.datenuebergabe(new User(userid, username));
+                mainController.dataTransferLogin(new User(userid, username));
                 //Falscher Benutzer
             } catch (IOException ex) {
                 Logger.getLogger(LoginFXMLController.class.getName()).log(Level.SEVERE, null, ex);
@@ -82,20 +82,20 @@ public class LoginFXMLController implements Initializable {
 
     //Enter ersetzt Mausclick
     @FXML
-    public void Enterpress() throws SQLException {
+    public void enterPress() throws SQLException {
         login();
     }
 
     //Klick in das Textfeld leert dieses
     @FXML
-    public void Feldleeren() {
+    public void emptyField() {
         txtLogin.setText("");
     }
 
     //POP-UP der RegistFXML.fxml
     //registrier-fenster
     @FXML
-    public void Regist() throws IOException {
+    public void regist() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/RegistFXML.fxml"));
 
         Stage stage = new Stage();
